@@ -3,3 +3,6 @@ dist/
 
 # ignore node_modules
 node_modules/
+
+# ignore vscode setting file
+.vscode/

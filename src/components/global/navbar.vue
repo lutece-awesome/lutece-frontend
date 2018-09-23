@@ -43,7 +43,7 @@
 			clipped-left
 			app
 			dark
-			color = "red"
+			color = "primary"
 		>
 			<v-toolbar-side-icon @click.stop="drawer=!drawer"/>
 			<v-toolbar-title class="hidden-xs-only">
@@ -173,11 +173,11 @@ export default {
 				// 	title: 'Blog',
 				// 	path: '/blog',
 				// },
-				// {
-				// 	icon: 'mdi-information',
-				// 	title: 'About',
-				// 	path: '/about',
-				// },
+				{
+					icon: 'mdi-information',
+					title: 'About',
+					path: '/about',
+				},
 			],
 		};
 	},
