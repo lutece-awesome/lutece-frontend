@@ -1,0 +1,17 @@
+query BLogListGQL($page: Int!) {
+	blogList(page: $page) {
+		maxpage
+		blogList {
+            title
+            vote
+            view
+			user{
+				displayName
+				username
+				gravataremail
+			}
+			slug
+			createTime
+		}
+	}
+}

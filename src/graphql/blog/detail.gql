@@ -1,0 +1,13 @@
+query BlogGQL( $slug: String! ){
+    blog( slug: $slug ){
+        title
+        content
+        view
+        vote
+        createTime
+        user{
+            username
+            displayName
+        }
+    }
+}
