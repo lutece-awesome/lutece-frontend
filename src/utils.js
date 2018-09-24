@@ -24,4 +24,10 @@ function getThoundNumberic(number) {
 	return number < 1000 ? String(number) : `${String((number / 1000).toFixed(1))}K`;
 }
 
-export { getGraphQLUri, getWebSocketUri, getServerUri, getThoundNumberic };
+function formatRank(rk) {
+	let s = String(rk);
+	if (s.length < 2) s = `0${s}`;
+	return s;
+}
+
+export { getGraphQLUri, getWebSocketUri, getServerUri, getThoundNumberic, formatRank };

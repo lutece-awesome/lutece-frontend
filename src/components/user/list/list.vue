@@ -19,7 +19,7 @@
 						tag ="tr"
 						style = "cursor: pointer"
 					>
-						<td class = "text-xs-center">{{ getRank( props.item.rank ) }}</td>
+						<td class = "text-xs-center">{{ formatRank( props.item.rank ) }}</td>
 						<td class = "text-xs-center" >
 							<div style = "white-space: nowrap;">
 								<v-avatar
@@ -28,10 +28,10 @@
 								>
 									<img :src = "props.item.gravataremail" >
 								</v-avatar>
-								<span class = "body-2 ml-2"> {{ props.item.displayName }} </span>
+								<span class = "ml-2 font-weight-medium"> {{ props.item.displayName }} </span>
 							</div>
 						</td>
-						<td class="text-xs-center">
+						<td class = "text-xs-center">
 							<span class = "success--text" > {{ props.item.solved }} </span>
 							<span> / </span>
 							<span class = "error--text" > {{ props.item.tried }} </span>
@@ -50,7 +50,7 @@
 
 <script>
 
-const { getRank } = require('@/plugins/utils');
+const { formatRank } = require('@/utils');
 
 export default {
 	props: {
@@ -93,7 +93,7 @@ export default {
 		],
 	}),
 	methods: {
-		getRank,
+		formatRank,
 	},
 };
 </script>

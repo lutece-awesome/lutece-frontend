@@ -15,6 +15,8 @@ import apolloProvider from './apollo';
 import './registerServiceWorker';
 import './stylus/main.styl';
 
+import './plugins/util-components';
+
 Vue.config.productionTip = false;
 
 new Vue({

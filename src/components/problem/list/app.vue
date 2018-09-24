@@ -18,7 +18,7 @@
 							:callback = "updateFilter"
 							class = "mb-4 fluid"
 							label = "" />
-						<div v-if = "error"> An error occured</div>
+						<ErrorSpinner v-if = "error" />
 						<div v-else-if = "data">
 							<v-hover>
 								<v-card
@@ -49,7 +49,6 @@
 <script>
 import ProblemList from '@/components/problem/list/list';
 import Searchbar from '@/components/basic/searchbar';
-import LoadingSpinner from '@/components/basic/loadingspinner';
 
 export default {
 	name: 'Problem',
@@ -57,7 +56,6 @@ export default {
 	components: {
 		ProblemList,
 		Searchbar,
-		LoadingSpinner,
 	},
 
 	data() {

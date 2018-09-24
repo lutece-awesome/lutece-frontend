@@ -14,12 +14,8 @@
 					@result = "onResult" >
 					<template
 						slot-scope = "{ result: { loading , error , data } }">
-						<div
-							v-if = "loading"
-						> Loading... </div>
-						<div
-							v-else-if = "error"
-						>An error occured</div>
+						<LoadingSpinner v-if = "loading" />
+						<ErrorSpinner v-else-if = "error" />
 						<BlogList
 							v-else-if = "data"
 							:items = "data.blogList.blogList"

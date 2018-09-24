@@ -11,7 +11,7 @@
 			<template
 				slot-scope = "{ result: { loading , error , data } }">
 				<LoadingSpinner v-if = "loading" />
-				<div v-else-if = "error" > An error occured </div>
+				<ErrorSpinner v-else-if = "error" />
 				<div v-else-if = "data">
 					<Comments v-model = "data.blogDiscussionList.discussionList" />
 					<div
@@ -33,13 +33,11 @@
 <script>
 
 import Comments from '@/components/comments/comments';
-import LoadingSpinner from '@/components/basic/loadingspinner';
 
 export default {
 
 	components: {
 		Comments,
-		LoadingSpinner,
 	},
 
 	props: {

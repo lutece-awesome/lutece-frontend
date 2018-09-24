@@ -112,13 +112,7 @@
 
 <script>
 
-import LoadingSpinner from '@/components/basic/loadingspinner';
-
 export default {
-
-	components: {
-		LoadingSpinner,
-	},
 
 	props: {
 		user: {

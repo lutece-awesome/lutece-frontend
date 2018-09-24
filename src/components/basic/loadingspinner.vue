@@ -1,6 +1,5 @@
 <template>
 	<v-layout
-		slot="placeholder"
 		fill-height
 		align-center
 		justify-center

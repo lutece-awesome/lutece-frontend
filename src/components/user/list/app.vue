@@ -20,7 +20,7 @@
 							class = "mb-4 fluid"
 							label = ""
 						/>
-						<div v-if = "error" >An error occured</div>
+						<ErrorSpinner v-if = "error" />
 						<div v-else-if = "data" >
 							<UserList
 								:user-item = "data.userList.userList"
@@ -42,10 +42,9 @@
 </template>
 
 <script>
+
 import UserList from '@/components/user/list/list';
 import Searchbar from '@/components/basic/searchbar';
-import LoadingSpinner from '@/components/basic/loadingspinner';
-
 
 export default {
 	name: 'User',
@@ -53,7 +52,6 @@ export default {
 	components: {
 		UserList,
 		Searchbar,
-		LoadingSpinner,
 	},
 
 	data() {

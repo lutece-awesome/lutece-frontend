@@ -28,7 +28,7 @@
 						<template
 							slot-scope = "{ result: { loading , error , data } }">
 							<LoadingSpinner v-if = "loading" />
-							<div v-else-if = "error" >An error occured</div>
+							<ErrorSpinner v-else-if = "error" />
 							<div v-else-if = "data">
 								<Layout :user = "data.user"/>
 							</div>
@@ -43,14 +43,12 @@
 
 <script>
 
-import LoadingSpinner from '@/components/basic/loading';
 import Layout from '@/components/user/detail/layout';
 
 export default {
 	metaInfo() { return { title: this.username }; },
 
 	components: {
-		LoadingSpinner,
 		Layout,
 	},
 

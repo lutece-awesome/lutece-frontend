@@ -6,7 +6,7 @@
 		<template
 			slot-scope = "{ result: { loading , error , data } }">
 			<LoadingSpinner v-if = "loading" />
-			<div v-else-if = "error" >An error occured</div>
+			<ErrorSpinner v-else-if = "error" />
 			<div v-else-if = "data">
 				<v-hover>
 					<v-card
@@ -28,7 +28,7 @@
 									tag = "tr"
 									style = "cursor: pointer"
 								>
-									<td class = "text-xs-center">{{ getRank( props.item.rank ) }}</td>
+									<td class = "text-xs-center">{{ formatRank( props.item.rank ) }}</td>
 									<td class = "text-xs-center" >
 										<div style = "white-space: nowrap;">
 											<v-avatar
@@ -37,7 +37,7 @@
 											>
 												<img :src = "props.item.gravataremail" >
 											</v-avatar>
-											<span class = "body-2 ml-2"> {{ props.item.displayName }} </span>
+											<span class = "font-weight-medium ml-2"> {{ props.item.displayName }} </span>
 										</div>
 									</td>
 									<td class="text-xs-center">
@@ -46,7 +46,6 @@
 										<span class = "error--text" > {{ props.item.tried }} </span>
 									</td>
 								</router-link>
-
 							</template>
 						</v-data-table>
 					</v-card>
@@ -59,14 +58,9 @@
 
 <script>
 
-import LoadingSpinner from '@/components/basic/loadingspinner';
-
-const { getRank } = require('@/plugins/utils');
+const { formatRank } = require('@/utils');
 
 export default {
-	components: {
-		LoadingSpinner,
-	},
 	props: {
 		number: {
 			type: Number,
@@ -93,7 +87,7 @@ export default {
 		],
 	}),
 	methods: {
-		getRank,
+		formatRank,
 	},
 };
 </script>
