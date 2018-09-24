@@ -63,7 +63,20 @@ table.summary-table
 		width 50%
 	tr >td:nth-child(2)
 		text-align right
-	
+
+table.about-card-table
+	width 100%
+	border-spacing 0px
+	color rgba(0,0,0,0.6)
+	td
+		padding-top 8px
+		border-width 0 0 thin 0
+		border-style solid
+		border-color rgba(0,0,0,0.12)
+	tr >td:first-child
+		width 30px
+	tr >td:nth-child(2)
+		@extend .grey--text, .font-weight-medium
 
 .CodeMirror
 	height 100% !important

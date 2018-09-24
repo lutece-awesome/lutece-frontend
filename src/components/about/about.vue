@@ -13,6 +13,7 @@
 				<introduction/>
 				<why class = "mt-4" />
 				<dev class = "mt-4" />
+				<contributor class = "mt-4" />
 				<copyright class = "mt-4" />
 			</v-flex>
 		</v-layout>
@@ -25,6 +26,7 @@ import introduction from '@/components/about/introduction';
 import why from '@/components/about/why';
 import copyright from '@/components/about/copyright';
 import dev from '@/components/about/dev';
+import contributor from '@/components/about/contributor';
 
 export default {
 	components: {
@@ -32,6 +34,7 @@ export default {
 		copyright,
 		why,
 		dev,
+		contributor,
 	},
 	metaInfo() { return { title: 'About' }; },
 };

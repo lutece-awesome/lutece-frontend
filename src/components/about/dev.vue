@@ -9,18 +9,19 @@
 					row
 					wrap>
 					<v-flex xs12>
-						<h1 class="headline mb-3 primary--text"> Dev Team </h1>
+						<h1 class = "headline mb-3 primary--text"> Dev Team </h1>
 						<v-divider class = "mb-3" />
 						<v-layout
 							row
-							wrap>
+							wrap
+						>
 							<v-flex
 								v-for = "( each , index ) in author"
 								:key = "index"
 								xs12
 								md6
 							>
-								{{ each.name }}
+								<Card :user = "each" />
 							</v-flex>
 						</v-layout>
 					</v-flex>
@@ -32,7 +33,13 @@
 
 
 <script>
+
+import Card from '@/components/about/card';
+
 export default {
+	components: {
+		Card,
+	},
 	data: () => ({
 		author: [
 			{
@@ -40,12 +47,14 @@ export default {
 				company: 'Google',
 				location: 'Shanghai',
 				title: 'Software Engineer',
+				gravataremail: 'https://secure.gravatar.com/avatar/79bc21937a1f625d1cf08c919f8c70c2.jpg?s=250&d=mm&r=g',
 			},
 			{
 				name: 'Zhu He',
 				company: 'Alibaba',
 				location: 'Hangzhou',
 				title: 'Algorithm Engineer',
+				gravataremail: 'https://secure.gravatar.com/avatar/ec21fbe82157f45b8cab83f91f0cac69.jpg?s=250&d=mm&r=g',
 			},
 		],
 	}),
