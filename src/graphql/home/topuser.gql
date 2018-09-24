@@ -1,0 +1,10 @@
+query TopUserGQL($number: Int!) {
+	topUser(number: $number) {
+                username
+                displayName
+                gravataremail
+                solved
+                tried
+                rank
+        }
+}

@@ -22,17 +22,10 @@
 						/>
 						<div v-if = "error" >An error occured</div>
 						<div v-else-if = "data" >
-							<v-hover>
-								<v-card
-									slot-scope = "{ hover }"
-									:class = "`elevation-${hover ? 4 : 1}`"
-								>
-									<UserList
-										:user-item = "data.userList.userList"
-										:is-loading = "loading"
-									/>
-								</v-card>
-							</v-hover>
+							<UserList
+								:user-item = "data.userList.userList"
+								:is-loading = "loading"
+							/>
 							<div
 								class = "text-xs-center mt-3">
 								<v-pagination
