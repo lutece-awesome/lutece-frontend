@@ -73,8 +73,8 @@ Vue.use(Vuetify, {
 	},
 	iconfont: 'mdi',
 	theme: {
-		primary: colors.blue.darken1,
-		secondary: colors.blue.darken2,
+		primary: colors.blueGrey.darken3,
+		secondary: colors.blueGrey.darken4,
 		accent: colors.pink.base,
 	},
 });

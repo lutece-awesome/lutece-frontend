@@ -1,34 +1,49 @@
 <template>
-	<div class = "curtain">
-		<v-layout
-			fill-height
-			align-center
-			justify-center
-			ma-0
+	<v-hover>
+		<v-card
+			slot-scope = "{ hover }"
+			:class = "`elevation-${hover ? 6 : 1}`"
 		>
-			<div class = "white--text">
-				<div class = "text-xs-center">
-					<span class = "display-3 font-weight-bold" > Lutece </span>
-					<span class = "font-weight-medium" > Ver 0.1 </span>
-				</div>
-				<div class = "text-xs-center subheading mt-2">
-					<span> In Lutece, find and solve problem, to touch the future </span>
-				</div>
+			<div
+				class = "curtain secondary"
+			>
+
+				<v-layout
+					fill-height
+					align-center
+					justify-center
+					ma-0
+				>
+					<div class = "white--text pl-4 pr-4 pt-4 pb-4">
+						<div class = "text-xs-center">
+							<span class = "display-3 font-weight-bold" > Lutece </span>
+							<span class = "font-weight-medium" > Ver {{ version }} </span>
+						</div>
+						<div class = "text-xs-center subheading mt-2">
+							<!-- <span> In Lutece, meet the future. </span> -->
+						</div>
+					</div>
+				</v-layout>
 			</div>
-		</v-layout>
-	</div>
+		</v-card>
+	</v-hover>
 </template>
 
 
 <script>
-export default {
 
+const { version } = require('@/utils');
+
+export default {
+	data: () => ({
+		version,
+	}),
 };
 </script>
 
 <style scoped>
     .curtain {
-        background: #3F51B5;
+		opacity:0.7;
         width: 100%;
         height: 350px;
     }

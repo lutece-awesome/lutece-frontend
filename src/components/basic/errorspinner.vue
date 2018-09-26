@@ -21,7 +21,7 @@ export default {
 	props: {
 		msg: {
 			type: String,
-			default: 'Sorry, an unexpected error is occured, please refresh the browser.',
+			default: 'Sorry, an unexpected error was occured, please refresh the browser.',
 		},
 	},
 };

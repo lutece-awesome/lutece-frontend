@@ -1,15 +1,16 @@
 <template>
-	<v-container>
+	<v-container fluid>
 		<v-layout
 			row
 			justify-center
 			wrap>
-			<v-flex
-				xs12
-				md10
-			>
+			<v-flex xs12>
 				<Curtain/>
 			</v-flex>
+			<v-flex xs6>
+				<Recently />
+			</v-flex>
+			<v-flex xs6/>
 		</v-layout>
 	</v-container>
 </template>
@@ -18,6 +19,7 @@
 
 import TopUser from '@/components/home/topuser';
 import Curtain from '@/components/home/curtain';
+import Recently from '@/components/home/recently';
 
 export default {
 	metaInfo() { return { title: 'Home' }; },
@@ -25,6 +27,7 @@ export default {
 	components: {
 		TopUser,
 		Curtain,
+		Recently,
 	},
 
 };

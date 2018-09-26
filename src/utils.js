@@ -30,4 +30,6 @@ function formatRank(rk) {
 	return s;
 }
 
-export { getGraphQLUri, getWebSocketUri, getServerUri, getThoundNumberic, formatRank };
+const { version } = require('../package.json');
+
+export { getGraphQLUri, getWebSocketUri, getServerUri, getThoundNumberic, formatRank, version };
