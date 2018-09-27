@@ -5,7 +5,7 @@
 			<span class = "title ml-1" > Comments: </span>
 		</div>
 		<ApolloQuery
-			:query = "require('@/graphql/blog/discussion.gql')"
+			:query = "require('@/graphql/article/discussion.gql')"
 			:variables = "{ page , slug }"
 			@result = "onResult" >
 			<template

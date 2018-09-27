@@ -9,14 +9,14 @@
 				md8
 				lg6>
 				<ApolloQuery
-					:query = "require('@/graphql/blog/list.gql')"
+					:query = "require('@/graphql/article/list.gql')"
 					:variables = "{ page }"
 					@result = "onResult" >
 					<template
 						slot-scope = "{ result: { loading , error , data } }">
 						<LoadingSpinner v-if = "loading" />
 						<ErrorSpinner v-else-if = "error" />
-						<BlogList
+						<article-list
 							v-else-if = "data"
 							:items = "data.blogList.blogList"
 						/>
@@ -32,7 +32,7 @@
 				</div>
 				<v-btn
 					v-if = "this.$store.getters['user/isAuthenticated']"
-					:to="{name: 'BlogCreate'}"
+					:to="{name: 'ArticleCreate'}"
 					color="accent"
 					dark
 					fab
@@ -48,14 +48,14 @@
 
 
 <script>
-import BlogList from '@/components/blog/list/list';
+import ArticleList from '@/components/article/list/list';
 
 export default {
-	name: 'Blog',
-	metaInfo() { return { title: 'Blog' }; },
+	name: 'Article',
+	metaInfo() { return { title: 'Article' }; },
 
 	components: {
-		BlogList,
+		ArticleList,
 	},
 
 	data: () => ({

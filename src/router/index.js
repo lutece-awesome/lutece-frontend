@@ -5,9 +5,9 @@ import About from '@/components/about/about';
 import StatusList from '@/components/status/list/app';
 import StatusDetail from '@/components/status/detail/app';
 import Contest from '@/components/contest/contest';
-import BlogList from '@/components/blog/list/app';
-import BlogDetail from '@/components/blog/detail/app';
-import BlogEditor from '@/components/blog/basic/app';
+import ArticleList from '@/components/article/list/app';
+import ArticleDetail from '@/components/article/detail/app';
+import ArticleEditor from '@/components/article/basic/app';
 import UserList from '@/components/user/list/app';
 import UserDetail from '@/components/user/detail/app';
 import UserSettings from '@/components/user/settings/app';
@@ -93,19 +93,19 @@ export default new Router({
 			component: UserDetail,
 		},
 		{
-			path: '/blog',
-			name: 'Blog',
-			component: BlogList,
+			path: '/article',
+			name: 'Article',
+			component: ArticleList,
 		},
 		{
-			path: '/blog/:slug',
-			name: 'BlogDetail',
-			component: BlogDetail,
+			path: '/article/:slug',
+			name: 'ArticleDetail',
+			component: ArticleDetail,
 		},
 		{
-			path: '/blog/create',
-			name: 'BlogCreate',
-			component: BlogEditor,
+			path: '/article/create',
+			name: 'articleCreate',
+			component: ArticleEditor,
 			beforeEnter: ifAuthenticated,
 		},
 		{

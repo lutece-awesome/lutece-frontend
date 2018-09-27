@@ -8,7 +8,7 @@
 					mode="out-in">
 					<keep-alive
 						v-if = "!isAuthenticated || isProfileLoaded"
-						include = "Problem,Status,User,Blog">
+						include = "Problem,Status,User,Article">
 						<router-view/>
 					</keep-alive>
 				</v-fade-transition>

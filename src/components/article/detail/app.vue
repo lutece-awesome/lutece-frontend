@@ -48,12 +48,12 @@
 
 
 <script>
-import BlogGQL from '@/graphql/blog/detail.gql';
+import ArticleGQL from '@/graphql/article/detail.gql';
 import Commtents from '@/components/comments/app';
 
 
 export default {
-	metaInfo() { return { title: this.blog.title ? this.blog.title : 'Loading...' }; },
+	metaInfo() { return { title: this.article.title ? this.article.title : 'Loading...' }; },
 
 	components: {
 		Commtents,
@@ -61,7 +61,7 @@ export default {
 
 	data: () => ({
 		slug: '',
-		blog: {
+		article: {
 			title: '',
 			content: '',
 			view: 0,
@@ -85,13 +85,13 @@ export default {
 	methods: {
 		request() {
 			this.$apollo.query({
-				query: BlogGQL,
+				query: ArticleGQL,
 				variables: {
 					slug: this.slug,
 				},
 			})
 				.then(response => response.data.blog)
-				.then((data) => { this.blog = data; });
+				.then((data) => { this.article = data; });
 		},
 	},
 };

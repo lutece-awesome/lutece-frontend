@@ -1,11 +1,12 @@
 <template>
-	<v-hover class = "secondary mt-2 curtain">
+	<v-hover class = "mt-2 curtain">
 		<v-card
 			slot-scope = "{ hover }"
 			:class = "`elevation-${hover ? 6 : 1}`"
 		>
 			<v-card-text>
-				123
+				<div class = "subheading font-weight-medium"> Recently Articles </div>
+				<v-divider class = "mt-2 mb-2" />
 			</v-card-text>
 		</v-card>
 	</v-hover>

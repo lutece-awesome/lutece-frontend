@@ -7,7 +7,7 @@
 			<v-flex
 				xs12
 				md6>
-				<BlogEdit
+				<article-edit
 					:value = "value"
 				/>
 				<v-btn
@@ -31,12 +31,12 @@
 
 <script>
 
-import BlogEdit from '@/components/blog/basic/edit';
-import CreateBlogGQL from '@/graphql/blog/create.gql';
+import ArticleEdit from '@/components/article/basic/edit';
+import CreateArticleGQL from '@/graphql/article/create.gql';
 
 export default {
 	components: {
-		BlogEdit,
+		ArticleEdit,
 	},
 	data: () => ({
 		value: {
@@ -50,7 +50,7 @@ export default {
 	methods: {
 		submit() {
 			this.$apollo.mutate({
-				mutation: CreateBlogGQL,
+				mutation: CreateArticleGQL,
 				variables: {
 					title: this.value.title,
 					content: this.value.content,
