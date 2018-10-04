@@ -88,9 +88,6 @@ export default {
 				.finally(() => { this.loading = false; });
 		},
 
-		redirect() {
-		},
-
 		signup() {
 			this.$router.push({
 				name: 'Signup',

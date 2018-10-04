@@ -25,7 +25,14 @@
 						<span> Copyright (C) </span>
 						<span> 2018 </span>
 					</div>
-					<div class = "mt-1" >Judgecore Powered by <a href = "https://github.com/lutece-awesome/osiris">Osiris</a></div>
+					<div class = "mt-1" >
+						Judgecore Powered by
+						<strong>
+							<a href = "https://github.com/lutece-awesome/osiris">
+								Osiris
+							</a>
+						</strong>
+					</div>
 				</v-flex>
 			</v-layout>
 		</v-container>

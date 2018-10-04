@@ -14,16 +14,17 @@ const getters = {
 	payload: state => state.payload,
 	profile: state => state.profile,
 	token: state => state.token,
-	isProfileLoaded: state => !!state.profile.displayName,
+	isProfileLoaded: state => !!state.profile.username,
 	isAuthenticated: state => !!state.token,
 	hasPermission: state => permission => state.permission.indexOf(permission) !== -1,
 };
 
 const mutations = {
 	login(state, data) {
+		const { username, attachInfo } = data.user;
 		state.token = data.token;
 		state.payload = data.payload;
-		state.profile = data.user;
+		state.profile = { username, ...attachInfo };
 		state.permission = data.permission;
 		localStorage.setItem('USER_TOKEN', data.token);
 	},
@@ -91,7 +92,7 @@ const actions = {
 						token: state.token,
 					},
 				})
-					.then(response => response.data.UserTokenRefresh)
+					.then(response => response.data.userTokenRefresh)
 					.then((data) => {
 						commit('login', data);
 					})

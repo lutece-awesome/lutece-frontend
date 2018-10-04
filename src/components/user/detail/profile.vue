@@ -5,7 +5,7 @@
 			wrap>
 			<v-flex xs12>
 				<v-img
-					:src = "user.gravataremail"
+					:src = "user.attachInfo.gravatar"
 					height = "200"
 					contain
 				>
@@ -25,7 +25,7 @@
 								row
 								wrap>
 								<v-flex xs12>
-									<div class = "headline font-weight-medium ml-1" > {{ user.displayName }} </div>
+									<div class = "headline font-weight-medium ml-1" > {{ user.username }} </div>
 									<v-divider class = "mt-2 mb-2" />
 									<table class="profile-table">
 										<tr>
@@ -34,11 +34,11 @@
 												<v-tooltip bottom>
 													<span slot = "activator">
 														<span>
-															{{ user.lastloginDate | moment("from") }}
+															{{ user.lastLoginDate | moment("from") }}
 														</span>
 													</span>
 													<span>
-														{{ user.lastloginDate | moment("dddd, MMMM Do YYYY, h:mm:ss a") }}
+														{{ user.lastLoginDate | moment("dddd, MMMM Do YYYY, h:mm:ss a") }}
 													</span>
 												</v-tooltip>
 											</td>
@@ -53,24 +53,24 @@
 														</span>
 													</span>
 													<span>
-														{{ user.lastloginDate | moment( "MMMM Do, YYYY" ) }}
+														{{ user.joinedDate | moment( "MMMM Do, YYYY" ) }}
 													</span>
 												</v-tooltip>
 											</td>
 										</tr>
-										<tr v-if = "user.school" >
+										<tr v-if = "user.attachInfo.school" >
 											<td>School</td>
-											<td>{{ user.school }}</td>
+											<td>{{ user.attachInfo.school }}</td>
 										</tr>
-										<tr v-if = "user.company" >
+										<tr v-if = "user.attachInfo.company" >
 											<td>Company</td>
-											<td>{{ user.company }}</td>
+											<td>{{ user.attachInfo.company }}</td>
 										</tr>
-										<tr v-if = "user.location" >
+										<tr v-if = "user.attachInfo.location" >
 											<td>Location</td>
-											<td>{{ user.location }}</td>
+											<td>{{ user.attachInfo.location }}</td>
 										</tr>
-										<tr v-if = "user.about">
+										<tr>
 											<td>Social</td>
 											<td>
 												<img
@@ -94,9 +94,9 @@
 												>
 											</td>
 										</tr>
-										<tr v-if = "user.about">
+										<tr v-if = "user.attachInfo.about">
 											<td>About</td>
-											<td>{{ user.about }}</td>
+											<td>{{ user.attachInfo.about }}</td>
 										</tr>
 									</table>
 								</v-flex>

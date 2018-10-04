@@ -24,9 +24,9 @@
 								</td>
 								<td>
 									<div class = "green--text text--lighten-2 summaryfont">
-										<span> {{ user.rank }} </span>
+										<span> {{ user.rank.position }} </span>
 										<span class = "separate" > / </span>
-										<span> {{ user.userall }} </span>
+										<span> {{ user.rank.count }} </span>
 									</div>
 								</td>
 							</tr>
@@ -135,7 +135,7 @@ export default {
 	}),
 	computed: {
 		accept() {
-			return this.statistics.AC;
+			return this.statistics.ac;
 		},
 		all() {
 			let sum = 0;
@@ -149,7 +149,7 @@ export default {
 		},
 	},
 	created() {
-		this.statistics = this.user.submissionStatistics;
+		this.statistics = this.user.statistics;
 		const label = [];
 		const data = [];
 		const backgroundColor = [];

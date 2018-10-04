@@ -75,13 +75,13 @@
 						slot="activator"
 						flat>
 						<v-avatar size = "36">
-							<img :src = "profile.gravataremail" >
+							<img :src = "profile.gravatar" >
 						</v-avatar>
 						<span
 							style = "text-transform: none; color:white;"
 							class = "ml-2"
 						>
-							{{ profile.	displayName }}
+							{{ profile.username }}
 						</span>
 					</v-btn>
 					<v-list>
@@ -109,7 +109,7 @@
 				icon
 				class = "hidden-md-and-up">
 				<v-avatar size="36">
-					<img :src="profile.gravataremail" >
+					<img :src="profile.gravatar" >
 				</v-avatar>
 			</v-btn>
 			<v-btn

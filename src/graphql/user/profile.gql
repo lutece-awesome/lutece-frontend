@@ -1,27 +1,29 @@
 query ProfileGQL($username: String!) {
 	user( username: $username){
-		analysis
-		displayName
-		gravataremail
-		group
-		school
-		company
-		location
-		about
+		username
+		attachInfo{
+			school
+			company
+			location
+			about
+			gravatar
+		}
 		solved
 		tried
 		joinedDate
-		lastloginDate
-		rank
-		userall
-		submissionStatistics{
-			AC
-			TLE
-			CE
-			WA
-			RE
-			OLE
-			MLE
+		lastLoginDate
+		rank{
+			position
+			count
+		}
+		statistics{
+			ac
+			tle
+			ce
+			wa
+			re
+			ole
+			mle
 		}
 	}
 }
