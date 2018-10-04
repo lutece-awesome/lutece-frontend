@@ -143,7 +143,7 @@ export default {
 		updateUserSearch() {
 			if (!this.userSearchFilter) {
 				if (this.isAuthenticated) {
-					this.userSearch.items = [this.profile.displayName];
+					this.userSearch.items = [this.profile.username];
 				} else {
 					this.userSearch.items = [];
 				}
@@ -159,7 +159,7 @@ export default {
 			})
 				.then(response => response.data.userSearch)
 				.then((data) => {
-					this.userSearch.items = data.userList.map(val => val.displayName);
+					this.userSearch.items = data.userList.map(val => val.username);
 				})
 				.then(() => { this.userSearch.isLoading = false; });
 		},

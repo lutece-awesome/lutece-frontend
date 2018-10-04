@@ -18,23 +18,28 @@ query SubmissionListGQL(
 	) {
 		maxpage
 		submissionList {
-			submissionId
+			pk
 			failedCase
-			submitTime
+			createTime
 			user {
 				username
-				gravataremail
-				displayName
+				attachInfo{
+					gravatar
+				}
 			}
 			problem {
 				title
 				slug
 			}
-			judgeStatus
+			result{
+				status
+				color
+			}
 			language
-			color
-			timeCost
-			memoryCost
+			attachInfo{
+				timeCost
+				memoryCost
+			}
 		}
 	}
 }

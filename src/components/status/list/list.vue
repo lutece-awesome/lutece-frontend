@@ -8,11 +8,11 @@
 			slot = "items"
 			slot-scope = "props">
 			<router-link
-				:to = "{name: 'StatusDetail', params: {pk: props.item.submissionId}}"
+				:to = "{name: 'StatusDetail', params: {pk: props.item.pk}}"
 				style = "cursor: pointer"
 				tile
 				tag = "tr">
-				<td class="text-xs-center">{{ props.item.submissionId }}</td>
+				<td class="text-xs-center">{{ props.item.pk }}</td>
 				<td class="text-xs-center nowrap">
 					<router-link
 						:to = "{ name: 'UserDetail' , params: {username: props.item.user.username } }"
@@ -21,9 +21,9 @@
 						<v-avatar
 							size="32"
 							class="mr-1" >
-							<img :src="props.item.user.gravataremail" >
+							<img :src = "props.item.user.attachInfo.gravatar" >
 						</v-avatar>
-						{{ props.item.user.displayName }}
+						{{ props.item.user.username }}
 					</router-link>
 				</td>
 				<td class="text-xs-center">
@@ -34,16 +34,16 @@
 					</router-link>
 				</td>
 				<td
-					:class="props.item.color + '--text'"
-					class="text-xs-center">
-					{{ props.item.judgeStatus }}
+					:class = "props.item.result.color + '--text'"
+					class = "text-xs-center">
+					{{ props.item.result.status }}
 					<span v-if="props.item.failedCase">#{{ props.item.failedCase }}</span>
 				</td>
 				<td class="text-xs-center hidden-sm-and-down">{{ props.item.timeCost }}</td>
 				<td class="text-xs-center hidden-sm-and-down">{{ props.item.memoryCost }}</td>
 				<td class="text-xs-center time hidden-sm-and-down">
-					<span class="humanize-time">{{ props.item.submitTime | moment("from") }}</span>
-					<span class="full-time">{{ props.item.submitTime | moment("Y-MM-DD HH:mm:ss") }}</span>
+					<span class="humanize-time">{{ props.item.createTime | moment("from") }}</span>
+					<span class="full-time">{{ props.item.createTime | moment("Y-MM-DD HH:mm:ss") }}</span>
 				</td>
 				<td class="text-xs-center hidden-sm-and-down">{{ props.item.language }}</td>
 			</router-link>

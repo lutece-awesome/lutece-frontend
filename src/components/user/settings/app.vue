@@ -20,30 +20,27 @@
 								prepend-icon = "mdi-school"
 							/>
 							<v-text-field
-								v-model="company"
+								v-model = "company"
 								:error-messages = "geterror('company')"
 								label = "Company"
 								prepend-icon = "mdi-briefcase"
 							/>
 							<v-text-field
-								v-model="location"
+								v-model = "location"
 								:error-messages = "geterror('location')"
 								label = "Location"
 								prepend-icon = "mdi-map-marker"
 							/>
 
 							<v-text-field
-								v-model="about"
+								v-model = "about"
 								:error-messages = "geterror('about')"
 								label = "About"
 								prepend-icon = "mdi-book"
 							/>
-
 							<v-text-field
-								slot = "activator"
 								v-model = "gravatar"
 								:error-messages = "geterror('gravatar')"
-								:message = "gravatarExplain"
 								label = "Gravatar"
 								disabled
 								prepend-icon = "mdi-emoticon-cool"/>

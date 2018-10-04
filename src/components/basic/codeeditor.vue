@@ -30,7 +30,7 @@
 					flat
 					color="primary"
 					type="submit"
-					@click= "submitsolution">
+					@click= "SubmitSubmission">
 					<v-icon> mdi-send </v-icon>
 					<span class = "ml-2"> Submit </span>
 				</v-btn>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { SubmitSolution } from '@/graphql/submission/submit.gql';
+import { SubmitSubmission } from '@/graphql/submission/submit.gql';
 import { mapGetters } from 'vuex';
 import LanguageList from '@/plugins/language';
 
@@ -108,7 +108,7 @@ export default {
 		onResize() {
 			this.height = Math.max(window.innerHeight - 300, 300);
 		},
-		submitsolution() {
+		SubmitSubmission() {
 			if (!this.isAuthenticated) {
 				this.$router.push({
 					name: 'Login',
@@ -119,13 +119,13 @@ export default {
 				return;
 			}
 			this.$apollo.mutate({
-				mutation: SubmitSolution,
+				mutation: SubmitSubmission,
 				variables: {
 					code: this.code,
 					language: this.language,
-					problemslug: this.problemslug,
+					problemSlug: this.problemslug,
 				},
-			}).then(response => response.data.SubmitSolution)
+			}).then(response => response.data.submitSubmission)
 				.then((data) => {
 					this.$router.push({
 						name: 'StatusDetail',
