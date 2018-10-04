@@ -12,14 +12,9 @@
 				:style = "{cursor: 'pointer'}"
 				tile
 				tag = "tr">
-				<td class="text-xs-center">{{ props.item.problemId }}</td>
+				<td class="text-xs-center">{{ props.item.pk }}</td>
 				<td class="text-xs-center">
 					<span>{{ props.item.title }}</span>
-					<span
-						v-if="props.item.resource"
-						class="caption grey--text">
-						{{ props.item.resource }}
-					</span>
 				</td>
 				<td class="text-xs-center">{{ props.item.accept }}/{{ props.item.submit }}</td>
 				<td class="text-xs-center">

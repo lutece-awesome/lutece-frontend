@@ -3,14 +3,17 @@ query UserListGQL($page: Int!, $filter: String) {
 		maxpage
 		userList {
 			username
-			gravataremail
-			displayName
+			attachInfo{
+				gravatar
+			}
 			solved
 			tried
-			submissionStatistics{
-				Ratio
+			statistics{
+				ratio
 			}
-			rank
+			rank{
+				position
+			}
 		}
 	}
 }

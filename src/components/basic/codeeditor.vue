@@ -40,10 +40,9 @@
 </template>
 
 <script>
-import { LanguageList } from '@/graphql/language/languagelist.gql';
 import { SubmitSolution } from '@/graphql/submission/submit.gql';
 import { mapGetters } from 'vuex';
-
+import LanguageList from '@/plugins/language';
 
 export default {
 
@@ -95,20 +94,15 @@ export default {
 
 	mounted() {
 		this.onResize();
-		this.$apollo.query({
-			query: LanguageList,
-		})
-			.then(response => response.data.allLanguage)
-			.then((data) => {
-				this.data = [];
-				for (let i = 0; i < data.length; i += 1) {
-					const {
-						full, info,
-					} = data[i];
-					this.items.push({ text: info, value: full, codemirror: data[i].codemirror });
-				}
-				this.language = this.items[0].value;
+		for (let i = 0; i < LanguageList.length; i += 1) {
+			const { full, info, codemirror } = LanguageList[i];
+			this.items.push({
+				text: info,
+				value: full,
+				codemirror,
 			});
+		}
+		this.language = this.items[0].value;
 	},
 	methods: {
 		onResize() {

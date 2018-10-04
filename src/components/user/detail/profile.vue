@@ -27,7 +27,7 @@
 								<v-flex xs12>
 									<div class = "headline font-weight-medium ml-1" > {{ user.username }} </div>
 									<v-divider class = "mt-2 mb-2" />
-									<table class="profile-table">
+									<table class = "profile-table">
 										<tr>
 											<td>Last Seen</td>
 											<td>
@@ -70,7 +70,7 @@
 											<td>Location</td>
 											<td>{{ user.attachInfo.location }}</td>
 										</tr>
-										<tr>
+										<!-- <tr>
 											<td>Social</td>
 											<td>
 												<img
@@ -93,7 +93,7 @@
 													class = "ml-2"
 												>
 											</td>
-										</tr>
+										</tr> -->
 										<tr v-if = "user.attachInfo.about">
 											<td>About</td>
 											<td>{{ user.attachInfo.about }}</td>

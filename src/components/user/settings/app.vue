@@ -1,7 +1,5 @@
 <template>
-	<v-container
-		:class="{'pa-0': $vuetify.breakpoint.xsOnly }"
-		fluid>
+	<v-container>
 		<v-layout
 			justify-center
 			row
@@ -14,48 +12,49 @@
 				xl4>
 				<v-card>
 					<v-card-text>
-						<v-form
-							@submit.prevent="submit"
-						>
+						<v-form @submit.prevent = "submit">
 							<v-text-field
-								v-model="displayName"
-								:error-messages="geterror('display_name')"
-								label="Display name"
-								prepend-icon = "mdi-account"
-							/>
-							<v-text-field
-								v-model="group"
-								:error-messages="geterror('group')"
-								label="Group"
-								prepend-icon = "mdi-account-group"
-								disabled
-							/>
-							<v-text-field
-								v-model="school"
-								:error-messages="geterror('school')"
-								label="School"
+								v-model = "school"
+								:error-messages = "geterror('school')"
+								label = "School"
 								prepend-icon = "mdi-school"
 							/>
 							<v-text-field
 								v-model="company"
-								:error-messages="geterror('company')"
-								label="Company"
+								:error-messages = "geterror('company')"
+								label = "Company"
 								prepend-icon = "mdi-briefcase"
 							/>
 							<v-text-field
 								v-model="location"
-								:error-messages="geterror('location')"
-								label="Location"
+								:error-messages = "geterror('location')"
+								label = "Location"
 								prepend-icon = "mdi-map-marker"
 							/>
 
-							<v-textarea
+							<v-text-field
 								v-model="about"
-								:error-messages="geterror('about')"
-								label="About"
-								auto-grow
+								:error-messages = "geterror('about')"
+								label = "About"
+								prepend-icon = "mdi-book"
 							/>
 
+							<v-text-field
+								slot = "activator"
+								v-model = "gravatar"
+								:error-messages = "geterror('gravatar')"
+								:message = "gravatarExplain"
+								label = "Gravatar"
+								disabled
+								prepend-icon = "mdi-emoticon-cool"/>
+							<v-alert
+								:value = "true"
+								class = "mb-3"
+								type = "info"
+								outline
+							>
+								<span v-html = "gravatarExplain" />
+							</v-alert>
 							<v-btn
 								:loading = "isloading"
 								:color="error ? &quot;error&quot; : &quot;primary&quot;"
@@ -76,20 +75,21 @@
 import { mapGetters } from 'vuex';
 import { UserInfoUpdateGQL } from '@/graphql/user/settings.gql';
 import { ProfileGQL } from '@/graphql/user/profile.gql';
+import apolloProvider from '@/apollo';
 
 export default {
 	metaInfo() { return { title: 'Settings' }; },
 
 	data: () => ({
-		displayName: '',
 		school: '',
 		company: '',
 		location: '',
 		about: '',
-		group: '',
+		gravatar: '',
 		isloading: false,
 		error: false,
 		errordetail: [],
+		gravatarExplain: '<div> You can only use Gravatar service to gain the avatar, to ensure your gravatar email privacy, the default gravatar email address will not shown and only encrypted address shown. </div> <div> But currently this is based on your email, changing is still WIP. </div>',
 	}),
 	computed: {
 		...mapGetters({
@@ -97,12 +97,11 @@ export default {
 		}),
 	},
 	mounted() {
-		this.displayName = this.profile.displayName;
 		this.school = this.profile.school;
 		this.company = this.profile.company;
 		this.location = this.profile.location;
 		this.about = this.profile.about;
-		this.group = this.profile.group;
+		this.gravatar = this.profile.gravatar;
 	},
 	methods: {
 		request() {
@@ -140,6 +139,7 @@ export default {
 			})
 				.then(() => {
 					this.$store.dispatch('user/refresh_token', true);
+					apolloProvider.defaultClient.resetStore();
 					this.$router.push({
 						name: 'UserDetail',
 						params: { username: this.$store.state.user.payload.username },

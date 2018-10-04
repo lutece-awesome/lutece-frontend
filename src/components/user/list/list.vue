@@ -19,16 +19,16 @@
 						tag ="tr"
 						style = "cursor: pointer"
 					>
-						<td class = "text-xs-center">{{ formatRank( props.item.rank ) }}</td>
+						<td class = "text-xs-center">{{ formatRank( props.item.rank.position ) }}</td>
 						<td class = "text-xs-center" >
 							<div style = "white-space: nowrap;">
 								<v-avatar
 									size = "32"
 									color="grey lighten-4"
 								>
-									<img :src = "props.item.gravataremail" >
+									<img :src = "props.item.attachInfo.gravatar" >
 								</v-avatar>
-								<span class = "ml-2 font-weight-medium"> {{ props.item.displayName }} </span>
+								<span class = "ml-2 font-weight-medium"> {{ props.item.username }} </span>
 							</div>
 						</td>
 						<td class = "text-xs-center">
@@ -37,7 +37,7 @@
 							<span class = "error--text" > {{ props.item.tried }} </span>
 						</td>
 						<td class = "text-xs-center">
-							{{ ( props.item.submissionStatistics.Ratio * 100 ).toFixed( 2 ) }} %
+							{{ ( props.item.statistics.ratio * 100 ).toFixed( 2 ) }} %
 						</td>
 					</router-link>
 

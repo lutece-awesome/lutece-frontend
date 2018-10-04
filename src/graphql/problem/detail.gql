@@ -1,20 +1,24 @@
 query ProblemDetailGQL($slug: String!) {
 	problem(slug: $slug) {
-		problemId
+		pk
 		title
 		content
 		standardInput
 		standardOutput
 		constraints
-		resource
+		resources
 		note
-		timeLimit
-		memoryLimit
-		sampleSet {
-			inputContent
-			outputContent
+		limitation{
+			timeLimit
+			memoryLimit
+			outputLimit
+			cpuLimit
 		}
-		visible
-		discussionvisible
+		samples {
+			sampleList{
+				inputContent
+				outputContent
+			}
+		}
 	}
 }

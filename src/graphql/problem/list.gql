@@ -2,12 +2,11 @@ query ProblemListGQL($page: Int!, $filter: String) {
 	problemList(page: $page, filter: $filter) {
 		maxpage
 		problemList {
-			problemId
+			pk
 			title
 			submit
 			accept
 			slug
-			resource
 		}
 	}
 }

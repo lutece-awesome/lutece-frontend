@@ -24,32 +24,32 @@
 				</v-btn>
 				<v-card>
 					<v-tabs
-						v-if="problem"
-						v-model="tabs"
+						v-if = "problem"
+						v-model = "tabs"
 						fixed-tabs>
 						<v-tab
 							:ripple="false"
-							to="description">Description</v-tab>
+							to = "description">Description</v-tab>
 						<v-tab
 							:ripple="false"
-							to="editor">Editor</v-tab>
-						<v-tab
+							to = "editor">Editor</v-tab>
+							<!-- <v-tab
 							:ripple="false"
-							to="discussion">Disscussion</v-tab>
+							to="discussion">Disscussion</v-tab> -->
 					</v-tabs>
 					<v-tabs-items
 						v-if="problem"
 						v-model="tabs"
 						touchless>
-						<v-tab-item id="description">
+						<v-tab-item id = "description">
 							<ProblemDescription :problem = "problem"/>
 						</v-tab-item>
-						<v-tab-item id="editor">
+						<v-tab-item id = "editor">
 							<ProblemEditor :problemslug = "slug" />
 						</v-tab-item>
-						<v-tab-item id="discussion">
+						<!-- <v-tab-item id="discussion">
 							<ProblemDiscussion/>
-						</v-tab-item>
+						</v-tab-item> -->
 					</v-tabs-items>
 				</v-card>
 			</v-flex>
