@@ -39,28 +39,27 @@
 								</v-flex>
 								<v-flex>
 									<v-text-field
-										v-model="displayName"
-										:error-messages="geterror('display_name')"
-										label="Display name *"
-										required />
-								</v-flex>
-								<v-flex>
-									<v-text-field
-										v-model="school"
+										v-model = "school"
 										:error-messages="geterror('school')"
 										label="School" />
 								</v-flex>
 								<v-flex>
 									<v-text-field
-										v-model="company"
+										v-model = "company"
 										:error-messages="geterror('company')"
 										label="Company" />
 								</v-flex>
 								<v-flex>
 									<v-text-field
-										v-model="location"
+										v-model = "location"
 										:error-messages="geterror('location')"
 										label="Location" />
+								</v-flex>
+								<v-flex>
+									<v-text-field
+										v-model = "about"
+										:error-messages="geterror('about')"
+										label="About" />
 								</v-flex>
 								<v-flex mt-3>
 									<v-btn
@@ -92,6 +91,7 @@ export default {
 			school: '',
 			company: '',
 			location: '',
+			about: 'The man is too lazy to leaven anything.',
 			loading: false,
 			error: false,
 			errordetail: {},
@@ -112,10 +112,10 @@ export default {
 			this.error = false;
 			this.loading = true;
 			const {
-				username, password, email, displayName, school, company, location,
+				username, password, email, about, school, company, location,
 			} = this;
 			this.$store.dispatch('user/signup', {
-				username, password, email, displayName, school, company, location,
+				username, password, email, about, school, company, location,
 			})
 				.then(() => {
 					this.$router.push(this.$route.query.redirect || '/');

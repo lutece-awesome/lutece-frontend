@@ -2,16 +2,16 @@ mutation RegisterGQL(
 	$username: String!
 	$password: String!
 	$email: String!
-	$displayName: String!
+	$about: String!
 	$school: String
 	$company: String
 	$location: String
 ) {
-	register(
+	userRegister(
 		username: $username
 		password: $password
 		email: $email
-		displayName: $displayName
+		about: $about
 		school: $school
 		company: $company
 		location: $location
@@ -20,13 +20,14 @@ mutation RegisterGQL(
 		payload
 		permission
 		user{
-			displayName
-			gravataremail
-			school
-			company
-			location
-			about
-			group
+			username
+			attachInfo{
+				gravatar
+				school
+				company
+				location
+				about
+			}
 		}
 	}
 }

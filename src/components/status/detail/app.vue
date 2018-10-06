@@ -43,7 +43,7 @@
 									<td><pre>User:</pre></td>
 									<td class = "pl-1">
 										<router-link :to="{name: 'UserDetail', params: {username: user__username}}">
-											{{ user__display_name }}
+											{{ user__username }}
 										</router-link>
 									</td>
 								</tr>
@@ -164,7 +164,6 @@ export default {
 		completed: false,
 		problem__title: null,
 		problem__slug: null,
-		user__display_name: null,
 		user__username: null,
 		submit_time: null,
 		result_color: 'info',

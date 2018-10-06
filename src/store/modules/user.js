@@ -59,7 +59,7 @@ const actions = {
 			mutation: RegisterGQL,
 			variables,
 		})
-			.then(response => response.data.register)
+			.then(response => response.data.userRegister)
 			.then((data) => {
 				commit('login', data);
 				apolloProvider.defaultClient.resetStore().then(() => {
