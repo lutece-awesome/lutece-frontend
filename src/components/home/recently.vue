@@ -5,8 +5,16 @@
 			:class = "`elevation-${hover ? 6 : 1}`"
 		>
 			<v-card-text>
-				<div class = "subheading font-weight-medium"> Recently Articles </div>
-				<v-divider class = "mt-2 mb-2" />
+				<v-layout
+					fill-height
+					align-center
+					justify-center
+					ma-0
+				>
+					<div style = "margin-top: 200px">
+						<span class = "headline font-weight-medium grey--text"> No article available </span>
+					</div>
+				</v-layout>
 			</v-card-text>
 		</v-card>
 	</v-hover>
@@ -21,6 +29,6 @@ export default {
 
 <style scoped>
     .curtain{
-        min-height:200px;
+        min-height: 600px;
     }
 </style>

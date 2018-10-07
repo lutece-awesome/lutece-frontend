@@ -39,8 +39,8 @@
 					{{ props.item.result.status }}
 					<span v-if="props.item.failedCase">#{{ props.item.failedCase }}</span>
 				</td>
-				<td class="text-xs-center hidden-sm-and-down">{{ props.item.timeCost }}</td>
-				<td class="text-xs-center hidden-sm-and-down">{{ props.item.memoryCost }}</td>
+				<td class="text-xs-center hidden-sm-and-down">{{ props.item.attachInfo.timeCost }}</td>
+				<td class="text-xs-center hidden-sm-and-down">{{ props.item.attachInfo.memoryCost }}</td>
 				<td class="text-xs-center time hidden-sm-and-down">
 					<span class="humanize-time">{{ props.item.createTime | moment("from") }}</span>
 					<span class="full-time">{{ props.item.createTime | moment("Y-MM-DD HH:mm:ss") }}</span>
@@ -199,7 +199,6 @@ export default {
 		languageItems: [
 			'GNU G++',
 			'GNU GCC',
-			'Clang',
 			'Python',
 			'Java',
 			'Go',

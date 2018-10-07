@@ -9,11 +9,11 @@ const Language = [
 		info: 'GNU GCC 7.3',
 		codemirror: 'text/x-csrc',
 	},
-	{
-		full: 'Clang',
-		info: 'Clang 6.0.0',
-		codemirror: 'text/x-c++src',
-	},
+	// {
+	// 	full: 'Clang',
+	// 	info: 'Clang 6.0.0',
+	// 	codemirror: 'text/x-c++src',
+	// },
 	{
 		full: 'Python',
 		info: 'Python 3.6.5',
