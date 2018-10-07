@@ -26,9 +26,9 @@
 					class="shrink"
 				/>
 				<v-btn
-					large
+					:color=" isError ? 'error' : 'primary'"
 					flat
-					color="primary"
+					large
 					type="submit"
 					@click= "SubmitSubmission">
 					<v-icon> mdi-send </v-icon>
@@ -73,6 +73,7 @@ export default {
 		language: '',
 		items: [],
 		height: 0,
+		isError: false,
 	}),
 	computed: {
 		cmHeight() {
@@ -118,6 +119,7 @@ export default {
 				});
 				return;
 			}
+			this.isError = false;
 			this.$apollo.mutate({
 				mutation: SubmitSubmission,
 				variables: {
@@ -134,8 +136,9 @@ export default {
 						},
 					});
 				})
-				.catch((error) => {
-					this.$store.commit('snackbar/setSnack', error.message);
+				.catch(() => {
+					// this.$store.commit('snackbar/setSnack', error.graphQLErrors[0].message);
+					this.isError = true;
 				});
 		},
 	},
