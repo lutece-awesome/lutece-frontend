@@ -17,14 +17,14 @@
 							<v-divider class = "mt-2 mb-2" />
 							<div>
 								<v-btn
-									v-for = "each in user.analysis"
-									:key = "each[0]"
-									:to = "{name: 'ProblemDetailDescription', params: {slug: each[2] }}"
-									:color = " each[1] == 'yes' ? 'success' : 'error' "
+									v-for = "each in user.statistics.solve"
+									:key = "each.pk"
+									:to = "{name: 'ProblemDetailDescription', params: {slug: each.slug }}"
+									:color = " each.status ? 'success' : 'error' "
 									small
 									round
 								>
-									{{ each[0] }}
+									{{ each.pk }}
 								</v-btn>
 							</div>
 						</v-flex>

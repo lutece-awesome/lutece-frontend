@@ -91,7 +91,7 @@ export default {
 			school: '',
 			company: '',
 			location: '',
-			about: 'The man is too lazy to leaven anything.',
+			about: 'The man is too lazy to leave anything.',
 			loading: false,
 			error: false,
 			errordetail: {},

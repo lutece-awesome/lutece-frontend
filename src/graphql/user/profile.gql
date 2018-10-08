@@ -24,6 +24,11 @@ query ProfileGQL($username: String!) {
 			re
 			ole
 			mle
+			solve{
+				pk
+				slug
+				status
+			}
 		}
 	}
 }
