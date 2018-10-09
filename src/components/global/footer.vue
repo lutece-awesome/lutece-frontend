@@ -16,7 +16,7 @@
 					text-xs-center
 				>
 					<div>
-						<a href = "https://github.com/LaPluses/Lutece">
+						<a href = "https://github.com/lutece-awesome">
 							<strong>
 								<span class = "lutece"> Lutece </span>
 								<sup> v2 </sup>

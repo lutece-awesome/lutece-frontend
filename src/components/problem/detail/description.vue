@@ -17,12 +17,6 @@
 		<div
 			v-mixrend = "problem.standardOutput"
 			class="mb-3" />
-		<h2
-			v-if="problem.constraints"
-			class="headline mb-3">Constraints</h2>
-		<div
-			v-mixrend = "problem.constraints"
-			class="mb-3" />
 		<h2 class="headline mb-3">Sample</h2>
 		<table class="sample-table mb-3">
 			<tr><th>Input</th><th>Output</th></tr>
@@ -38,6 +32,12 @@
 			class = "headline mb-3">Note</h2>
 		<div
 			v-mixrend = "problem.note"
+			class="mb-3" />
+		<h2
+			v-if="problem.constraints"
+			class="headline mb-3">Constraints</h2>
+		<div
+			v-mixrend = "problem.constraints"
 			class="mb-3" />
 		<table class="guideline-table" >
 			<tr>

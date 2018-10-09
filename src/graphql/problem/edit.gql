@@ -1,18 +1,19 @@
-mutation UpdateProblem($title: String!, $content: String!, $note: String!, $timeLimit: Int!, $memoryLimit: Int!, $constraints: String!, $resource: String!, $standardInput: String! , $standardOutput: String! , $slug: String! , $samples: String!, $discussionvisible: Boolean! , $visible: Boolean!  ) {
-	UpdateProblem(
+mutation UpdateProblem($title: String!, $content: String!, $note: String!, $timeLimit: Int!, $memoryLimit: Int!, $constraints: String!, $resources: String!, $standardInput: String! , $standardOutput: String! , $slug: String! , $samples: String! , $disable: Boolean! , $outputLimit: Int! , $cpuLimit: Int!  ) {
+	updateProblem(
         title: $title,
         content: $content,
         note: $note,
         timeLimit: $timeLimit,
         memoryLimit: $memoryLimit,
+        outputLimit: $outputLimit,
+        cpuLimit: $cpuLimit,
         constraints: $constraints,
-        resource: $resource,
+        resources: $resources,
         standardInput: $standardInput,
         standardOutput: $standardOutput,
         slug: $slug,
         samples: $samples,
-        discussionvisible: $discussionvisible,
-        visible: $visible
+        disable: $disable
     ) {
         state
 	}

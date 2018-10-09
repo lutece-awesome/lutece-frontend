@@ -35,7 +35,7 @@
 import ProblemDescription from '@/components/problem/detail/description';
 import ProblemSetting from '@/components/problem/detail/setting';
 import ProblemDetailGQL from '@/graphql/problem/detail.gql';
-import UpdateProblem from '@/graphql/problem/edit.gql';
+import updateProblem from '@/graphql/problem/edit.gql';
 
 export default {
 	metaInfo() { return { title: this.problem ? `Edit ${this.problem.title}` : 'Loading...' }; },
@@ -56,7 +56,7 @@ export default {
 	methods: {
 		submit() {
 			this.$apollo.mutate({
-				mutation: UpdateProblem,
+				mutation: updateProblem,
 				variables: {
 					title: this.title,
 					content: this.content,

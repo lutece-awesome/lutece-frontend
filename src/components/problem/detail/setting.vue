@@ -4,20 +4,20 @@
 		fiuld>
 		<v-form>
 			<v-text-field
-				v-model="value.title"
-				label="Title"
+				v-model = "value.title"
+				label = "Title"
 			/>
 			<v-textarea
-				v-model="value.content"
-				label="Content"
+				v-model = "value.content"
+				label = "Content"
 				auto-grow
 				rows="1"
 			/>
 			<v-textarea
-				v-model="value.standardInput"
-				label="Standard Input"
+				v-model = "value.standardInput"
+				label = "Standard Input"
 				auto-grow
-				rows="1"
+				rows ="1"
 			/>
 			<v-textarea
 				v-model="value.standardOutput"
@@ -32,8 +32,8 @@
 				rows="1"
 			/>
 			<v-text-field
-				v-model="value.resource"
-				label="resource"
+				v-model="value.resources"
+				label="resources"
 			/>
 			<div
 				v-for = "(each , index) in value.sampleSet"
