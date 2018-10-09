@@ -34,10 +34,12 @@
 			</tr>
 		</table>
 		<h2
-			v-if="problem.note"
-			class="headline mb-3">Note</h2>
-		<div class="mb-3">{{ problem.note }}</div>
-		<table class="guideline-table">
+			v-if = "problem.note"
+			class = "headline mb-3">Note</h2>
+		<div
+			v-mixrend = "problem.note"
+			class="mb-3" />
+		<table class="guideline-table" >
 			<tr>
 				<td>Problem ID</td>
 				<td>{{ problem.pk }}</td>
