@@ -20,11 +20,8 @@ Vue.directive('mixrend', (el, binding) => {
 	} else {
 		el.innerHTML = binding.value;
 	}
+	console.log(el.innerHTML);
 	mdPromise.then((md) => {
-		if (binding.value.expression) {
-			el.innerHTML = md.render(binding.value.expression);
-		} else {
-			el.innerHTML = md.render(binding.value);
-		}
+		el.innerHTML = md.render(el.innerHTML);
 	});
 });
