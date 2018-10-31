@@ -17,7 +17,7 @@
 		<div
 			v-mixrend = "problem.standardOutput"
 			class="mb-3" />
-		<h2 class="headline mb-3">Sample</h2>
+		<h2 class="headline mb-3">Samples</h2>
 		<table class="sample-table mb-3">
 			<tr><th>Input</th><th>Output</th></tr>
 			<tr

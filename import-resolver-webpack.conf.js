@@ -12,4 +12,17 @@ module.exports = {
 			'@': resolve('src'),
 		},
 	},
+
+	module: {
+		rules: [
+			{
+				test: /\.styl(us)?$/,
+				use: [
+					'vue-style-loader',
+					'css-loader',
+					'stylus-loader',
+				],
+			},
+		],
+	},
 };

@@ -10,19 +10,25 @@
 			<v-flex
 				xs12
 				md6>
-				<v-card>
-					<v-card-title primary-title>
-						<h3 class="headline">Edit</h3>
-					</v-card-title>
-					<ProblemSetting v-model="problem"/>
-				</v-card>
+				<div class = "elevation-2" >
+					<div class = "text-xs-center pt-4" >
+						<v-icon> mdi-circle-edit-outline </v-icon>
+						<span class = "headline" > Edit </span>
+					</div>
+					<div>
+						<ProblemSetting
+							:data = "problem"
+							@triggerSampleListChanged = "updateSampleList"
+							@triggerLimitationChanged = "updateLimitation" />
+					</div>
+				</div>
 			</v-flex>
 			<v-flex
 				xs12
 				md6>
 				<v-card>
 					<v-card-title primary-title>
-						<h3 class="headline">Preview</h3>
+						<div class = "headline">Preview</div>
 					</v-card-title>
 					<ProblemDescription :problem = "problem" />
 				</v-card>
@@ -54,6 +60,15 @@ export default {
 	},
 
 	methods: {
+
+		updateSampleList(current) {
+			this.problem.samples = current;
+		},
+
+		updateLimitation(current) {
+			this.problem.limitation = current;
+		},
+
 		submit() {
 			this.$apollo.mutate({
 				mutation: updateProblem,

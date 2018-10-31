@@ -1,88 +1,237 @@
 <template>
 	<v-container
-		v-if="value"
+		v-if="problem"
 		fiuld>
 		<v-form>
-			<v-text-field
-				v-model = "value.title"
-				label = "Title"
-			/>
-			<v-textarea
-				v-model = "value.content"
-				label = "Content"
-				auto-grow
-				rows="1"
-			/>
-			<v-textarea
-				v-model = "value.standardInput"
-				label = "Standard Input"
-				auto-grow
-				rows ="1"
-			/>
-			<v-textarea
-				v-model="value.standardOutput"
-				label="Standard Output"
-				auto-grow
-				rows="1"
-			/>
-			<v-textarea
-				v-model="value.constraints"
-				label="Constraints"
-				auto-grow
-				rows="1"
-			/>
-			<v-text-field
-				v-model="value.resources"
-				label="resources"
-			/>
-			<div
-				v-for = "(each , index) in value.sampleSet"
-				:key = "index">
-				<span>
-					{{ each.inputContent }}
-				</span>
-				<span>
-					{{ each.outputContent }}
-				</span>
+			<div>
+				<div class = "section-title" > Title </div>
+				<v-text-field v-model = "problem.title"/>
 			</div>
-			<v-btn> ADD SAMPLE </v-btn>
-			<v-textarea
-				v-model="value.note"
-				label="Note"
-				auto-grow
-				rows="1"
-			/>
-			<v-text-field
-				v-model="value.timeLimit"
-				type= "number"
-				label="TimeLimit"
-			/>
-			<v-text-field
-				v-model="value.memoryLimit"
-				type= "number"
-				label="MemoryLimit"
-			/>
-			<v-btn> SUBMIT </v-btn>
+
+			<div>
+				<div class = "section-title" > Limitation </div>
+				<div class = "limitation-section" >
+					<v-tooltip right>
+						<v-text-field
+							slot = "activator"
+							:change = "triggerLimitationUpdate()"
+							v-model = "limitation.timeLimit"
+							prepend-icon = "mdi-clock"
+							suffix = "Ms"
+							type = "number"
+						/>
+						<span> Time Limit </span>
+					</v-tooltip>
+				</div>
+				<div class = "limitation-section" >
+					<v-tooltip right>
+						<v-text-field
+							slot = "activator"
+							:change = "triggerLimitationUpdate()"
+							v-model = "limitation.memoryLimit"
+							prepend-icon = "mdi-zip-disk"
+							suffix = "Mib"
+							type= "number"
+						/>
+						<span> Memory Limit </span>
+					</v-tooltip>
+				</div>
+				<div class = "limitation-section" >
+					<v-tooltip right>
+						<v-text-field
+							slot = "activator"
+							:change = "triggerLimitationUpdate()"
+							v-model = "limitation.outputLimit"
+							prepend-icon = "mdi-pencil"
+							suffix = "Mib"
+							type= "number"
+						/>
+						<span> Output Limit </span>
+					</v-tooltip>
+				</div>
+				<div class = "limitation-section" >
+					<v-tooltip right>
+						<v-text-field
+							slot = "activator"
+							:change = "triggerLimitationUpdate()"
+							v-model = "limitation.cpuLimit"
+							disabled
+							prepend-icon = "mdi-laptop"
+							suffix = "Core"
+							type= "number"
+						/>
+						<span> CPU Limit </span>
+					</v-tooltip>
+				</div>
+			</div>
+
+
+			<div>
+				<div class = "section-title" > Content </div>
+				<v-textarea
+					v-model = "problem.content"
+					auto-grow
+					rows="4"
+				/>
+			</div>
+			<div>
+				<div class = "section-title" > Standard Input </div>
+				<v-textarea
+					v-model = "problem.standardInput"
+					auto-grow
+					rows ="4"
+				/>
+			</div>
+
+			<div>
+				<div class = "section-title" > Standard Output </div>
+				<v-textarea
+					v-model="problem.standardOutput"
+					auto-grow
+					rows="4"
+				/>
+			</div>
+
+			<div>
+				<div class = "section-title" > Samples </div>
+				<v-layout
+					row
+					wrap>
+					<v-flex
+						v-for = "(sample, index) in samples.sampleList"
+						:key = "index"
+						d-flex
+					>
+						<v-flex
+							d-flex
+							xs5>
+							<v-textarea
+								v-model = "sample.inputContent"
+								:change = "triggerEmitSampleUpdate()"
+								auto-grow
+								rows = "1"
+							/>
+						</v-flex>
+
+						<v-flex
+							d-flex
+							xs5>
+							<v-textarea
+								v-model = "sample.outputContent"
+								:change = "triggerEmitSampleUpdate()"
+								auto-grow
+								rows="1"
+							/>
+						</v-flex>
+
+						<v-flex
+							d-flex
+							xs1>
+							<v-icon @click = "removeSample(index)" > mdi-close-circle </v-icon>
+						</v-flex>
+					</v-flex>
+
+				</v-layout>
+				<div class = "text-xs-center">
+					<v-btn
+						color = "info"
+						@click = "addSample" > Add Sample </v-btn>
+				</div>
+			</div>
+
+			<div>
+				<div class = "section-title" > Constraints </div>
+				<v-textarea
+					v-model="problem.constraints"
+					auto-grow
+					rows="4"
+				/>
+			</div>
+
+			<div>
+				<div class = "section-title" > Note </div>
+				<v-textarea
+					v-model = "problem.note"
+					auto-grow
+					rows="4"
+				/>
+			</div>
+
+			<div>
+				<div class = "section-title" > Resources </div>
+				<v-text-field v-model = "problem.resources" />
+			</div>
+
+			<div class = "text-xs-center">
+				<v-btn color = "success"> SUBMIT </v-btn>
+			</div>
 		</v-form>
 	</v-container>
 </template>
 
 
 <script>
+
 export default {
 	props: {
-		value: {
+		data: {
 			type: Object,
 			default: null,
 		},
 	},
 
+	data: () => ({
+		problem: null,
+		samples: null,
+		limitation: null,
+	}),
+
+	watch: {
+		data(current) {
+			this.problem = current;
+			this.samples = JSON.parse(JSON.stringify(this.problem.samples));
+			this.limitation = JSON.parse(JSON.stringify(this.problem.limitation));
+		},
+	},
+
 	methods: {
 
-		submit() {
+		addSample() {
+			this.samples.sampleList.push({
+				inputContent: '',
+				outputContent: '',
+			});
+		},
 
+		removeSample(index) {
+			this.samples.sampleList.splice(index, 1);
+		},
+
+		triggerEmitSampleUpdate() {
+			this.$emit('triggerSampleListChanged', this.samples);
+		},
+
+		triggerLimitationUpdate() {
+			this.$emit('triggerLimitationChanged', this.limitation);
+		},
+
+		submit() {
+			this.$emit('sumitChange');
 		},
 
 	},
 };
 </script>
+
+
+<style scoped lang = "stylus">
+	.section-title
+		font-size: 16px
+		color: grey
+		font-weight: 500
+		margin-top: 12px
+		margin-bottom: -12px
+
+	.limitation-section
+		max-width: 200px
+</style>
