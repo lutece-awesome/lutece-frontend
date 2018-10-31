@@ -62,7 +62,7 @@
 					</v-card>
 				</div>
 
-				<div class = "elevation-2 mt-5">
+				<div class = "elevation-2 mt-5" >
 					<v-tabs
 						v-model = "active"
 						fixed-tabs>
@@ -114,7 +114,8 @@ export default {
 	},
 	metaInfo() { return { title: `Submission#${this.pk}` }; },
 	data: () => ({
-		active: 0,
+		isInitialized: false,
+		active: null,
 		pk: '',
 		judge: [],
 		ws: null,
@@ -202,10 +203,13 @@ export default {
 				data.judge = this.judge.concat(data.judge);
 			}
 			Object.assign(this, data);
-			if (this.hasCode) {
-				this.active = 0;
-			} else {
-				this.active = 1;
+			if (!this.isInitialized) {
+				this.isInitialized = true;
+				if (this.hasCode) {
+					this.active = 0;
+				} else {
+					this.active = 1;
+				}
 			}
 		};
 	},
