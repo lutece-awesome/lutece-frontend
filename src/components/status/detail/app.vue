@@ -7,11 +7,8 @@
 				v-show = "result"
 				xs12
 				md8>
-				<v-hover>
-					<v-card
-						slot-scope = "{ hover }"
-						:class = "`elevation-${hover ? 4 : 1}`"
-					>
+				<div>
+					<v-card>
 						<v-card-title primary-title>
 							<h3
 								:class = "result_color + '--text'"
@@ -59,72 +56,46 @@
 											{{ judge.length }} / {{ casenumber }}
 										</span>
 									</td>
-							</tr></table>
+								</tr>
+							</table>
 						</v-card-text>
 					</v-card>
-				</v-hover>
+				</div>
 
-				<v-hover>
-					<v-card
-						slot-scope = "{ hover }"
-						:class = "`elevation-${hover ? 4 : 1}`"
-						class = "mt-5"
+				<div class = "elevation-2 mt-5">
+					<v-tabs
+						v-model = "active"
+						fixed-tabs>
+						<v-tab
+							:ripple = "false"
+							:disabled = "!hasCode"
+							value > Code </v-tab>
+						<v-tab :ripple = "false"> Progress </v-tab>
+					</v-tabs>
+
+					<v-tabs-items
+						v-model = "active"
+						touchless
 					>
 
-						<div v-if = "hasCode">
-							<v-tabs
-								v-model = "tabs"
-								fixed-tabs>
-								<v-tab :ripple = "false"> Code </v-tab>
-								<v-tab :ripple = "false"> Progress </v-tab>
-							</v-tabs>
-						</div>
-						<div v-else>
-							<v-tabs
-								v-model = "tabs"
-								fixed-tabs>
-								<v-tab :ripple = "false"> Progress </v-tab>
-							</v-tabs>
-						</div>
+						<v-tab-item>
+							<codeComponent
+								:code = "code"
+								:judgererror_msg = "judgererror_msg"
+								:compileerror_msg = "compileerror_msg"
+								:cm-options = "cmOptions"
+							/>
+						</v-tab-item>
 
-						<div v-if = "hasCode">
-							<v-tabs-items
-								v-model = "tabs"
-								touchless
-							>
+						<v-tab-item>
+							<progressComponent
+								:judge = "judge"
+								:headers = "headers" />
+						</v-tab-item>
 
-								<v-tab-item>
-									<codeComponent
-										:code = "code"
-										:judgererror_msg = "judgererror_msg"
-										:compileerror_msg = "compileerror_msg"
-										:cm-options = "cmOptions"
-									/>
-								</v-tab-item>
+					</v-tabs-items>
 
-								<v-tab-item>
-									<progressComponent
-										:judge = "judge"
-										:headers = "headers" />
-								</v-tab-item>
-
-							</v-tabs-items>
-						</div>
-						<div v-else>
-							<v-tabs-items
-								v-model = "tabs"
-								touchless
-							>
-								<v-tab-item>
-									<progressComponent
-										:judge = "judge"
-										:headers = "headers" />
-								</v-tab-item>
-
-							</v-tabs-items>
-						</div>
-					</v-card>
-				</v-hover>
+				</div>
 			</v-flex>
 		</v-layout>
 	</v-container>
@@ -143,7 +114,7 @@ export default {
 	},
 	metaInfo() { return { title: `Submission#${this.pk}` }; },
 	data: () => ({
-		tabs: null,
+		active: 0,
 		pk: '',
 		judge: [],
 		ws: null,
@@ -231,6 +202,11 @@ export default {
 				data.judge = this.judge.concat(data.judge);
 			}
 			Object.assign(this, data);
+			if (this.hasCode) {
+				this.active = 0;
+			} else {
+				this.active = 1;
+			}
 		};
 	},
 };

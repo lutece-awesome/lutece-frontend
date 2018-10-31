@@ -12,7 +12,7 @@
 								<v-flex>
 									<v-text-field
 										v-model="username"
-										:error-messages="geterror('username')"
+										:error-messages = "getErrorByDelegate( 'username' )"
 										label="Username"
 										autocomplete="off"
 										autocorrect="off"
@@ -24,7 +24,7 @@
 								<v-flex>
 									<v-text-field
 										v-model="password"
-										:error-messages="geterror('password')"
+										:error-messages = "getErrorByDelegate( 'password' )"
 										type="password"
 										label="Password"
 										prepend-icon = "mdi-lock"
@@ -54,36 +54,33 @@
 
 <script>
 
+import { parseGraphqlError, getErrorMessage } from '@/utils';
+
 export default {
 	metaInfo() { return { title: 'Login' }; },
 	data: () => ({
 		loading: false,
-		error: false,
+		error: null,
 		username: '',
 		password: '',
-		errordetail: {},
 	}),
 
 	methods: {
-		geterror(field) {
-			if (Object.prototype.hasOwnProperty.call(this.errordetail, field)) {
-				return this.errordetail[field][0].message;
-			}
-			return '';
+
+		getErrorByDelegate(field) {
+			return getErrorMessage(this.error, field);
 		},
 
 		login() {
 			this.loading = true;
-			this.error = false;
-			this.errordetail = {};
+			this.error = null;
 			const { username, password } = this;
 			this.$store.dispatch('user/login', { username, password })
 				.then(() => {
 					this.$router.push(this.$route.query.redirect || '/');
 				})
 				.catch((error) => {
-					this.errordetail = JSON.parse(error.graphQLErrors[0].message);
-					this.error = true;
+					this.error = parseGraphqlError(error);
 				})
 				.finally(() => { this.loading = false; });
 		},

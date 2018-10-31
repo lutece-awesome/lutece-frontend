@@ -163,7 +163,10 @@
 			</div>
 
 			<div class = "text-xs-center">
-				<v-btn color = "success"> SUBMIT </v-btn>
+				<v-btn
+					:loading = "isLoading"
+					color = "success"
+					@click = "submit" > SUBMIT </v-btn>
 			</div>
 		</v-form>
 	</v-container>
@@ -172,10 +175,17 @@
 
 <script>
 
+import updateProblemGQL from '@/graphql/problem/edit.gql';
+import { clearApolloCache } from '@/utils';
+
 export default {
 	props: {
 		data: {
 			type: Object,
+			default: null,
+		},
+		slug: {
+			type: String,
 			default: null,
 		},
 	},
@@ -184,6 +194,7 @@ export default {
 		problem: null,
 		samples: null,
 		limitation: null,
+		isLoading: false,
 	}),
 
 	watch: {
@@ -216,7 +227,38 @@ export default {
 		},
 
 		submit() {
-			this.$emit('sumitChange');
+			this.isLoading = true;
+			this.$apollo.mutate({
+				mutation: updateProblemGQL,
+				variables: {
+					title: this.problem.title,
+					content: this.problem.content,
+					note: this.problem.note,
+					timeLimit: this.limitation.timeLimit,
+					memoryLimit: this.limitation.memoryLimit,
+					outputLimit: this.limitation.outputLimit,
+					cpuLimit: this.limitation.cpuLimit,
+					constraints: this.problem.constraints,
+					resources: this.problem.resources,
+					standardInput: this.problem.standardInput,
+					standardOutput: this.problem.standardOutput,
+					slug: this.slug,
+					samples: JSON.stringify(this.samples.sampleList),
+					disable: this.problem.disable,
+				},
+			})
+				.then(() => {
+					clearApolloCache().then(() => {
+						this.$router.push({
+							name: 'ProblemDetailDescription',
+							params: { slug: this.slug },
+						});
+					});
+				})
+				.catch(error => this.$store.commit('snackbar/setSnack', error.message))
+				.finally(() => {
+					this.isLoading = false;
+				});
 		},
 
 	},

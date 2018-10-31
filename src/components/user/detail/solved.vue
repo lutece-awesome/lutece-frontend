@@ -22,7 +22,6 @@
 									:to = "{name: 'ProblemDetailDescription', params: {slug: each.slug }}"
 									:color = " each.status ? 'success' : 'error' "
 									small
-									round
 								>
 									{{ each.pk }}
 								</v-btn>

@@ -15,32 +15,32 @@
 						<v-form @submit.prevent = "submit">
 							<v-text-field
 								v-model = "school"
-								:error-messages = "geterror('school')"
+								:error-messages = "getErrorByDelegate('school')"
 								label = "School"
 								prepend-icon = "mdi-school"
 							/>
 							<v-text-field
 								v-model = "company"
-								:error-messages = "geterror('company')"
+								:error-messages = "getErrorByDelegate('company')"
 								label = "Company"
 								prepend-icon = "mdi-briefcase"
 							/>
 							<v-text-field
 								v-model = "location"
-								:error-messages = "geterror('location')"
+								:error-messages = "getErrorByDelegate('location')"
 								label = "Location"
 								prepend-icon = "mdi-map-marker"
 							/>
 
 							<v-text-field
 								v-model = "about"
-								:error-messages = "geterror('about')"
+								:error-messages = "getErrorByDelegate('about')"
 								label = "About"
 								prepend-icon = "mdi-book"
 							/>
 							<v-text-field
 								v-model = "gravatar"
-								:error-messages = "geterror('gravatar')"
+								:error-messages = "getErrorByDelegate('gravatar')"
 								label = "Gravatar"
 								disabled
 								prepend-icon = "mdi-emoticon-cool"/>
@@ -72,7 +72,8 @@
 import { mapGetters } from 'vuex';
 import { UserInfoUpdateGQL } from '@/graphql/user/settings.gql';
 import { ProfileGQL } from '@/graphql/user/profile.gql';
-import apolloProvider from '@/apollo';
+import { clearApolloCache, parseGraphqlError, getErrorMessage } from '@/utils';
+
 
 export default {
 	metaInfo() { return { title: 'Settings' }; },
@@ -84,8 +85,7 @@ export default {
 		about: '',
 		gravatar: '',
 		isloading: false,
-		error: false,
-		errordetail: [],
+		error: null,
 		gravatarExplain: '<div> You can only use Gravatar service to gain the avatar, to ensure your gravatar email privacy, the default gravatar email address will not shown and only encrypted address shown. </div> <div> But currently this is based on your email, changing is still WIP. </div>',
 	}),
 	computed: {
@@ -113,17 +113,14 @@ export default {
 					Object.assign(this, data);
 				});
 		},
-		geterror(field) {
-			if (Object.prototype.hasOwnProperty.call(this.errordetail, field)) {
-				return this.errordetail[field][0].message;
-			}
-			return '';
+
+		getErrorByDelegate(field) {
+			return getErrorMessage(this.error, field);
 		},
 
 		submit() {
 			this.isloading = true;
-			this.errordetail = [];
-			this.error = false;
+			this.error = null;
 			this.$apollo.mutate({
 				mutation: UserInfoUpdateGQL,
 				variables: {
@@ -136,17 +133,17 @@ export default {
 			})
 				.then(() => {
 					this.$store.dispatch('user/refresh_token', true);
-					apolloProvider.defaultClient.resetStore();
-					this.$router.push({
-						name: 'UserDetail',
-						params: { username: this.$store.state.user.payload.username },
+					clearApolloCache().then(() => {
+						this.$router.push({
+							name: 'UserDetail',
+							params: { username: this.$store.state.user.payload.username },
+						});
 					});
 				})
-				.finally(() => { this.isloading = false; })
 				.catch((error) => {
-					this.errordetail = JSON.parse(error.graphQLErrors[0].message);
-					this.error = true;
-				});
+					this.error = parseGraphqlError(error);
+				})
+				.finally(() => { this.isloading = false; });
 		},
 	},
 };

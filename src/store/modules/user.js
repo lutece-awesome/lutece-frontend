@@ -1,6 +1,7 @@
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 import { UserLogin, RefreshToken } from '@/graphql/signin/token.gql';
 import RegisterGQL from '@/graphql/signin/register.gql';
+import { clearApolloCache } from '@/utils';
 import apolloProvider from '@/apollo';
 
 const state = {
@@ -46,7 +47,7 @@ const actions = {
 			.then(response => response.data.userLogin)
 			.then((data) => {
 				commit('login', data);
-				apolloProvider.defaultClient.resetStore().then(() => {
+				clearApolloCache().then(() => {
 					resolve(data);
 				});
 			})
@@ -62,7 +63,7 @@ const actions = {
 			.then(response => response.data.userRegister)
 			.then((data) => {
 				commit('login', data);
-				apolloProvider.defaultClient.resetStore().then(() => {
+				clearApolloCache().then(() => {
 					resolve(data);
 				});
 			})
@@ -72,7 +73,7 @@ const actions = {
 	}),
 	logout: ({ commit }) => new Promise((resolve, _reject) => {
 		commit('logout');
-		apolloProvider.defaultClient.resetStore().then(() => {
+		clearApolloCache().then(() => {
 			resolve();
 		});
 	}),

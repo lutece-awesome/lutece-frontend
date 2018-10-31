@@ -13,7 +13,7 @@
 								<v-flex>
 									<v-text-field
 										v-model="username"
-										:error-messages="geterror('username')"
+										:error-messages="getErrorByDelegate('username')"
 										label="Username *"
 										autocomplete="off"
 										autocorrect="off"
@@ -24,7 +24,7 @@
 								<v-flex>
 									<v-text-field
 										v-model="password"
-										:error-messages="geterror('password')"
+										:error-messages="getErrorByDelegate('password')"
 										type="password"
 										label="Password *"
 										required />
@@ -32,7 +32,7 @@
 								<v-flex>
 									<v-text-field
 										v-model="email"
-										:error-messages="geterror('email')"
+										:error-messages="getErrorByDelegate('email')"
 										type="email"
 										label="Email *"
 										required />
@@ -40,25 +40,25 @@
 								<v-flex>
 									<v-text-field
 										v-model = "school"
-										:error-messages="geterror('school')"
+										:error-messages="getErrorByDelegate('school')"
 										label="School" />
 								</v-flex>
 								<v-flex>
 									<v-text-field
 										v-model = "company"
-										:error-messages="geterror('company')"
+										:error-messages="getErrorByDelegate('company')"
 										label="Company" />
 								</v-flex>
 								<v-flex>
 									<v-text-field
 										v-model = "location"
-										:error-messages="geterror('location')"
+										:error-messages="getErrorByDelegate('location')"
 										label="Location" />
 								</v-flex>
 								<v-flex>
 									<v-text-field
 										v-model = "about"
-										:error-messages="geterror('about')"
+										:error-messages="getErrorByDelegate('about')"
 										label="About" />
 								</v-flex>
 								<v-flex mt-3>
@@ -80,6 +80,8 @@
 
 <script>
 
+import { parseGraphqlError, getErrorMessage } from '@/utils';
+
 export default {
 	metaInfo() { return { title: 'Sign Up' }; },
 	data() {
@@ -93,24 +95,18 @@ export default {
 			location: '',
 			about: 'The man is too lazy to leave anything.',
 			loading: false,
-			error: false,
-			errordetail: {},
+			error: null,
 		};
 	},
 
 	methods: {
 
-		geterror(field) {
-			if (Object.prototype.hasOwnProperty.call(this.errordetail, field)) {
-				return this.errordetail[field][0].message;
-			}
-			return '';
+		getErrorByDelegate(field) {
+			return getErrorMessage(this.error, field);
 		},
 
 		register() {
-			this.errordetail = {};
-			this.error = false;
-			this.loading = true;
+			this.error = null;
 			const {
 				username, password, email, about, school, company, location,
 			} = this;
@@ -121,8 +117,7 @@ export default {
 					this.$router.push(this.$route.query.redirect || '/');
 				})
 				.catch((error) => {
-					this.errordetail = JSON.parse(error.graphQLErrors[0].message);
-					this.error = true;
+					this.error = parseGraphqlError(error);
 				})
 				.finally(() => { this.loading = false; });
 		},

@@ -9,7 +9,7 @@
 				xs12
 				sm10
 				md8
-				xl6
+				xl7
 			>
 				<user-profile :user = "user" />
 				<user-summary

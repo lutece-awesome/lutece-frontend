@@ -20,17 +20,12 @@
 							label = "" />
 						<ErrorSpinner v-if = "error" />
 						<div v-else-if = "data">
-							<v-hover>
-								<v-card
-									slot-scope = "{ hover }"
-									:class = "`elevation-${hover ? 4 : 1}`"
-								>
-									<ProblemList
-										:problem-item = "data.problemList.problemList"
-										:is-loading = "loading"
-									/>
-								</v-card>
-							</v-hover>
+							<div class = "elevation-2">
+								<ProblemList
+									:problem-item = "data.problemList.problemList"
+									:is-loading = "loading"
+								/>
+							</div>
 							<div class = "text-xs-center mt-3">
 								<v-pagination
 									ref = "pagination"
