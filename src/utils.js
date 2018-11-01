@@ -1,9 +1,16 @@
 import apolloProvider from '@/apollo';
 
 function getServerUri(protocol, path) {
+	const env = process.env.NODE_ENV;
+	const loc = window.location;
+	const host = env === 'production' ? loc.host : `${loc.host.split(':')[0]}:8000`;
 	let newUri = protocol;
-	newUri += 's:';
-	newUri += `//acm.uestc.edu.cn/${path}`;
+	if (loc.protocol === 'https:') {
+		newUri += 's:';
+	} else {
+		newUri += ':';
+	}
+	newUri += `//${host}/${path}`;
 	return newUri;
 }
 

@@ -5,7 +5,9 @@
 		<v-form>
 			<div>
 				<div class = "section-title" > Title </div>
-				<v-text-field v-model = "problem.title"/>
+				<v-text-field
+					v-model = "problem.title"
+					:error-messages="getErrorByDelegate('title')"/>
 			</div>
 
 			<div>
@@ -16,6 +18,7 @@
 							slot = "activator"
 							:change = "triggerLimitationUpdate()"
 							v-model = "limitation.timeLimit"
+							:error-messages="getErrorByDelegate('time_limit')"
 							prepend-icon = "mdi-clock"
 							suffix = "Ms"
 							type = "number"
@@ -28,6 +31,7 @@
 						<v-text-field
 							slot = "activator"
 							:change = "triggerLimitationUpdate()"
+							:error-messages="getErrorByDelegate('memory_limit')"
 							v-model = "limitation.memoryLimit"
 							prepend-icon = "mdi-zip-disk"
 							suffix = "Mib"
@@ -41,6 +45,7 @@
 						<v-text-field
 							slot = "activator"
 							:change = "triggerLimitationUpdate()"
+							:error-messages="getErrorByDelegate('output_limit')"
 							v-model = "limitation.outputLimit"
 							prepend-icon = "mdi-pencil"
 							suffix = "Mib"
@@ -54,6 +59,7 @@
 						<v-text-field
 							slot = "activator"
 							:change = "triggerLimitationUpdate()"
+							:error-messages="getErrorByDelegate('cpu_limit')"
 							v-model = "limitation.cpuLimit"
 							disabled
 							prepend-icon = "mdi-laptop"
@@ -70,6 +76,7 @@
 				<div class = "section-title" > Content </div>
 				<v-textarea
 					v-model = "problem.content"
+					:error-messages="getErrorByDelegate('content')"
 					auto-grow
 					rows="4"
 				/>
@@ -78,6 +85,7 @@
 				<div class = "section-title" > Standard Input </div>
 				<v-textarea
 					v-model = "problem.standardInput"
+					:error-messages="getErrorByDelegate('standard_input')"
 					auto-grow
 					rows ="4"
 				/>
@@ -86,9 +94,10 @@
 			<div>
 				<div class = "section-title" > Standard Output </div>
 				<v-textarea
-					v-model="problem.standardOutput"
+					v-model = "problem.standardOutput"
+					:error-messages="getErrorByDelegate('standard_output')"
 					auto-grow
-					rows="4"
+					rows = "4"
 				/>
 			</div>
 
@@ -143,6 +152,7 @@
 				<div class = "section-title" > Constraints </div>
 				<v-textarea
 					v-model="problem.constraints"
+					:error-messages="getErrorByDelegate('constraints')"
 					auto-grow
 					rows="4"
 				/>
@@ -152,6 +162,7 @@
 				<div class = "section-title" > Note </div>
 				<v-textarea
 					v-model = "problem.note"
+					:error-messages="getErrorByDelegate('note')"
 					auto-grow
 					rows="4"
 				/>
@@ -159,13 +170,15 @@
 
 			<div>
 				<div class = "section-title" > Resources </div>
-				<v-text-field v-model = "problem.resources" />
+				<v-text-field
+					v-model = "problem.resources"
+					:error-messages="getErrorByDelegate('resources')"/>
 			</div>
 
 			<div class = "text-xs-center">
 				<v-btn
 					:loading = "isLoading"
-					color = "success"
+					:color = "error ? 'error' : 'success'"
 					@click = "submit" > SUBMIT </v-btn>
 			</div>
 		</v-form>
@@ -176,7 +189,7 @@
 <script>
 
 import updateProblemGQL from '@/graphql/problem/edit.gql';
-import { clearApolloCache } from '@/utils';
+import { clearApolloCache, getErrorMessage, parseGraphqlError } from '@/utils';
 
 export default {
 	props: {
@@ -195,6 +208,7 @@ export default {
 		samples: null,
 		limitation: null,
 		isLoading: false,
+		error: false,
 	}),
 
 	watch: {
@@ -206,6 +220,10 @@ export default {
 	},
 
 	methods: {
+
+		getErrorByDelegate(field) {
+			return getErrorMessage(this.error, field);
+		},
 
 		addSample() {
 			this.samples.sampleList.push({
@@ -228,6 +246,7 @@ export default {
 
 		submit() {
 			this.isLoading = true;
+			this.isError = false;
 			this.$apollo.mutate({
 				mutation: updateProblemGQL,
 				variables: {
@@ -255,7 +274,9 @@ export default {
 						});
 					});
 				})
-				.catch(error => this.$store.commit('snackbar/setSnack', error.message))
+				.catch((error) => {
+					this.error = parseGraphqlError(error);
+				})
 				.finally(() => {
 					this.isLoading = false;
 				});
