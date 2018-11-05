@@ -11,19 +11,21 @@
 				<ApolloQuery
 					:query = "require('@/graphql/problem/list.gql')"
 					:variables = "{ page , filter }"
+					:debounce = "300"
 					@result = "onResult" >
 					<template
-						slot-scope = "{ result: { loading , error , data } }">
+						slot-scope = "{ result: { loading, error , data } }">
 						<Searchbar
-							:callback = "updateFilter"
+							v-model = "filter"
 							class = "mb-4 fluid"
-							label = "" />
+							label = ""
+						/>
 						<ErrorSpinner v-if = "error" />
-						<div v-else-if = "data">
+						<div>
 							<div class = "elevation-2">
 								<ProblemList
-									:problem-item = "data.problemList.problemList"
-									:is-loading = "loading"
+									:problem-item = "data ? data.problemList.problemList : []"
+									:is-loading = "loading || !data"
 								/>
 							</div>
 							<div class = "text-xs-center mt-3">
@@ -44,6 +46,7 @@
 <script>
 import ProblemList from '@/components/problem/list/list';
 import Searchbar from '@/components/basic/searchbar';
+import LoadingSpinner from '@/components/basic/loadingspinner';
 
 export default {
 	name: 'Problem',
@@ -51,6 +54,7 @@ export default {
 	components: {
 		ProblemList,
 		Searchbar,
+		LoadingSpinner,
 	},
 
 	data() {
@@ -62,15 +66,14 @@ export default {
 	},
 
 	activated() {
-		if (this.$refs.pagination) { this.$refs.pagination.init(); }
+		if (this.$refs.pagination) {
+			this.$refs.pagination.init();
+		}
 	},
 
 	methods: {
 		onResult(result) {
 			this.maxpage = result.data.problemList.maxpage;
-		},
-		updateFilter(result) {
-			this.filter = result;
 		},
 	},
 };

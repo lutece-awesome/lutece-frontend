@@ -11,20 +11,21 @@
 			>
 				<ApolloQuery
 					:query = "require('@/graphql/user/list.gql')"
+					:debounce = "300"
 					:variables = "{ page , filter }"
 					@result = "onResult">
 					<template
 						slot-scope = "{ result: { loading , error , data } }">
 						<Searchbar
-							:callback = "updateFilter"
+							v-model = "filter"
 							class = "mb-4 fluid"
 							label = ""
 						/>
 						<ErrorSpinner v-if = "error" />
-						<div v-else-if = "data" >
+						<div>
 							<UserList
-								:user-item = "data.userList.userList"
-								:is-loading = "loading"
+								:user-item = "data ? data.userList.userList : []"
+								:is-loading = "loading || !data"
 							/>
 							<div
 								class = "text-xs-center mt-3">
@@ -63,16 +64,14 @@ export default {
 	},
 
 	activated() {
-		if (this.$refs.pagination) { this.$refs.pagination.init(); }
+		if (this.$refs.pagination) {
+			this.$refs.pagination.init();
+		}
 	},
-
 
 	methods: {
 		onResult(result) {
 			this.maxpage = result.data.userList.maxpage;
-		},
-		updateFilter(result) {
-			this.filter = result;
 		},
 	},
 
