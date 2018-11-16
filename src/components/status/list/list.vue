@@ -57,37 +57,45 @@
 					scope="col"
 					class="column text-xs-center">
 					<v-text-field
-						v-model="filters.pk"
-						label="#"
+						:value = "pk"
+						label = "#"
 						single-line
 						hide-details
-						type="number"
-						min="1"
-						step="1"
-						style="width: 30px"
+						type = "number"
+						min = "1"
+						step = "1"
+						style = "width: 30px"
+						@input = "$emit( 'input-pk' , $event )"
 					/>
 				</th>
 				<th
-					role="columnheader"
-					scope="col"
-					class="column text-xs-center">
-					<v-autocomplete
-						v-model="filters.user"
-						:items="userSearch.items"
-						:loading="userSearch.isLoading"
-						:search-input.sync="userSearch.filter"
-						:append-icon="null"
-						single-line
-						hide-details
-						clearable
-						label="User"
-						style="width: 50px"
-						item-text="name"
-						dense
-					/>
-
+					role = "columnheader"
+					scope = "col"
+					class = "column text-xs-center">
+					<ApolloQuery
+						:query = "require('@/graphql/user/search.gql')"
+						:variables = "{ user }"
+						:debounce = "300"
+					>
+						<template
+							slot-scope = "{ result: { loading, error , data } }">
+							<v-autocomplete
+								:value = "user"
+								:items = "data ? data.userSearch.userList.map( each => each.username ) : []"
+								:loading = "loading || !data"
+								single-line
+								hide-details
+								clearable
+								label = "User"
+								style = "width: 50px"
+								item-text = "name"
+								dense
+								@input = "$emit( 'input-user' , $event )"
+							/>
+						</template>
+					</ApolloQuery>
 				</th>
-				<th
+				<!-- <th
 					role="columnheader"
 					scope="col"
 					class="column text-xs-center">
@@ -121,7 +129,7 @@
 						offset-y
 						style="width: 120px"
 					/>
-				</th>
+				</th> -->
 				<th
 					role = "columnheader"
 					scope = "col"
@@ -136,7 +144,7 @@
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center pt-3 hidden-sm-and-down">Submit Time</th>
-				<th
+					<!-- <th
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center hidden-sm-and-down">
@@ -151,7 +159,7 @@
 						offset-y
 						style = "width: 60px"
 					/>
-				</th>
+				</th> -->
 			</tr>
 		</template>
 	</v-data-table>
@@ -169,20 +177,29 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		filters: {
-			type: Object,
-			default: () => {},
+		pk: {
+			type: Number,
+			default: null,
 		},
-		userSearch: {
-			type: Object,
-			default: () => {},
+		user: {
+			type: String,
+			default: null,
 		},
-		problemSearch: {
-			type: Object,
-			default: () => {},
+		problem: {
+			type: String,
+			default: null,
+		},
+		judgeStatus: {
+			type: String,
+			default: null,
+		},
+		language: {
+			type: String,
+			default: null,
 		},
 	},
 	data: () => ({
+		problemTitle: '',
 		verdictItems: [
 			'Pending',
 			'Preparing',
@@ -206,5 +223,10 @@ export default {
 			'Rust',
 		],
 	}),
+	computed: {
+		getUser() {
+			return this.user;
+		},
+	},
 };
 </script>

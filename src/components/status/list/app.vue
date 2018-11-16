@@ -8,23 +8,39 @@
 			<v-flex
 				xs12
 				xl10>
-				<div class = "elevation-2">
-					<StatusList
-						:status-item = "submissionList"
-						:filters = "filters"
-						:user-search = "userSearch"
-						:problem-search = "problemSearch"
-						:is-loading = "isLoading"
-					/>
-				</div>
-				<div
-					:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
-					class = "text-xs-center mt-3">
-					<v-pagination
-						ref = "pagination"
-						v-model = "page"
-						:length = "maxpage"/>
-				</div>
+				<ApolloQuery
+					:query = "require('@/graphql/submission/list.gql')"
+					:variables = "{ page , pk , user, problem, judgeStatus, language }"
+					:debounce = "300"
+					fetch-policy = "no-cache"
+					@result = "onRequestResult" >
+					<template
+						slot-scope = "{ result: { loading, error , data } }">
+						<div>
+							<div class = "elevation-2">
+								<StatusList
+									:status-item = "data ? data.submissionList.submissionList : []"
+									:pk = "parseInt(pk,10)"
+									:user = "user"
+									:problem = "problem"
+									:judge-status = "judgeStatus"
+									:language = "language"
+									:is-loading = "loading || !data"
+									@input-pk = "pk = $event"
+									@input-user = "user = $event"
+								/>
+							</div>
+							<div
+								:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
+								class = "text-xs-center mt-3">
+								<v-pagination
+									ref = "pagination"
+									v-model = "page"
+									:length = "maxpage"/>
+							</div>
+						</div>
+					</template>
+				</ApolloQuery>
 			</v-flex>
 		</v-layout>
 	</v-container>
@@ -34,12 +50,9 @@
 <script>
 
 import StatusList from '@/components/status/list/list';
-import StatusListGQL from '@/graphql/submission/list.gql';
-import UserSearchGQL from '@/graphql/user/search.gql';
-import ProblemSearchGQL from '@/graphql/problem/search.gql';
+// import UserSearchGQL from '@/graphql/user/search.gql';
+// import ProblemSearchGQL from '@/graphql/problem/search.gql';
 import { mapGetters } from 'vuex';
-
-const debounce = require('lodash.debounce');
 
 
 export default {
@@ -52,11 +65,16 @@ export default {
 
 	data() {
 		return {
+			test: null,
 			isLoading: false,
 			page: 1,
 			maxpage: 0,
-			submissionList: [],
-			filters: { },
+			filters: {},
+			pk: null,
+			user: null,
+			problem: null,
+			judgeStatus: null,
+			language: null,
 			userSearch: {
 				items: [],
 				isLoading: false,
@@ -71,6 +89,9 @@ export default {
 	},
 
 	computed: {
+		queryFilters() {
+			return { ...this.filters };
+		},
 		userSearchFilter() {
 			return this.userSearch.filter;
 		},
@@ -82,17 +103,8 @@ export default {
 			isAuthenticated: 'user/isAuthenticated',
 		}),
 	},
+
 	watch: {
-		page() {
-			this.request();
-		},
-		filters: {
-			handler() {
-				this.isLoading = true;
-				this.debouncedRequest();
-			},
-			deep: true,
-		},
 		userSearchFilter() {
 			this.updateUserSearch();
 		},
@@ -103,80 +115,54 @@ export default {
 
 	activated() {
 		this.$refs.pagination.init();
-		this.request();
-	},
-
-	mounted() {
-		this.request();
 	},
 
 	methods: {
-		request() {
-			const variables = {
-				page: this.page,
-				date: new Date().getTime(),
-				...this.filters,
-			};
-			variables.pk = parseInt(variables.pk, 10);
-			this.isLoading = true;
-			this.$apollo.query({
-				query: StatusListGQL,
-				variables,
-			})
-				.then(response => response.data.submissionList)
-				.then((data) => {
-					Object.assign(this, data);
-					this.page = Math.min(this.page, this.maxpage);
-				})
-				.then(() => {
-					this.isLoading = false;
-				});
+		onRequestResult(result) {
+			this.maxpage = result.data.submissionList.maxpage;
 		},
-		debouncedRequest: debounce(function _debouncedRequest() {
-			this.request();
-		}, 250),
-		updateUserSearch() {
-			if (!this.userSearchFilter) {
-				if (this.isAuthenticated) {
-					this.userSearch.items = [this.profile.username];
-				} else {
-					this.userSearch.items = [];
-				}
-				return;
-			}
-			const variables = {
-				filter: this.userSearchFilter,
-			};
-			this.userSearch.isLoading = true;
-			this.$apollo.query({
-				query: UserSearchGQL,
-				variables,
-			})
-				.then(response => response.data.userSearch)
-				.then((data) => {
-					this.userSearch.items = data.userList.map(val => val.username);
-				})
-				.then(() => { this.userSearch.isLoading = false; });
-		},
-		updateProblemSearch() {
-			if (!this.problemSearchFilter) {
-				this.problemSearch.items = [];
-				return;
-			}
-			const variables = {
-				filter: this.problemSearchFilter,
-			};
-			this.problemSearch.isLoading = true;
-			this.$apollo.query({
-				query: ProblemSearchGQL,
-				variables,
-			})
-				.then(response => response.data.problemSearch)
-				.then((data) => {
-					this.problemSearch.items = data.problemList.map(val => val.title);
-				})
-				.then(() => { this.problemSearch.isLoading = false; });
-		},
+		// updateUserSearch() {
+		// 	if (!this.userSearchFilter) {
+		// 		if (this.isAuthenticated) {
+		// 			this.userSearch.items = [this.profile.username];
+		// 		} else {
+		// 			this.userSearch.items = [];
+		// 		}
+		// 		return;
+		// 	}
+		// 	const variables = {
+		// 		filter: this.userSearchFilter,
+		// 	};
+		// 	this.userSearch.isLoading = true;
+		// 	this.$apollo.query({
+		// 		query: UserSearchGQL,
+		// 		variables,
+		// 	})
+		// 		.then(response => response.data.userSearch)
+		// 		.then((data) => {
+		// 			this.userSearch.items = data.userList.map(val => val.username);
+		// 		})
+		// 		.then(() => { this.userSearch.isLoading = false; });
+		// },
+		// updateProblemSearch() {
+		// 	if (!this.problemSearchFilter) {
+		// 		this.problemSearch.items = [];
+		// 		return;
+		// 	}
+		// 	const variables = {
+		// 		filter: this.problemSearchFilter,
+		// 	};
+		// 	this.problemSearch.isLoading = true;
+		// 	this.$apollo.query({
+		// 		query: ProblemSearchGQL,
+		// 		variables,
+		// 	})
+		// 		.then(response => response.data.problemSearch)
+		// 		.then((data) => {
+		// 			this.problemSearch.items = data.problemList.map(val => val.title);
+		// 		})
+		// 		.then(() => { this.problemSearch.isLoading = false; });
+		// },
 	},
 };
 </script>

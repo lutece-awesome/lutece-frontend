@@ -1,6 +1,5 @@
 query SubmissionListGQL(
 	$page: Int!
-	$date: String!
 	$pk: ID
 	$user: String
 	$problem: String
@@ -9,7 +8,6 @@ query SubmissionListGQL(
 ) {
 	submissionList(
 		page: $page
-		date: $date
 		pk: $pk
 		user: $user
 		problem: $problem

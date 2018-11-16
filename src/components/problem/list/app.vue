@@ -21,7 +21,7 @@
 							label = ""
 						/>
 						<ErrorSpinner v-if = "error" />
-						<div>
+						<div v-else>
 							<div class = "elevation-2">
 								<ProblemList
 									:problem-item = "data ? data.problemList.problemList : []"

@@ -22,7 +22,7 @@
 							label = ""
 						/>
 						<ErrorSpinner v-if = "error" />
-						<div>
+						<div v-else >
 							<UserList
 								:user-item = "data ? data.userList.userList : []"
 								:is-loading = "loading || !data"
