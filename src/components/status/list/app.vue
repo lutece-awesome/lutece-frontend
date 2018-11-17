@@ -10,33 +10,34 @@
 				xl10>
 				<ApolloQuery
 					:query = "require('@/graphql/submission/list.gql')"
-					:variables = "{ page , pk , user, problem, judgeStatus, language }"
-					:debounce = "300"
+					:variables = "queryVariables"
+					:debounce = "128"
 					fetch-policy = "no-cache"
 					@result = "onResult" >
 					<template
-						slot-scope = "{ result: { loading, error , data } }, isLoading">
-						<div class = "elevation-2">
-							<div>
-								{{ loading }}
+						slot-scope = "{ result: { error , data } }">
+						<error-spinner v-if = "error" />
+						<div v-else>
+							<div
+								class = "elevation-2">
+								<status-list
+									:status-item = "data ? data.submissionList.submissionList : []"
+									:is-loading = "isLoading || !data"
+									@input-pk = "isLoading = true, pk = $event"
+									@input-user = "isLoading = true, user = $event"
+									@input-problem = "isLoading = true, problem = $event"
+									@input-verdict = "isLoading = true, verdict = $event"
+									@input-language = "isLoading = true, language = $event"
+								/>
 							</div>
-							<status-list
-								:status-item = "data ? data.submissionList.submissionList : []"
-								:is-loading = "isLoading || !data || loading"
-								@input-pk = "pk = $event"
-								@input-user = "user = $event"
-								@input-problem = "problem = $event"
-								@input-verdict = "judgeStatus = $event"
-								@input-language = "language = $event"
-							/>
-						</div>
-						<div
-							:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
-							class = "text-xs-center mt-3">
-							<v-pagination
-								ref = "pagination"
-								v-model = "page"
-								:length = "maxPage"/>
+							<div
+								:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
+								class = "text-xs-center mt-3">
+								<v-pagination
+									ref = "pagination"
+									v-model = "page"
+									:length = "maxPage"/>
+							</div>
 						</div>
 					</template>
 				</ApolloQuery>
@@ -66,9 +67,22 @@ export default {
 			pk: null,
 			user: null,
 			problem: null,
-			judgeStatus: null,
+			verdict: null,
 			language: null,
 		};
+	},
+
+	computed: {
+		queryVariables() {
+			return {
+				page: this.page,
+				pk: this.pk,
+				user: this.user,
+				problem: this.problem,
+				judgeStatus: this.verdict,
+				language: this.language,
+			};
+		},
 	},
 
 	activated() {
@@ -77,7 +91,8 @@ export default {
 
 	methods: {
 		onResult(result) {
-			this.maxpage = result.data.submissionList.maxpage;
+			this.isLoading = false;
+			this.maxPage = result.data.submissionList.maxpage;
 		},
 	},
 };

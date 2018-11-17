@@ -14,7 +14,7 @@
 					:debounce = "300"
 					@result = "onResult" >
 					<template
-						slot-scope = "{ result: { loading, error , data } }">
+						slot-scope = "{ result: { loading, error , data } , isLoading }">
 						<search-bar
 							v-model = "filter"
 							class = "mb-4 fluid"
@@ -25,7 +25,7 @@
 							<div class = "elevation-2">
 								<problem-list
 									:problem-item = "data ? data.problemList.problemList : []"
-									:is-loading = "( loading || !data ) && !error"
+									:is-loading = "( !data || loading || isLoading ) ? true : false"
 								/>
 							</div>
 							<div class = "text-xs-center mt-3">
@@ -71,7 +71,7 @@ export default {
 
 	methods: {
 		onResult(result) {
-			this.maxpage = result.data.problemList.maxpage;
+			this.maxPage = result.data.problemList.maxpage;
 		},
 	},
 };

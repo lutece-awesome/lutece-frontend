@@ -4,6 +4,80 @@
 		:loading = "isLoading"
 		:headers-length = "8"
 		hide-actions >
+		<v-progress-linear
+			slot = "progress"
+			color = "primary"
+			height = "5"
+			indeterminate
+		/>
+		<template
+			slot="headers"
+			slot-scope="props">
+			<tr>
+				<th
+					role="columnheader"
+					scope="col"
+					class="column text-xs-center">
+					<v-text-field
+						label = "#"
+						single-line
+						hide-details
+						type = "number"
+						min = "1"
+						step = "1"
+						@input = "$emit( 'input-pk' , $event )"
+					/>
+				</th>
+				<th
+					role = "columnheader"
+					scope = "col"
+					class = "column text-xs-center">
+					<user-auto-complete
+						style = "padding-top: 20px"
+						label = "User"
+						@input = "$emit( 'input-user' , $event )"/>
+				</th>
+				<th
+					role="columnheader"
+					scope="col"
+					class="column text-xs-center">
+					<problem-auto-complete
+						style = "padding-top: 20px"
+						label = "Problem"
+						@input = "$emit( 'input-problem' , $event )" />
+				</th>
+				<th
+					role = "columnheader"
+					scope = "col"
+					class = "column text-xs-center">
+					<verdict-select
+						@input = "$emit( 'input-verdict' , $event )"
+					/>
+				</th>
+				<th
+					role = "columnheader"
+					scope = "col"
+					class = "column text-xs-center pt-3 hidden-sm-and-down">
+					Time (ms)
+				</th>
+				<th
+					role = "columnheader"
+					scope = "col"
+					class = "column text-xs-center pt-3 hidden-sm-and-down">Memory (KiB)</th>
+				<th
+					role = "columnheader"
+					scope = "col"
+					class = "column text-xs-center pt-3 hidden-sm-and-down">Submit Time</th>
+				<th
+					role = "columnheader"
+					scope = "col"
+					class = "column text-xs-center hidden-sm-and-down">
+					<language-select
+						@input = "$emit( 'input-language' , $event )"
+					/>
+				</th>
+			</tr>
+		</template>
 		<template
 			slot = "items"
 			slot-scope = "props">
@@ -47,73 +121,6 @@
 				</td>
 				<td class="text-xs-center hidden-sm-and-down">{{ props.item.language }}</td>
 			</router-link>
-		</template>
-		<template
-			slot="headers"
-			slot-scope="props">
-			<tr>
-				<th
-					role="columnheader"
-					scope="col"
-					class="column text-xs-center">
-					<v-text-field
-						label = "#"
-						single-line
-						hide-details
-						type = "number"
-						min = "1"
-						step = "1"
-						style = "width: 30px"
-						@input = "$emit( 'input-pk' , $event )"
-					/>
-				</th>
-				<th
-					role = "columnheader"
-					scope = "col"
-					class = "column text-xs-center">
-					<user-auto-complete
-						label = "User"
-						@input = "$emit( 'input-user' , $event )"/>
-				</th>
-				<th
-					role="columnheader"
-					scope="col"
-					class="column text-xs-center">
-					<problem-auto-complete
-						label = "Problem"
-						@input = "$emit( 'input-problem' , $event )" />
-				</th>
-				<th
-					role = "columnheader"
-					scope = "col"
-					class = "column text-xs-center">
-					<verdict-select
-						@input = "$emit( 'input-verdict' , $event )"
-					/>
-				</th>
-				<th
-					role = "columnheader"
-					scope = "col"
-					class = "column text-xs-center pt-3 hidden-sm-and-down">
-					Time (ms)
-				</th>
-				<th
-					role = "columnheader"
-					scope = "col"
-					class = "column text-xs-center pt-3 hidden-sm-and-down">Memory (KiB)</th>
-				<th
-					role = "columnheader"
-					scope = "col"
-					class = "column text-xs-center pt-3 hidden-sm-and-down">Submit Time</th>
-				<th
-					role = "columnheader"
-					scope = "col"
-					class = "column text-xs-center hidden-sm-and-down">
-					<language-select
-						@input = "$emit( 'input-language' , $event )"
-					/>
-				</th>
-			</tr>
 		</template>
 	</v-data-table>
 </template>

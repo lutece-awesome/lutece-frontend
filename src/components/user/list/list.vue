@@ -6,6 +6,12 @@
 			:loading = "isLoading"
 			hide-actions
 		>
+			<v-progress-linear
+				slot = "progress"
+				color = "primary"
+				height = "5"
+				indeterminate
+			/>
 			<template
 				slot="items"
 				slot-scope="props">

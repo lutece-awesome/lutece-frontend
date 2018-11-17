@@ -10,18 +10,18 @@
 				<div>
 					<v-card>
 						<v-card-title primary-title>
-							<h3
+							<div
 								:class = "result_color + '--text'"
 								class = "headline mb-0">
-								{{ result }}
-							</h3>
+								<strong> {{ result }} </strong>
+							</div>
 						</v-card-title>
 						<v-progress-linear
-							:indeterminate="!completed && judge.length == 0"
-							v-model="progress"
-							:color="result_color"
-							height="2"
-							class="ma-0"/>
+							:indeterminate = "isIndeterminate"
+							v-model = "progress"
+							:color = "result_color"
+							height = "5"
+							class = "ma-0"/>
 						<v-card-text>
 							<table class="submission-table output-code mt-2">
 								<tr>
@@ -105,6 +105,7 @@
 <script>
 import { getWebSocketUri } from '@/utils';
 import { mapGetters } from 'vuex';
+import Verdict from '@/plugins/verdict';
 
 
 export default {
@@ -174,6 +175,10 @@ export default {
 		hasCode() {
 			if (!this.code) return false;
 			return this.code.length > 0;
+		},
+		isIndeterminate() {
+			const ret = Verdict.valueOf(this.result);
+			return ret === Verdict.pd || ret === Verdict.pr;
 		},
 	},
 

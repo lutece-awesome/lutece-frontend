@@ -25,7 +25,7 @@
 						<div v-else >
 							<UserList
 								:user-item = "data ? data.userList.userList : []"
-								:is-loading = "isLoading || loading || !data"
+								:is-loading = "( !data || loading || isLoading ) ? true : false"
 							/>
 							<div
 								class = "text-xs-center mt-3">
@@ -61,12 +61,6 @@ export default {
 			maxpage: 0,
 			filter: '',
 		};
-	},
-
-	activated() {
-		if (this.$refs.pagination) {
-			this.$refs.pagination.init();
-		}
 	},
 
 	methods: {
