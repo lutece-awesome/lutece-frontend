@@ -15,17 +15,17 @@
 					:variables = "{ page , filter }"
 					@result = "onResult">
 					<template
-						slot-scope = "{ result: { loading , error , data } }">
+						slot-scope = "{ result: { loading, error , data } , isLoading }">
 						<Searchbar
 							v-model = "filter"
 							class = "mb-4 fluid"
 							label = ""
 						/>
-						<ErrorSpinner v-if = "error" />
+						<error-spinner v-if = "error" />
 						<div v-else >
 							<UserList
 								:user-item = "data ? data.userList.userList : []"
-								:is-loading = "loading || !data"
+								:is-loading = "isLoading || loading || !data"
 							/>
 							<div
 								class = "text-xs-center mt-3">

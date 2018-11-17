@@ -10,8 +10,8 @@
 			@result = "onResult" >
 			<template
 				slot-scope = "{ result: { loading , error , data } }">
-				<LoadingSpinner v-if = "loading" />
-				<ErrorSpinner v-else-if = "error" />
+				<loading-spinner v-if = "loading" />
+				<error-spinner v-else-if = "error" />
 				<div v-else-if = "data">
 					<Comments v-model = "data.blogDiscussionList.discussionList" />
 					<div

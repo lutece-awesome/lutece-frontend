@@ -10,7 +10,7 @@
 			@result = "onResult" >
 			<template
 				slot-scope = "{ result: { loading , error , data } }">
-				<ErrorSpinner v-if = "error" />
+				<error-spinner v-if = "error" />
 				<div v-show = "data">
 					<v-layout
 						row

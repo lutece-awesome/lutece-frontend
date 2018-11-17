@@ -8,7 +8,7 @@
 					:src="user.attachInfo.gravatar"
 					height="200"
 					contain>
-					<LoadingSpinner slot="placeholder" />
+					<loading-spinner slot="placeholder" />
 				</v-img>
 			</v-flex>
 			<v-flex

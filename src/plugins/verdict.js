@@ -59,8 +59,8 @@ const VerdictList = [
 	},
 ];
 
-const valueOf = result =>
-	VerdictList.find(element => element.full === result || element.short === result);
+const valueOf = result => VerdictList.find(element => element.full === result
+	|| element.short === result);
 
 const Verdict = {
 	valueOf: result => valueOf(result),

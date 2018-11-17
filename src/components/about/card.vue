@@ -16,7 +16,7 @@
 						height = "128"
 						contain
 					>
-						<LoadingSpinner slot = "placeholder" />
+						<loading-spinner slot = "placeholder" />
 					</v-img>
 				</v-layout>
 			</v-flex>
@@ -44,7 +44,8 @@
 				</table>
 			</v-flex>
 		</v-layout>
-</v-container></template>
+	</v-container>
+</template>
 
 
 <script>

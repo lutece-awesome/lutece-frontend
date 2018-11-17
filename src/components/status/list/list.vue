@@ -57,7 +57,6 @@
 					scope="col"
 					class="column text-xs-center">
 					<v-text-field
-						:value = "pk"
 						label = "#"
 						single-line
 						hide-details
@@ -73,22 +72,24 @@
 					scope = "col"
 					class = "column text-xs-center">
 					<user-auto-complete
-						v-model = "user"
-						label = "User"/>
+						label = "User"
+						@input = "$emit( 'input-user' , $event )"/>
 				</th>
 				<th
 					role="columnheader"
 					scope="col"
 					class="column text-xs-center">
 					<problem-auto-complete
-						v-model = "problem"
-						label = "Problem" />
+						label = "Problem"
+						@input = "$emit( 'input-problem' , $event )" />
 				</th>
 				<th
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center">
-					<verdict-select/>
+					<verdict-select
+						@input = "$emit( 'input-verdict' , $event )"
+					/>
 				</th>
 				<th
 					role = "columnheader"
@@ -108,7 +109,9 @@
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center hidden-sm-and-down">
-					<language-select />
+					<language-select
+						@input = "$emit( 'input-language' , $event )"
+					/>
 				</th>
 			</tr>
 		</template>
@@ -137,56 +140,6 @@ export default {
 		isLoading: {
 			type: Boolean,
 			default: false,
-		},
-		pk: {
-			type: Number,
-			default: null,
-		},
-		user: {
-			type: String,
-			default: null,
-		},
-		problem: {
-			type: String,
-			default: null,
-		},
-		judgeStatus: {
-			type: String,
-			default: null,
-		},
-		language: {
-			type: String,
-			default: null,
-		},
-	},
-	data: () => ({
-		problemTitle: '',
-		verdictItems: [
-			'Pending',
-			'Preparing',
-			'Accepted',
-			'Running',
-			'Compile Error',
-			'Wrong Answer',
-			'Runtime Error',
-			'Time Limit Exceeded',
-			'Output Limit Exceeded',
-			'Memory Limit Exceeded',
-			'Judger Error',
-		],
-		languageItems: [
-			'GNU G++',
-			'GNU GCC',
-			'Python',
-			'Java',
-			'Go',
-			'Ruby',
-			'Rust',
-		],
-	}),
-	computed: {
-		getUser() {
-			return this.user;
 		},
 	},
 };
