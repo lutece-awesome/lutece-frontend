@@ -1,6 +1,6 @@
 <template>
 	<v-select
-		:items = "languageList"
+		:items = "verdictList"
 		:item-text = "each => each.full"
 		:item-value = "itemValue"
 		:append-icon = "appendIcon"
@@ -16,7 +16,7 @@
 
 <script>
 
-import LanguageList from '@/plugins/language';
+import Verdict from '@/plugins/verdict';
 
 export default {
 	props: {
@@ -26,7 +26,7 @@ export default {
 		},
 		label: {
 			type: String,
-			default: 'Language',
+			default: 'Verdict',
 		},
 		appendIcon: {
 			type: String,
@@ -39,7 +39,7 @@ export default {
 	},
 
 	data: () => ({
-		languageList: LanguageList,
+		verdictList: Verdict.all(),
 	}),
 };
 </script>

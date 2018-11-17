@@ -94,7 +94,7 @@
 <script>
 
 import Bar from '@/components/chart/bar';
-import JudgeResult from '@/plugins/judge-result';
+import Verdict from '@/plugins/verdict';
 
 export default {
 	components: {
@@ -157,11 +157,11 @@ export default {
 		Object.keys(this.statistics).forEach((key) => {
 			const value = this.statistics[key];
 			if (Number.isInteger(value) && value > 0) {
-				const result = JudgeResult.valueOf[String(key)];
-				label.push(JudgeResult.toString[result]);
+				const result = Verdict.valueOf(String(key));
+				label.push(result.full);
 				data.push(value);
-				backgroundColor.push(JudgeResult.backgroundColor[result]);
-				borderColor.push(JudgeResult.borderColor[result]);
+				backgroundColor.push(result.backgroundColor);
+				borderColor.push(result.borderColor);
 			}
 		});
 		const index = [];
