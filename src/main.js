@@ -22,7 +22,7 @@ Vue.config.productionTip = false;
 new Vue({
 	router,
 	store,
-	provide: apolloProvider.provide(),
+	apolloProvider,
 	data() {
 		return {
 			title: 'Lutece',
