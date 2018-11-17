@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import LoadingSpinner from '@/components/basic/loadingspinner';
-import ErrorSpinner from '@/components/basic/errorspinner';
+import LoadingSpinner from '@/components/utils/loading-spinner';
+import ErrorSpinner from '@/components/utils/error-spinner';
 
-Vue.component('LoadingSpinner', LoadingSpinner);
-Vue.component('ErrorSpinner', ErrorSpinner);
+Vue.component('loading-spinner', LoadingSpinner);
+Vue.component('error-spinner', ErrorSpinner);

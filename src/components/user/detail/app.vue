@@ -43,7 +43,7 @@
 
 <script>
 
-import Layout from '@/components/user/detail/layout';
+import Layout from './layout';
 
 export default {
 	metaInfo() { return { title: this.username }; },

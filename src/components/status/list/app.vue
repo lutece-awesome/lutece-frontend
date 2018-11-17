@@ -18,7 +18,7 @@
 						slot-scope = "{ result: { loading, error , data } }">
 						<div>
 							<div class = "elevation-2">
-								<StatusList
+								<status-list
 									:status-item = "data ? data.submissionList.submissionList : []"
 									:pk = "parseInt(pk,10)"
 									:user = "user"
@@ -36,7 +36,7 @@
 								<v-pagination
 									ref = "pagination"
 									v-model = "page"
-									:length = "maxpage"/>
+									:length = "maxPage"/>
 							</div>
 						</div>
 					</template>
@@ -68,7 +68,7 @@ export default {
 			test: null,
 			isLoading: false,
 			page: 1,
-			maxpage: 0,
+			maxPage: 0,
 			filters: {},
 			pk: null,
 			user: null,

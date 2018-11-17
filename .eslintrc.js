@@ -13,7 +13,7 @@ module.exports = {
     '@vue/airbnb'
 	],
   plugins: [
-    'graphql'
+    'graphql',
   ],
   // check if imports actually resolve
   settings: {

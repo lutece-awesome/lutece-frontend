@@ -15,24 +15,24 @@
 					@result = "onResult" >
 					<template
 						slot-scope = "{ result: { loading, error , data } }">
-						<Searchbar
+						<search-bar
 							v-model = "filter"
 							class = "mb-4 fluid"
 							label = ""
 						/>
-						<ErrorSpinner v-if = "error" />
+						<error-spinner v-if = "error" />
 						<div v-else>
 							<div class = "elevation-2">
-								<ProblemList
+								<problem-list
 									:problem-item = "data ? data.problemList.problemList : []"
-									:is-loading = "loading || !data"
+									:is-loading = "( loading || !data ) && !error"
 								/>
 							</div>
 							<div class = "text-xs-center mt-3">
 								<v-pagination
 									ref = "pagination"
 									v-model = "page"
-									:length = "maxpage"
+									:length = "maxPage"
 								/>
 							</div>
 						</div>
@@ -45,22 +45,20 @@
 
 <script>
 import ProblemList from '@/components/problem/list/list';
-import Searchbar from '@/components/basic/searchbar';
-import LoadingSpinner from '@/components/basic/loadingspinner';
+import SearchBar from '@/components/basic/searchbar';
 
 export default {
 	name: 'Problem',
 	metaInfo() { return { title: 'Problem' }; },
 	components: {
 		ProblemList,
-		Searchbar,
-		LoadingSpinner,
+		SearchBar,
 	},
 
 	data() {
 		return {
 			page: 1,
-			maxpage: 0,
+			maxPage: 0,
 			filter: '',
 		};
 	},

@@ -5,34 +5,32 @@
 			wrap>
 			<v-flex xs12>
 				<v-img
-					:src = "user.attachInfo.gravatar"
-					height = "200"
-					contain
-				>
-					<LoadingSpinner slot = "placeholder" />
+					:src="user.attachInfo.gravatar"
+					height="200"
+					contain>
+					<LoadingSpinner slot="placeholder" />
 				</v-img>
 			</v-flex>
 			<v-flex
 				xs12
-				class = "mt-3" >
+				class="mt-3">
 				<v-hover>
 					<v-card
-						slot-scope = "{ hover }"
-						:class = "`elevation-${hover ? 4 : 1}`"
-					>
+						slot-scope="{ hover }"
+						:class="`elevation-${hover ? 4 : 1}`">
 						<v-container>
 							<v-layout
 								row
 								wrap>
 								<v-flex xs12>
-									<div class = "headline font-weight-medium ml-1" > {{ user.username }} </div>
-									<v-divider class = "mt-2 mb-2" />
-									<table class = "profile-table">
+									<div class="headline font-weight-medium ml-1"> {{ user.username }} </div>
+									<v-divider class="mt-2 mb-2" />
+									<table class="profile-table">
 										<tr>
 											<td>Last Seen</td>
 											<td>
 												<v-tooltip bottom>
-													<span slot = "activator">
+													<span slot="activator">
 														<span>
 															{{ user.lastLoginDate | moment("from") }}
 														</span>
@@ -47,7 +45,7 @@
 											<td>Registered</td>
 											<td>
 												<v-tooltip bottom>
-													<span slot = "activator">
+													<span slot="activator">
 														<span>
 															{{ user.joinedDate | moment("from") }}
 														</span>
@@ -58,15 +56,15 @@
 												</v-tooltip>
 											</td>
 										</tr>
-										<tr v-if = "user.attachInfo.school" >
+										<tr v-if="user.attachInfo.school">
 											<td>School</td>
 											<td>{{ user.attachInfo.school }}</td>
 										</tr>
-										<tr v-if = "user.attachInfo.company" >
+										<tr v-if="user.attachInfo.company">
 											<td>Company</td>
 											<td>{{ user.attachInfo.company }}</td>
 										</tr>
-										<tr v-if = "user.attachInfo.location" >
+										<tr v-if="user.attachInfo.location">
 											<td>Location</td>
 											<td>{{ user.attachInfo.location }}</td>
 										</tr>
@@ -94,7 +92,7 @@
 												>
 											</td>
 										</tr> -->
-										<tr v-if = "user.attachInfo.about">
+										<tr v-if="user.attachInfo.about">
 											<td>About</td>
 											<td>{{ user.attachInfo.about }}</td>
 										</tr>
@@ -111,9 +109,7 @@
 
 
 <script>
-
 export default {
-
 	props: {
 		user: {
 			type: Object,
@@ -124,9 +120,9 @@ export default {
 </script>
 
 <style scoped>
-    .about{
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+.about {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 </style>

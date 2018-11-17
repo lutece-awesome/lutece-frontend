@@ -6,3 +6,6 @@ node_modules/
 
 # ignore vscode setting file
 .vscode/
+
+# ignore idea setting file
+.idea/

@@ -72,7 +72,9 @@
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center">
-					<ApolloQuery
+
+					<user-auto-complete/>
+					<!-- <ApolloQuery
 						:query = "require('@/graphql/user/search.gql')"
 						:variables = "{ user }"
 						:debounce = "300"
@@ -93,7 +95,7 @@
 								@input = "$emit( 'input-user' , $event )"
 							/>
 						</template>
-					</ApolloQuery>
+					</ApolloQuery> -->
 				</th>
 				<!-- <th
 					role="columnheader"
@@ -165,9 +167,14 @@
 	</v-data-table>
 </template>
 
-
 <script>
+
+import UserAutoComplete from '@/components/user/utils/auto-complete';
+
 export default {
+	components: {
+		UserAutoComplete,
+	},
 	props: {
 		statusItem: {
 			type: Array,

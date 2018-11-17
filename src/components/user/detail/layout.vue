@@ -25,9 +25,9 @@
 
 <script>
 
-import UserProfile from '@/components/user/detail/profile';
-import UserSummary from '@/components/user/detail/summary';
-import UserSolved from '@/components/user/detail/solved';
+import UserProfile from './profile';
+import UserSummary from './summary';
+import UserSolved from './solved';
 
 export default {
 	components: {

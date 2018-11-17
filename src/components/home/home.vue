@@ -21,6 +21,7 @@
 						<Recently class = "mt-4" />
 					</v-flex>
 				</v-layout>
+				<user-auto-complete/>
 			<!-- <v-flex xs6>
 				<Recently />
 			</v-flex> -->
@@ -34,6 +35,7 @@
 import TopUser from '@/components/home/topuser';
 import Curtain from '@/components/home/curtain';
 import Recently from '@/components/home/recently';
+import UserAutoComplete from '@/components/user/utils/auto-complete';
 
 export default {
 	metaInfo() { return { title: 'Home' }; },
@@ -42,6 +44,7 @@ export default {
 		TopUser,
 		Curtain,
 		Recently,
+		UserAutoComplete,
 	},
 
 };
