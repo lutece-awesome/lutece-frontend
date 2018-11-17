@@ -27,7 +27,7 @@
 
 <script>
 
-import JudgeResult from '@/plugins/judge-result';
+import Verdict from '@/plugins/verdict';
 
 export default {
 	props: {
@@ -51,7 +51,7 @@ export default {
 		},
 
 		isAccepted(result) {
-			return JudgeResult.valueOf[result] === JudgeResult.ac;
+			return Verdict.valueOf(result) === Verdict.ac;
 		},
 	},
 };

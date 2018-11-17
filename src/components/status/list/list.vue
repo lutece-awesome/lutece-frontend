@@ -88,7 +88,7 @@
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center">
-					<language-select />
+					<verdict-select/>
 				</th>
 				<th
 					role = "columnheader"
@@ -104,22 +104,12 @@
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center pt-3 hidden-sm-and-down">Submit Time</th>
-					<!-- <th
+				<th
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center hidden-sm-and-down">
-					<v-select
-						v-model = "filters.language"
-						:items = "languageItems"
-						label = "Lang"
-						single-line
-						hide-details
-						dense
-						clearable
-						offset-y
-						style = "width: 60px"
-					/>
-				</th> -->
+					<language-select />
+				</th>
 			</tr>
 		</template>
 	</v-data-table>
@@ -130,12 +120,14 @@
 import UserAutoComplete from '@/components/user/utils/auto-complete';
 import ProblemAutoComplete from '@/components/problem/utils/auto-complete';
 import LanguageSelect from '@/components/language/utils/select';
+import VerdictSelect from '@/components/verdict/utils/select';
 
 export default {
 	components: {
 		UserAutoComplete,
 		ProblemAutoComplete,
 		LanguageSelect,
+		VerdictSelect,
 	},
 	props: {
 		statusItem: {
