@@ -11,7 +11,6 @@
 					row
 					justify-center
 					wrap>
-					<user-auto-complete v-model = "a"/>
 					<v-flex xs12>
 						<Curtain/>
 					</v-flex>
@@ -45,12 +44,6 @@ export default {
 		Curtain,
 		Recently,
 		UserAutoComplete,
-	},
-
-	data() {
-		return {
-			a: '',
-		};
 	},
 };
 </script>
