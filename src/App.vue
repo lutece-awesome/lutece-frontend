@@ -56,4 +56,3 @@ export default {
 		min-height: 85%;
 	}
 </style>
-
