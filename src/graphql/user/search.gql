@@ -2,6 +2,9 @@ query UserSearchGQL($filter: String) {
 	userSearch(filter: $filter) {
 		userList {
 			username
+			attachInfo{
+				gravatar
+			}
 		}
 	}
 }

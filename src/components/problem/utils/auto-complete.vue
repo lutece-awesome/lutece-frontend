@@ -1,6 +1,6 @@
 <template>
 	<ApolloQuery
-		:query = "require('@/graphql/user/search.gql')"
+		:query = "require('@/graphql/problem/search.gql')"
 		:variables = "{ filter: filter }"
 		:skip = "skip"
 		:debounce = "300"
@@ -12,10 +12,10 @@
 				:append-icon = "appendIcon"
 				:error = "error"
 				:loading = "( !skip && ( !data || isLoading ) ) ? true : false"
-				:items = "data ? data.userSearch.userList : []"
+				:items = "data ? data.problemSearch.problemList : []"
 				:label = "label"
-				:item-text = "each => each.username"
-				:item-value = "each => each.username"
+				:item-text = "each => each.title"
+				:item-value = "each => each.slug"
 				single-line
 				hide-no-data
 				hide-selected
@@ -26,12 +26,7 @@
 					slot = "item"
 					slot-scope = "{ item }"
 				>
-					<v-list-tile-avatar>
-						<img :src = "item.attachInfo.gravatar">
-					</v-list-tile-avatar>
-					<v-list-tile-content>
-						<v-list-tile-title v-html = "item.username"/>
-					</v-list-tile-content>
+					{{ item.pk + ' - ' + item.title }}
 				</template>
 			</v-autocomplete>
 		</template>

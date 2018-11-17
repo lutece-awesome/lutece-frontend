@@ -11,6 +11,7 @@
 					row
 					justify-center
 					wrap>
+					<user-auto-complete v-model = "a"/>
 					<v-flex xs12>
 						<Curtain/>
 					</v-flex>
@@ -21,7 +22,6 @@
 						<Recently class = "mt-4" />
 					</v-flex>
 				</v-layout>
-				<user-auto-complete/>
 			<!-- <v-flex xs6>
 				<Recently />
 			</v-flex> -->
@@ -47,5 +47,10 @@ export default {
 		UserAutoComplete,
 	},
 
+	data() {
+		return {
+			a: '',
+		};
+	},
 };
 </script>

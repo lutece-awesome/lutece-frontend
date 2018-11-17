@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import {
 	Vuetify, // required
+	VChip,
 	VAlert,
 	VImg,
 	VProgressCircular,
@@ -37,6 +38,7 @@ import colors from 'vuetify/es5/util/colors';
 
 Vue.use(Vuetify, {
 	components: {
+		VChip,
 		VAlert,
 		VImg,
 		VProgressCircular,

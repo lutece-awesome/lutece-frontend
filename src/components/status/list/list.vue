@@ -72,51 +72,19 @@
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center">
-
-					<user-auto-complete/>
-					<!-- <ApolloQuery
-						:query = "require('@/graphql/user/search.gql')"
-						:variables = "{ user }"
-						:debounce = "300"
-					>
-						<template
-							slot-scope = "{ result: { loading, error , data } }">
-							<v-autocomplete
-								:value = "user"
-								:items = "data ? data.userSearch.userList.map( each => each.username ) : []"
-								:loading = "loading || !data"
-								single-line
-								hide-details
-								clearable
-								label = "User"
-								style = "width: 50px"
-								item-text = "name"
-								dense
-								@input = "$emit( 'input-user' , $event )"
-							/>
-						</template>
-					</ApolloQuery> -->
+					<user-auto-complete
+						v-model = "user"
+						label = "User"/>
 				</th>
-				<!-- <th
+				<th
 					role="columnheader"
 					scope="col"
 					class="column text-xs-center">
-					<v-autocomplete
-						v-model = "filters.problem"
-						:items = "problemSearch.items"
-						:loading = "problemSearch.isLoading"
-						:search-input.sync = "problemSearch.filter"
-						:append-icon = "null"
-						single-line
-						hide-details
-						clearable
-						label="Problem"
-						style="width: 80px"
-						item-text="name"
-						dense
-					/>
+					<problem-auto-complete
+						v-model = "problem"
+						label = "Problem" />
 				</th>
-				<th
+				<!-- <th
 					role = "columnheader"
 					scope = "col"
 					class = "column text-xs-center">
@@ -170,10 +138,12 @@
 <script>
 
 import UserAutoComplete from '@/components/user/utils/auto-complete';
+import ProblemAutoComplete from '@/components/problem/utils/auto-complete';
 
 export default {
 	components: {
 		UserAutoComplete,
+		ProblemAutoComplete,
 	},
 	props: {
 		statusItem: {
