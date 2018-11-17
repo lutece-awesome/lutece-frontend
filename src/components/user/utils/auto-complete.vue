@@ -17,6 +17,7 @@
 				:item-text = "each => each.username"
 				:item-value = "each => each.username"
 				single-line
+				dense
 				hide-no-data
 				hide-selected
 				clearable
@@ -29,9 +30,7 @@
 					<v-list-tile-avatar>
 						<img :src = "item.attachInfo.gravatar">
 					</v-list-tile-avatar>
-					<v-list-tile-content>
-						<v-list-tile-title v-html = "item.username"/>
-					</v-list-tile-content>
+					<v-list-tile-content v-text = "item.username" />
 				</template>
 			</v-autocomplete>
 		</template>
@@ -42,6 +41,10 @@
 
 export default {
 	props: {
+		value: {
+			type: String,
+			default: '',
+		},
 		label: {
 			type: String,
 			default: '',

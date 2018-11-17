@@ -18,6 +18,7 @@
 				:item-value = "each => each.slug"
 				single-line
 				hide-no-data
+				dense
 				hide-selected
 				clearable
 				@input = "$emit( 'input' , $event )"
@@ -37,6 +38,10 @@
 
 export default {
 	props: {
+		value: {
+			type: String,
+			default: '',
+		},
 		label: {
 			type: String,
 			default: '',
