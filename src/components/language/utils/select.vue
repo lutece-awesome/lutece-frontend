@@ -9,7 +9,7 @@
 		hide-details
 		dense
 		clearable
-		offset-y
+		menu-props="offsetY"
 		@input = "$emit( 'input' , $event)"
 	/>
 </template>

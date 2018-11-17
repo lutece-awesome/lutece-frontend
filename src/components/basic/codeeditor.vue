@@ -19,7 +19,7 @@
 				<v-select
 					v-model="language"
 					:items="items"
-					offset-y
+					menu-props="offsetY"
 					solo
 					flat
 					hide-details

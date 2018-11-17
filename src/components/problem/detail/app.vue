@@ -41,13 +41,13 @@
 						v-if="problem"
 						v-model="tabs"
 						touchless>
-						<v-tab-item id = "description">
+						<v-tab-item value = "description">
 							<ProblemDescription :problem = "problem"/>
 						</v-tab-item>
-						<v-tab-item id = "editor">
+						<v-tab-item value = "editor">
 							<ProblemEditor :problemslug = "slug" />
 						</v-tab-item>
-						<!-- <v-tab-item id="discussion">
+						<!-- <v-tab-item value="discussion">
 							<ProblemDiscussion/>
 						</v-tab-item> -->
 					</v-tabs-items>
