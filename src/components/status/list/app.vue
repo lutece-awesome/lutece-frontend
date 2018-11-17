@@ -15,27 +15,28 @@
 					fetch-policy = "no-cache"
 					@result = "onResult" >
 					<template
-						slot-scope = "{ result: { loading, error , data } }">
-						<div>
-							<div class = "elevation-2">
-								<status-list
-									:status-item = "data ? data.submissionList.submissionList : []"
-									:is-loading = "loading || !data"
-									@input-pk = "pk = $event"
-									@input-user = "user = $event"
-									@input-problem = "problem = $event"
-									@input-verdict = "judgeStatus = $event"
-									@input-language = "language = $event"
-								/>
+						slot-scope = "{ result: { loading, error , data } }, isLoading">
+						<div class = "elevation-2">
+							<div>
+								{{ loading }}
 							</div>
-							<div
-								:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
-								class = "text-xs-center mt-3">
-								<v-pagination
-									ref = "pagination"
-									v-model = "page"
-									:length = "maxPage"/>
-							</div>
+							<status-list
+								:status-item = "data ? data.submissionList.submissionList : []"
+								:is-loading = "isLoading || !data || loading"
+								@input-pk = "pk = $event"
+								@input-user = "user = $event"
+								@input-problem = "problem = $event"
+								@input-verdict = "judgeStatus = $event"
+								@input-language = "language = $event"
+							/>
+						</div>
+						<div
+							:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
+							class = "text-xs-center mt-3">
+							<v-pagination
+								ref = "pagination"
+								v-model = "page"
+								:length = "maxPage"/>
 						</div>
 					</template>
 				</ApolloQuery>

@@ -88,7 +88,7 @@
 					scope = "col"
 					class = "column text-xs-center">
 					<verdict-select
-						@input = "$emit( 'input-vercit' , $event )"
+						@input = "$emit( 'input-verdict' , $event )"
 					/>
 				</th>
 				<th
