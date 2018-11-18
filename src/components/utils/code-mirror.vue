@@ -34,7 +34,16 @@ export default {
 			return Promise.all(
 				[cm, css, line, sublime, closeBrackets, clike, go, rust, ruby, py, neo,
 					scrollBars, scrollBarsCss, autoRefresh],
-			).then(ret => ret[0].codemirror);
+			)
+				.then(ret => ret[0].codemirror)
+				.then((_) => {
+					Object.assign(_, {
+						beforeDestroy() {
+							// TODO: garbage cleanup after transition
+						},
+					});
+					return _;
+				});
 		},
 	},
 

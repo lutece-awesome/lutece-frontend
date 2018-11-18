@@ -2,22 +2,23 @@
 	<v-card>
 		<v-card-text>
 			<v-data-table
-				:items = "judge"
+				:items = "caseList"
 				:headers = "headers"
 				dense
-				hide-actions>
+				hide-actions
+			>
 				<template
 					slot = "items"
 					slot-scope = "props">
 					<tr>
 						<td class = "text-xs-center">{{ props.item.case }}</td>
 						<td
-							:class = "getJudgeColor( props.item.result )"
+							:class = "props.item.result.textColor + '--text'"
 							class = "text-xs-center" >
-							{{ props.item.result }}
+							{{ props.item.result.full }}
 						</td>
-						<td class = "text-xs-center">{{ props.item.time_cost }} ms</td>
-						<td class = "text-xs-center">{{ props.item.memory_cost }} KiB</td>
+						<td class = "text-xs-center">{{ props.item.timeCost }} ms</td>
+						<td class = "text-xs-center">{{ props.item.memoryCost }} KiB</td>
 					</tr>
 				</template>
 			</v-data-table>
@@ -27,32 +28,39 @@
 
 <script>
 
-import Verdict from '@/plugins/verdict';
-
 export default {
 	props: {
-		judge: {
+		caseList: {
 			type: Array,
-			default: () => ([]),
-		},
-		headers: {
-			type: Array,
-			default: null,
+			default: () => [],
 		},
 	},
 
-	methods: {
-		getJudgeColor(result) {
-			const isAC = this.isAccepted(result);
-			return {
-				'success--text': isAC,
-				'error--text': !isAC,
-			};
-		},
-
-		isAccepted(result) {
-			return Verdict.valueOf(result) === Verdict.ac;
-		},
+	data() {
+		return {
+			headers: [
+				{
+					text: 'Case',
+					align: 'center',
+					sortable: false,
+				},
+				{
+					text: 'Verdict',
+					align: 'center',
+					sortable: false,
+				},
+				{
+					text: 'Time',
+					align: 'center',
+					sortable: false,
+				},
+				{
+					text: 'Memory',
+					align: 'center',
+					sortable: false,
+				},
+			],
+		};
 	},
 };
 </script>

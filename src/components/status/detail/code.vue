@@ -1,22 +1,28 @@
 <template>
 	<v-card>
 		<v-card-text>
-			<codemirror
-				v-if = "code"
-				v-model = "code"
-				:options = "cmOptions"
+			<code-mirror
+				:value = "code"
+				:option = "option"
+				min-height = "0"
 			/>
 			<div
-				v-if = "judgererror_msg"
+				v-if = "errorInfo"
 				class = "output-code mt-1">
-				<h4> Judger info </h4>
-				<pre>{{ judgererror_msg }}</pre>
+				<div class = "title">
+					<strong> Error Info </strong>
+				</div>
+				<v-divider class = "mt-2 mb-2" />
+				<pre class = "subheadline"> {{ errorInfo }} </pre>
 			</div>
 			<div
-				v-if = "compileerror_msg"
+				v-if = "compileInfo"
 				class = "output-code mt-1">
-				<h4> Compile Info </h4>
-				<pre>{{ compileerror_msg }}</pre>
+				<div class = "title">
+					<strong> Compile Info </strong>
+				</div>
+				<v-divider class = "mt-2 mb-2" />
+				<pre class = "subheadline"> {{ compileInfo }} </pre>
 			</div>
 		</v-card-text>
 	</v-card>
@@ -24,27 +30,36 @@
 
 
 <script>
+
+import CodeMirror from '@/components/utils/code-mirror';
+
 export default {
+
 	components: {
-		codemirror: () => import('@/components/basic/codemirror'),
+		CodeMirror,
 	},
+
 	props: {
 		code: {
 			type: String,
 			default: null,
 		},
-		judgererror_msg: {
+		compileInfo: {
 			type: String,
 			default: null,
 		},
-		compileerror_msg: {
+		errorInfo: {
 			type: String,
 			default: null,
 		},
-		cmOptions: {
-			type: Object,
-			default: null,
-		},
+	},
+
+	data() {
+		return {
+			option: {
+				readOnly: true,
+			},
+		};
 	},
 };
 </script>

@@ -7,93 +7,61 @@
 				xs12
 				md8>
 				<div>
-					<!-- <v-card>
-						<v-card-title primary-title>
-							<div
-								:class = "result_color + '--text'"
-								class = "headline mb-0">
-								<strong> {{ result }} </strong>
-							</div>
-						</v-card-title>
-						<v-progress-linear
-							:indeterminate = "isIndeterminate"
-							v-model = "progress"
-							:color = "result_color"
-							height = "5"
-							class = "ma-0"/>
-						<v-card-text>
-							<table class="submission-table output-code mt-2">
-								<tr>
-									<td><pre>Problem:</pre></td>
-									<td class = "pl-1">
-										<router-link
-											:to = "{name: 'ProblemDetailDescription',
-												params: {slug: problem__slug}}"
-											tag = "a"
-										>
-											{{ problem__title }}
-										</router-link>
-									</td>
-								</tr>
-								<tr>
-									<td><pre>User:</pre></td>
-									<td class = "pl-1">
-										<router-link :to="{name: 'UserDetail', params: {username: user__username}}">
-											{{ user__username }}
-										</router-link>
-									</td>
-								</tr>
-								<tr>
-									<td><pre>Time:</pre></td>
-									<td class = "pl-1"><pre>{{ submit_time }}</pre></td>
-								</tr>
-								<tr>
-									<td><pre>Case:</pre></td>
-									<td
-										class = "pl-1" >
-										<span :class = "result_color + '--text'">
-											{{ judge.length }} / {{ casenumber }}
-										</span>
-									</td>
-								</tr>
-							</table>
-						</v-card-text>
-					</v-card> -->
+					<Summary
+						v-if = "isInitialized"
+						:result = "result"
+						:problemTitle = "problemTitle"
+						:problemSlug = "problemSlug"
+						:username = "submitUser"
+						:submitTime = "submitTime"
+						:language = "language"
+						:isIndeterminate = "isIndeterminate"
+						:caseNumber = "caseNumber"
+						:caseList = "caseList"
+					/>
 				</div>
 
-				<div class = "elevation-2 mt-5" >
-					<!-- <v-tabs
-						v-model = "active"
+				<div
+					v-if = "isInitialized"
+					class = "elevation-2 mt-5"
+				>
+					<v-tabs
+						v-model = "tab"
 						fixed-tabs>
+
 						<v-tab
+							v-if = "hasCode"
 							:ripple = "false"
-							:disabled = "!hasCode"
-							value > Code </v-tab>
-						<v-tab :ripple = "false"> Progress </v-tab>
+						>
+							Code
+						</v-tab>
+
+						<v-tab :ripple = "false">
+							Progress
+						</v-tab>
 					</v-tabs>
 
+
 					<v-tabs-items
-						v-model = "active"
+						v-model = "tab"
 						touchless
 					>
 
-						<v-tab-item>
-							<codeComponent
+						<v-tab-item v-if = "hasCode">
+							<Code
 								:code = "code"
-								:judgererror_msg = "judgererror_msg"
-								:compileerror_msg = "compileerror_msg"
-								:cm-options = "cmOptions"
+								:compileInfo = "compileInfo"
+								:errorInfo = "errorInfo"
 							/>
 						</v-tab-item>
 
 						<v-tab-item>
-							<progressComponent
-								:judge = "judge"
-								:headers = "headers" />
+							<Progress
+								:caseList = "caseList"
+							/>
 						</v-tab-item>
 
-					</v-tabs-items> -->
-
+					</v-tabs-items>
 				</div>
 			</v-flex>
 		</v-layout>
@@ -103,13 +71,24 @@
 
 <script>
 import Verdict from '@/plugins/verdict';
-import CodeMirror from '@/components/utils/code-mirror';
-import { establishWebSocketConnection, closeWebSocketConnection, waitingInitializing } from './connection';
 import Language from '@/plugins/language';
+import Code from '@/components/status/detail/code';
+import Summary from '@/components/status/detail/summary';
+import Progress from '@/components/status/detail/progress';
+import { establishWebSocketConnection, closeWebSocketConnection, waitingInitializing } from './connection';
 
 export default {
+
+	metaInfo() {
+		return {
+			title: `Submission - ${this.pk}`,
+		};
+	},
+
 	components: {
-		CodeMirror,
+		Code,
+		Summary,
+		Progress,
 	},
 
 	props: {
@@ -119,67 +98,21 @@ export default {
 		},
 	},
 
-	metaInfo() {
-		return {
-			title: `Submission - ${this.pk}`,
-		};
-	},
-
 	data: () => ({
+		isInitialized: false,
 		ws: null,
 		result: null,
+		code: null,
 		language: null,
 		problemTitle: null,
 		problemSlug: null,
 		submitTime: null,
 		caseNumber: null,
+		submitUser: null,
+		compileInfo: null,
+		errorInfo: null,
 		caseList: [],
-		// isInitialized: false,
-		// active: null,
-		// judge: [],
-		// ws: null,
-		// result: null,
-		// compileerror_msg: null,
-		// judgererror_msg: null,
-		// code: null,
-		// casenumber: null,
-		// codehighlight: null,
-		// cmOptions: {
-		// 	indentUnit: 4,
-		// 	lineNumbers: true,
-		// 	matchBrackets: true,
-		// 	mode: '',
-		// 	theme: 'neo',
-		// 	readOnly: true,
-		// },
-		// completed: false,
-		// problem__title: null,
-		// problem__slug: null,
-		// user__username: null,
-		// submit_time: null,
-		// result_color: 'info',
-		// headers: [
-		// 	{
-		// 		text: 'Case',
-		// 		align: 'center',
-		// 		sortable: false,
-		// 	},
-		// 	{
-		// 		text: 'Verdict',
-		// 		align: 'center',
-		// 		sortable: false,
-		// 	},
-		// 	{
-		// 		text: 'Time',
-		// 		align: 'center',
-		// 		sortable: false,
-		// 	},
-		// 	{
-		// 		text: 'Memory',
-		// 		align: 'center',
-		// 		sortable: false,
-		// 	},
-		// ],
+		tab: null,
 	}),
 
 	computed: {
@@ -188,8 +121,7 @@ export default {
 			return this.code.length > 0;
 		},
 		isIndeterminate() {
-			const ret = Verdict.valueOf(this.result);
-			return ret === Verdict.pd || ret === Verdict.pr;
+			return this.result === Verdict.pd || this.result === Verdict.pr;
 		},
 	},
 
@@ -205,6 +137,7 @@ export default {
 						vm.assignData(event);
 						Object.assign(vm, { ws });
 						Object.assign(vm.ws, { onmessage: ev => vm.assignData(ev) });
+						Object.assign(vm, { isInitialized: true });
 					});
 				});
 			},
@@ -213,13 +146,22 @@ export default {
 
 	methods: {
 		assignData(event) {
+			const data = JSON.parse(event.data);
 			const previousCaseList = this.caseList;
-			Object.assign({}, event.data);
+			Object.assign(this, data);
+			this.result = Verdict.valueOf(this.result);
 			this.language = Language.valueOf(this.language);
 			this.caseList = [
 				...this.caseList,
 				...previousCaseList,
-			].sort((a, b) => a.case < b.case);
+			]
+				.sort((a, b) => a.case < b.case)
+				.map(each => ({
+					...each,
+					...{
+						result: typeof (each.result) === 'string' ? Verdict.valueOf(each.result) : each.result,
+					},
+				}));
 		},
 	},
 

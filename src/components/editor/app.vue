@@ -2,7 +2,7 @@
 	<div>
 		<code-mirror
 			v-model = "code"
-			:option = "{ mode: language.codemirror }"
+			:option = "{ mode: language.codeMirror }"
 		>
 			<template slot = "extension">
 				<v-divider />
@@ -61,7 +61,7 @@ export default {
 	},
 	data: () => ({
 		code: '',
-		language: Language[0],
+		language: Language.first(),
 		isLoading: false,
 		isError: false,
 	}),
