@@ -70,7 +70,7 @@
 					v-if = "isProfileLoaded"
 					open-on-hover
 					light
-					menu-props="offsetY"
+					offset-y
 				>
 					<v-btn
 						slot="activator"
