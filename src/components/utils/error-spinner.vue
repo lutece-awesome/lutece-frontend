@@ -10,7 +10,9 @@
 			type = "error"
 			outline
 		>
-			<span class = "font-weight-medium subheading" > {{ msg }} </span>
+			<span class = "font-weight-medium subheading" >
+				{{ msg }}
+			</span>
 		</v-alert>
 	</v-layout>
 </template>

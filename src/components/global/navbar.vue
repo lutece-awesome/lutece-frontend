@@ -38,6 +38,9 @@
 				</v-list-tile>
 			</v-list>
 		</v-navigation-drawer>
+		<v-progress-linear
+			:indeterminate="true"
+			color = "primary" />
 		<v-toolbar
 			fixed
 			clipped-left

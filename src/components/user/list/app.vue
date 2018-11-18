@@ -16,7 +16,7 @@
 					@result = "onResult">
 					<template
 						slot-scope = "{ result: { loading, error , data } , isLoading }">
-						<Searchbar
+						<search-bar
 							v-model = "filter"
 							class = "mb-4 fluid"
 							label = ""
@@ -45,14 +45,14 @@
 <script>
 
 import UserList from '@/components/user/list/list';
-import Searchbar from '@/components/basic/searchbar';
+import SearchBar from '@/components/utils/search-bar';
 
 export default {
 	name: 'User',
 	metaInfo() { return { title: 'User' }; },
 	components: {
 		UserList,
-		Searchbar,
+		SearchBar,
 	},
 
 	data() {

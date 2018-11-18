@@ -45,7 +45,7 @@
 
 <script>
 import ProblemList from '@/components/problem/list/list';
-import SearchBar from '@/components/basic/searchbar';
+import SearchBar from '@/components/utils/search-bar';
 
 export default {
 	name: 'Problem',
