@@ -45,8 +45,8 @@
 export default {
 	props: {
 		value: {
-			type: String,
-			default: '',
+			type: Object,
+			default: null,
 		},
 		label: {
 			type: String,

@@ -1,6 +1,6 @@
 <template>
 	<v-container
-		:class="{'pa-0': $vuetify.breakpoint.xsOnly }"
+		:class = "{'pa-0': $vuetify.breakpoint.xsOnly }"
 		fluid>
 		<v-layout
 			row
@@ -12,7 +12,10 @@
 				xl8>
 				<v-btn
 					v-if = "hasPermission('problem.change_problem')"
-					:to = "{name: 'ProblemEdit', params: {slug: slug}}"
+					:to = "{
+						name: 'ProblemEdit',
+						params: { slug }
+					}"
 					color = "accent"
 					dark
 					fab
@@ -33,9 +36,6 @@
 						<v-tab
 							:ripple="false"
 							to = "editor">Editor</v-tab>
-							<!-- <v-tab
-							:ripple="false"
-							to="discussion">Disscussion</v-tab> -->
 					</v-tabs>
 					<v-tabs-items
 						v-if = "problem"
@@ -58,17 +58,30 @@
 import ProblemDescription from '@/components/problem/utils/description';
 import ProblemEditor from '@/components/problem/detail/editor';
 import ProblemDetailGQL from '@/graphql/problem/detail.gql';
+import DataFetch from '@/components/problem/utils/fetch';
 import { mapGetters } from 'vuex';
 
 export default {
-	metaInfo() { return { title: this.problem ? this.problem.title : 'Loading...' }; },
+
+	metaInfo() {
+		return {
+			title: this.problem ? this.problem.title : 'Loading...',
+		};
+	},
+
 	components: {
 		ProblemDescription,
 		ProblemEditor,
 	},
+
+	props: {
+		slug: {
+			type: String,
+			required: true,
+		},
+	},
+
 	data: () => ({
-		slug: '',
-		isLoading: false,
 		tabs: null,
 		problem: null,
 	}),
@@ -79,24 +92,17 @@ export default {
 		}),
 	},
 
-	created() {
-		this.slug = this.$route.params.slug;
-		this.request();
-	},
-
-	methods: {
-		request() {
-			this.$apollo.query({
-				query: ProblemDetailGQL,
-				variables: {
-					slug: this.slug,
-				},
-			})
-				.then(response => response.data.problem)
-				.then((data) => {
-					this.problem = data;
+	beforeRouteEnter: (to, from, next) => {
+		DataFetch({
+			slug: to.params.slug,
+			gql: ProblemDetailGQL,
+		})
+			.then((response) => {
+				next((vm) => {
+					Object.assign(vm, response.data);
 				});
-		},
+			})
+			.catch(() => next(false));
 	},
 };
 </script>

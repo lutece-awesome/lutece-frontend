@@ -29,6 +29,11 @@ import dev from '@/components/about/dev';
 import contributor from '@/components/about/contributor';
 
 export default {
+	metaInfo() {
+		return {
+			title: 'About',
+		};
+	},
 	components: {
 		introduction,
 		copyright,
@@ -36,6 +41,5 @@ export default {
 		dev,
 		contributor,
 	},
-	metaInfo() { return { title: 'About' }; },
 };
 </script>

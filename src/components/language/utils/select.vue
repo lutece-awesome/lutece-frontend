@@ -1,16 +1,19 @@
 <template>
 	<v-select
+		:value = "value"
 		:items = "languageList"
 		:item-text = "each => each.full"
 		:item-value = "itemValue"
 		:append-icon = "appendIcon"
 		:label = "label"
+		:solo = "solo"
+		:flat = "flat"
+		:clearable = "clearable"
 		single-line
 		hide-details
 		dense
-		clearable
-		menu-props="offsetY"
-		@input = "$emit( 'input' , $event)"
+		menu-props = "offsetY"
+		@input = "$emit( 'input' , $event )"
 	/>
 </template>
 
@@ -21,7 +24,7 @@ import LanguageList from '@/plugins/language';
 export default {
 	props: {
 		value: {
-			type: String,
+			type: Object,
 			default: null,
 		},
 		label: {
@@ -35,6 +38,18 @@ export default {
 		itemValue: {
 			type: Function,
 			default: each => each.full,
+		},
+		solo: {
+			type: Boolean,
+			default: false,
+		},
+		flat: {
+			type: Boolean,
+			default: false,
+		},
+		clearable: {
+			type: Boolean,
+			default: true,
 		},
 	},
 

@@ -43,6 +43,7 @@
 			clipped-left
 			app
 			dark
+			extension-height = "7"
 			color = "primary"
 		>
 			<v-toolbar-side-icon @click.stop="drawer=!drawer"/>

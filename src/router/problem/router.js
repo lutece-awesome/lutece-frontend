@@ -24,6 +24,7 @@ const Router = [
 				component: ProblemEditor,
 			},
 		],
+		props: true,
 	},
 ];
 
