@@ -2,6 +2,7 @@ import ProblemDetail from '@/components/problem/detail/app';
 import ProblemList from '@/components/problem/list/app';
 import ProblemDescription from '@/components/problem/utils/description';
 import ProblemEditor from '@/components/problem/detail/editor';
+import ProblemChange from '@/components/problem/edit/app';
 
 const Router = [
 	{
@@ -24,6 +25,12 @@ const Router = [
 				component: ProblemEditor,
 			},
 		],
+		props: true,
+	},
+	{
+		path: '/problem/edit/:slug',
+		name: 'ProblemEdit',
+		component: ProblemChange,
 		props: true,
 	},
 ];

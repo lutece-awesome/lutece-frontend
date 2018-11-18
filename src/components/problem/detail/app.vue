@@ -45,7 +45,7 @@
 							<ProblemDescription :problem = "problem"/>
 						</v-tab-item>
 						<v-tab-item value = "editor">
-							<ProblemEditor :problemslug = "slug" />
+							<ProblemEditor :slug = "slug" />
 						</v-tab-item>
 					</v-tabs-items>
 				</v-card>
