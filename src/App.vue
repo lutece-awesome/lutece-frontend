@@ -24,7 +24,7 @@ import Vue from 'vue';
 import Footer from '@/components/global/footer';
 import Navbar from '@/components/global/navbar';
 import Snackbar from '@/components/global/snackbar';
-import { mapGetters } from 'vuex';
+import UserManager from '@/plugins/user-manager';
 
 
 export default {
@@ -34,10 +34,8 @@ export default {
 		Snackbar,
 	},
 	computed: {
-		...mapGetters({
-			isAuthenticated: 'user/isAuthenticated',
-			isProfileLoaded: 'user/isProfileLoaded',
-		}),
+		isAuthenticated: UserManager.isAuthenticated(),
+		isProfileLoaded: UserManager.isProfileLoaded(),
 	},
 	metaInfo() {
 		return {

@@ -20,7 +20,7 @@
 							md6>
 							<div class = "elevation-2" >
 								<div class = "text-xs-center pt-4" >
-									<v-icon> mdi-circle-edit-outline </v-icon>
+									<v-icon class = "mr-2" > mdi-circle-edit-outline </v-icon>
 									<span class = "headline" > Edit </span>
 								</div>
 								<div>
@@ -35,12 +35,13 @@
 						<v-flex
 							xs12
 							md6>
-							<v-card>
-								<v-card-title primary-title>
-									<div class = "headline">Preview</div>
-								</v-card-title>
+							<div class = "elevation-2" >
+								<div class = "text-xs-center pt-4" >
+									<v-icon class = "mr-2" > mdi-cloud </v-icon>
+									<span class = "headline" > Preview </span>
+								</div>
 								<ProblemDescription :problem = "problem" />
-							</v-card>
+							</div>
 						</v-flex>
 					</v-layout>
 				</div>

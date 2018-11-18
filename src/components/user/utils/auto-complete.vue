@@ -28,7 +28,10 @@
 					slot-scope = "{ item }"
 				>
 					<v-list-tile-avatar>
-						<img :src = "item.attachInfo.gravatar">
+						<v-img
+							:src = "item.attachInfo.gravatar"
+							height = "32"
+							contain/>
 					</v-list-tile-avatar>
 					<v-list-tile-content v-text = "item.username" />
 				</template>
