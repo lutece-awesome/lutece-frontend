@@ -43,8 +43,9 @@
 			clipped-left
 			app
 			dark
-			extension-height = "7"
+			extension-height = "0"
 			color = "primary"
+			class = "app-toolbar"
 		>
 			<v-toolbar-side-icon @click.stop="drawer=!drawer"/>
 			<v-toolbar-title class="hidden-xs-only">
@@ -127,6 +128,11 @@
 				class = "hidden-md-and-up">
 				<v-icon>mdi-login</v-icon>
 			</v-btn>
+			<v-progress-linear
+				slot="extension"
+				:indeterminate="true"
+				height="2"
+				color="white"/>
 		</v-toolbar>
 	</div>
 </template>
@@ -247,3 +253,9 @@ export default {
 	},
 };
 </script>
+
+<style>
+.app-toolbar .v-toolbar__extension {
+	padding: 0;
+}
+</style>
