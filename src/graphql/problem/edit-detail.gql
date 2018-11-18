@@ -1,6 +1,5 @@
-query ProblemDetailGQL($slug: String!) {
+query ProblemEditDetailGQL($slug: String!) {
 	problem(slug: $slug) {
-		pk
 		title
 		content
 		standardInput
@@ -14,6 +13,7 @@ query ProblemDetailGQL($slug: String!) {
 			outputLimit
 			cpuLimit
 		}
+        disable
 		samples {
 			sampleList{
 				inputContent

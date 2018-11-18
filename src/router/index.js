@@ -15,12 +15,7 @@ import Login from '@/components/signin/login';
 import Signup from '@/components/signin/signup';
 import Signout from '@/components/signin/signout';
 import NotFound from '@/components/global/404';
-import ProblemList from '@/components/problem/list/app';
-import ProblemDetail from '@/components/problem/detail/app';
-import ProblemDescription from '@/components/problem/detail/description';
-import ProblemEditor from '@/components/problem/detail/editor';
-import ProblemDiscussion from '@/components/problem/detail/discussion';
-import ProblemEdit from '@/components/problem/detail/edit';
+import ProblemRouter from '@/router/problem/router';
 import store from '../store';
 
 Vue.use(Router);
@@ -44,6 +39,7 @@ const ifAuthenticated = (to, from, next) => {
 export default new Router({
 	mode: 'history',
 	routes: [
+		...ProblemRouter,
 		{
 			path: '',
 			redirect: {
@@ -124,37 +120,6 @@ export default new Router({
 			name: 'Signout',
 			component: Signout,
 			beforeEnter: ifAuthenticated,
-		},
-		{
-			path: '/problem',
-			name: 'Problem',
-			component: ProblemList,
-		},
-		{
-			path: '/problem/:slug/edit',
-			name: 'ProblemEdit',
-			component: ProblemEdit,
-		},
-		{
-			path: '/problem/:slug',
-			component: ProblemDetail,
-			children: [
-				{
-					path: 'description',
-					name: 'ProblemDetailDescription',
-					component: ProblemDescription,
-				},
-				{
-					path: 'editor',
-					name: 'ProblemDetailEditor',
-					component: ProblemEditor,
-				},
-				{
-					path: 'discussion',
-					name: 'ProblemDetailDiscussion',
-					component: ProblemDiscussion,
-				},
-			],
 		},
 		{
 			path: '*',

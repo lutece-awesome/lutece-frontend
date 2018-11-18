@@ -1,6 +1,6 @@
 <template>
 	<v-container
-		v-if="problem"
+		v-if = "problem"
 		fiuld>
 		<div
 			v-mixrend = "problem.content"
@@ -56,10 +56,6 @@
 				<td>Output Limit</td>
 				<td>{{ problem.limitation.outputLimit }} MiB</td>
 			</tr>
-			<!-- <tr>
-				<td>CPU Limit</td>
-				<td>{{ problem.limitation.cpuLimit }} Core</td>
-			</tr> -->
 			<tr v-if="problem.resources">
 				<td>Source</td>
 				<td>{{ problem.resources }}</td>
@@ -74,12 +70,6 @@ export default {
 		problem: {
 			type: Object,
 			default: null,
-		},
-	},
-
-	methods: {
-		rend(_field) {
-
 		},
 	},
 };

@@ -2,7 +2,7 @@
 	<v-data-table
 		:items = "problemItem"
 		:headers = "headers"
-		:loading="isLoading"
+		:loading = "isLoading"
 		hide-actions >
 		<v-progress-linear
 			slot = "progress"

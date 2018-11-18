@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import ProblemDescription from '@/components/problem/detail/description';
-import ProblemSetting from '@/components/problem/detail/setting';
+import ProblemDescription from '@/components/problem/utils/description';
+import ProblemSetting from '@/components/problem/edit/setting';
 
 export default {
 	metaInfo() { return { title: this.problem ? `Edit ${this.problem.title}` : 'Loading...' }; },
@@ -81,10 +81,6 @@ export default {
 
 		onResult(result) {
 			this.problem = Object.assign({}, result.data.problem);
-		},
-
-		has_permission(permission) {
-			return this.$store.getters['user/has_permission'](permission);
 		},
 	},
 };

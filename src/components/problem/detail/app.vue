@@ -38,8 +38,8 @@
 							to="discussion">Disscussion</v-tab> -->
 					</v-tabs>
 					<v-tabs-items
-						v-if="problem"
-						v-model="tabs"
+						v-if = "problem"
+						v-model = "tabs"
 						touchless>
 						<v-tab-item value = "description">
 							<ProblemDescription :problem = "problem"/>
@@ -47,9 +47,6 @@
 						<v-tab-item value = "editor">
 							<ProblemEditor :problemslug = "slug" />
 						</v-tab-item>
-						<!-- <v-tab-item value="discussion">
-							<ProblemDiscussion/>
-						</v-tab-item> -->
 					</v-tabs-items>
 				</v-card>
 			</v-flex>
@@ -58,9 +55,8 @@
 </template>
 
 <script>
-import ProblemDescription from '@/components/problem/detail/description';
+import ProblemDescription from '@/components/problem/utils/description';
 import ProblemEditor from '@/components/problem/detail/editor';
-import ProblemDiscussion from '@/components/problem/detail/discussion';
 import ProblemDetailGQL from '@/graphql/problem/detail.gql';
 import { mapGetters } from 'vuex';
 
@@ -69,7 +65,6 @@ export default {
 	components: {
 		ProblemDescription,
 		ProblemEditor,
-		ProblemDiscussion,
 	},
 	data: () => ({
 		slug: '',

@@ -16,6 +16,7 @@
 				:label = "label"
 				:item-text = "each => each.title"
 				:item-value = "each => each.slug"
+				:filter = "() => true"
 				single-line
 				hide-no-data
 				dense
