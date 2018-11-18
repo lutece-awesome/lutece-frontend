@@ -48,8 +48,15 @@ import ProblemList from '@/components/problem/list/list';
 import SearchBar from '@/components/utils/search-bar';
 
 export default {
+
 	name: 'Problem',
-	metaInfo() { return { title: 'Problem' }; },
+
+	metaInfo() {
+		return {
+			title: 'Problem',
+		};
+	},
+
 	components: {
 		ProblemList,
 		SearchBar,

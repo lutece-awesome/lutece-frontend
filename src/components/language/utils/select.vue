@@ -19,7 +19,7 @@
 
 <script>
 
-import LanguageList from '@/plugins/language';
+import Language from '@/plugins/language';
 
 export default {
 	props: {
@@ -54,7 +54,7 @@ export default {
 	},
 
 	data: () => ({
-		languageList: LanguageList,
+		languageList: Language.all(),
 	}),
 };
 </script>

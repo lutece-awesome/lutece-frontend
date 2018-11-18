@@ -48,8 +48,15 @@ import UserList from '@/components/user/list/list';
 import SearchBar from '@/components/utils/search-bar';
 
 export default {
+
 	name: 'User',
-	metaInfo() { return { title: 'User' }; },
+
+	metaInfo() {
+		return {
+			title: 'User',
+		};
+	},
+
 	components: {
 		UserList,
 		SearchBar,

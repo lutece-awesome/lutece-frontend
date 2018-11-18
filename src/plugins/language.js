@@ -1,4 +1,4 @@
-const Language = [
+const LanguageList = [
 	{
 		full: 'GNU G++',
 		info: 'GNU G++17',
@@ -40,5 +40,14 @@ const Language = [
 		codemirror: 'text/x-rustsrc',
 	},
 ];
+
+const valueOf = result => LanguageList.find(element => element.full === result
+	|| element.short === result);
+
+const Language = {
+	valueOf: result => valueOf(result),
+	all: () => LanguageList,
+	first: () => LanguageList[0],
+};
 
 export default Language;

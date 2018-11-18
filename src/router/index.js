@@ -2,8 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/components/home/home';
 import About from '@/components/about/about';
-import StatusList from '@/components/status/list/app';
-import StatusDetail from '@/components/status/detail/app';
 import Contest from '@/components/contest/contest';
 import ArticleList from '@/components/article/list/app';
 import ArticleDetail from '@/components/article/detail/app';
@@ -16,6 +14,7 @@ import Signup from '@/components/signin/signup';
 import Signout from '@/components/signin/signout';
 import NotFound from '@/components/global/404';
 import ProblemRouter from '@/router/problem/router';
+import StatusRouter from '@/router/status/router';
 import store from '../store';
 
 Vue.use(Router);
@@ -40,6 +39,7 @@ export default new Router({
 	mode: 'history',
 	routes: [
 		...ProblemRouter,
+		...StatusRouter,
 		{
 			path: '',
 			redirect: {
@@ -56,16 +56,6 @@ export default new Router({
 			name: 'Login',
 			component: Login,
 			beforeEnter: ifNotAuthenticated,
-		},
-		{
-			path: '/status',
-			name: 'Status',
-			component: StatusList,
-		},
-		{
-			path: '/status/:pk',
-			name: 'StatusDetail',
-			component: StatusDetail,
 		},
 		{
 			path: '/contest',
