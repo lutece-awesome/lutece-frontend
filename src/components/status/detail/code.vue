@@ -4,7 +4,7 @@
 			<code-mirror
 				:value = "code"
 				:option = "option"
-				min-height = "0"
+				:min-height = "minHeight"
 			/>
 			<div
 				v-if = "errorInfo"
@@ -59,6 +59,7 @@ export default {
 			option: {
 				readOnly: true,
 			},
+			minHeight: 0,
 		};
 	},
 };

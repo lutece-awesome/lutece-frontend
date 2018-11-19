@@ -148,20 +148,28 @@ export default {
 		assignData(event) {
 			const data = JSON.parse(event.data);
 			const previousCaseList = this.caseList;
+			if (Object.prototype.hasOwnProperty.call(data, 'result')) {
+				Object.assign(data, { result: Verdict.valueOf(data.result) });
+			}
+			if (Object.prototype.hasOwnProperty.call(data, 'language')) {
+				Object.assign(data, { language: Language.valueOf(data.language) });
+			}
+			if (Object.prototype.hasOwnProperty.call(data, 'caseList')) {
+				Object.assign(data, {
+					caseList: data.caseList.map(each => ({
+						...each,
+						...{
+							result: Verdict.valueOf(each.result),
+						},
+					})),
+				});
+			}
 			Object.assign(this, data);
-			this.result = Verdict.valueOf(this.result);
-			this.language = Language.valueOf(this.language);
 			this.caseList = [
 				...this.caseList,
 				...previousCaseList,
 			]
-				.sort((a, b) => a.case < b.case)
-				.map(each => ({
-					...each,
-					...{
-						result: typeof (each.result) === 'string' ? Verdict.valueOf(each.result) : each.result,
-					},
-				}));
+				.sort((a, b) => a.case < b.case);
 		},
 	},
 
