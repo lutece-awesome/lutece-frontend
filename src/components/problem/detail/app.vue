@@ -55,6 +55,7 @@
 </template>
 
 <script>
+
 import ProblemDescription from '@/components/problem/utils/description';
 import ProblemEditor from '@/components/problem/detail/editor';
 import ProblemDetailGQL from '@/graphql/problem/detail.gql';
@@ -90,6 +91,18 @@ export default {
 		...mapGetters({
 			hasPermission: 'user/hasPermission',
 		}),
+	},
+
+	beforeRouteUpdate(to, from, next) {
+		DataFetch({
+			slug: to.params.slug,
+			gql: ProblemDetailGQL,
+		})
+			.then((response) => {
+				Object.assign(this, response.data);
+				next();
+			})
+			.catch(() => next(false));
 	},
 
 	beforeRouteEnter: (to, from, next) => {

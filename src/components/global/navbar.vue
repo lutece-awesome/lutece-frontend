@@ -1,5 +1,5 @@
 <template>
-	<div v-if = "visible" >
+	<div>
 		<v-navigation-drawer
 			v-model = "drawer"
 			:width = "240"
@@ -129,9 +129,10 @@
 				<v-icon>mdi-login</v-icon>
 			</v-btn>
 			<v-progress-linear
+				v-if="isProgressBarVisible"
 				slot="extension"
 				:indeterminate="true"
-				height="2"
+				height="4"
 				color="white"/>
 		</v-toolbar>
 	</div>
@@ -194,7 +195,7 @@ export default {
 			payload: 'user/payload',
 			isAuthenticated: 'user/isAuthenticated',
 			isProfileLoaded: 'user/isProfileLoaded',
-			visible: 'navbar/visible',
+			isProgressBarVisible: 'navbar/visible',
 		}),
 		title() {
 			return this.$root.title;
