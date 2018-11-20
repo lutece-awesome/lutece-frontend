@@ -2,7 +2,7 @@
 import { UserLogin, RefreshToken } from '@/graphql/signin/token.gql';
 import RegisterGQL from '@/graphql/signin/register.gql';
 import { clearApolloCache } from '@/utils';
-import apolloProvider from '@/apollo';
+import apolloProvider from '@/apollo/provider';
 
 const state = {
 	token: localStorage.getItem('USER_TOKEN') || '',
@@ -77,7 +77,7 @@ const actions = {
 			resolve();
 		});
 	}),
-	refresh_token({ state, commit }, force) {
+	refresh_token: ({ state, commit }, force) => new Promise((resolve, reject) => {
 		const BEFORE_EXPIRATION_DELTA = 60 * 60;
 		if (state.token) {
 			const { exp } = state.payload;
@@ -86,6 +86,7 @@ const actions = {
 			const needRefresh = force || !exp || exp - now < BEFORE_EXPIRATION_DELTA;
 			if (expired) {
 				commit('logout');
+				resolve();
 			} else if (needRefresh) {
 				apolloProvider.defaultClient.mutate({
 					mutation: RefreshToken,
@@ -96,14 +97,20 @@ const actions = {
 					.then(response => response.data.userTokenRefresh)
 					.then((data) => {
 						commit('login', data);
+						resolve();
 					})
 					.catch((error) => {
 						commit('snackbar/setSnack', error.message, { root: true });
 						commit('logout');
+						reject(error);
 					});
+			} else {
+				resolve();
 			}
+		} else {
+			resolve();
 		}
-	},
+	}),
 };
 
 export default {

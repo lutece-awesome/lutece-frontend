@@ -1,4 +1,4 @@
-import apolloProvider from '@/apollo';
+import apolloProvider from '@/apollo/provider';
 
 function getServerUri(protocol, path) {
 	const env = process.env.NODE_ENV;

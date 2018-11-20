@@ -3,7 +3,6 @@
 		<codemirror
 			:value = "value"
 			:options = "getOptions"
-			:style = "{ 'min-height': minHeight + 'px' }"
 			@input = "$emit( 'input' , $event )"
 		/>
 		<slot name = "extension" />
@@ -55,10 +54,6 @@ export default {
 		option: {
 			type: Object,
 			default: null,
-		},
-		minHeight: {
-			type: Number,
-			default: 500,
 		},
 	},
 

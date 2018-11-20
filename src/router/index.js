@@ -1,116 +1,33 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/components/home/home';
-import About from '@/components/about/about';
-import Contest from '@/components/contest/contest';
-import ArticleList from '@/components/article/list/app';
-import ArticleDetail from '@/components/article/detail/app';
-import ArticleEditor from '@/components/article/basic/app';
-import UserList from '@/components/user/list/app';
-import UserDetail from '@/components/user/detail/app';
-import UserSettings from '@/components/user/settings/app';
-import Login from '@/components/signin/login';
-import Signup from '@/components/signin/signup';
-import Signout from '@/components/signin/signout';
 import NotFound from '@/components/global/404';
+import AboutRouter from '@/router/about/router';
+import HomeRouter from '@/router/home/router';
 import ProblemRouter from '@/router/problem/router';
+import SignRouter from '@/router/sign/router';
 import StatusRouter from '@/router/status/router';
-import store from '../store';
+import UserRouter from '@/router/user/router';
+import Store from '@/store/index';
+import { isAuthenticated, goHome } from './utils';
 
-Vue.use(Router);
+/*
+	Supporting meta:
 
-const ifNotAuthenticated = (to, from, next) => {
-	if (!store.getters['user/isAuthenticated']) {
-		next();
-		return;
-	}
-	next('/');
-};
+		requireAuth: boolean
+			- true: Must log in to access.
+			- false: Must not log in to access.
 
-const ifAuthenticated = (to, from, next) => {
-	if (store.getters['user/isAuthenticated']) {
-		next();
-		return;
-	}
-	next('/login');
-};
+*/
 
-export default new Router({
+const router = new Router({
 	mode: 'history',
 	routes: [
+		...AboutRouter,
+		...HomeRouter,
 		...ProblemRouter,
+		...SignRouter,
 		...StatusRouter,
-		{
-			path: '',
-			redirect: {
-				name: 'Home',
-			},
-		},
-		{
-			path: '/home',
-			name: 'Home',
-			component: Home,
-		},
-		{
-			path: '/login',
-			name: 'Login',
-			component: Login,
-			beforeEnter: ifNotAuthenticated,
-		},
-		{
-			path: '/contest',
-			name: 'Contest',
-			component: Contest,
-		},
-		{
-			path: '/user',
-			name: 'User',
-			component: UserList,
-		},
-		{
-			path: '/user/settings',
-			name: 'UserSettings',
-			component: UserSettings,
-			beforeEnter: ifAuthenticated,
-		},
-		{
-			path: '/user/:username',
-			name: 'UserDetail',
-			component: UserDetail,
-		},
-		{
-			path: '/article',
-			name: 'Article',
-			component: ArticleList,
-		},
-		{
-			path: '/article/:slug',
-			name: 'ArticleDetail',
-			component: ArticleDetail,
-		},
-		{
-			path: '/article/create',
-			name: 'articleCreate',
-			component: ArticleEditor,
-			beforeEnter: ifAuthenticated,
-		},
-		{
-			path: '/about',
-			name: 'About',
-			component: About,
-		},
-		{
-			path: '/signup',
-			name: 'Signup',
-			component: Signup,
-			beforeEnter: ifNotAuthenticated,
-		},
-		{
-			path: '/signout',
-			name: 'Signout',
-			component: Signout,
-			beforeEnter: ifAuthenticated,
-		},
+		...UserRouter,
 		{
 			path: '*',
 			name: '404',
@@ -118,3 +35,24 @@ export default new Router({
 		},
 	],
 });
+
+
+router.beforeEach((to, from, next) => {
+	const meta = {};
+	to.matched.some(record => Object.assign(meta, record.meta));
+	if (Object.prototype.hasOwnProperty.call(meta, 'requireAuth')) {
+		if (isAuthenticated() !== meta.requireAuth) {
+			goHome();
+			return;
+		}
+	}
+	// Refresh token before enter any router, any error should be ignored,
+	// this step is only to validate token expired or not.
+	Store.dispatch('user/refresh_token')
+		.then(() => next())
+		.catch(() => next());
+});
+
+Vue.use(Router);
+
+export default router;

@@ -1,4 +1,4 @@
-import Apollo from '@/apollo';
+import Apollo from '@/apollo/provider';
 
 
 const fetchProblemData = ({ slug, gql }) => new Promise((resolve, reject) => {

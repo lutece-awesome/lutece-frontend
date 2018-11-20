@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<Navbar/>
+		<Toolbar/>
 		<v-content>
 			<div class = "maincontent" >
 				<v-fade-transition
@@ -22,14 +22,14 @@
 <script>
 import Vue from 'vue';
 import Footer from '@/components/global/footer';
-import Navbar from '@/components/global/navbar';
+import Toolbar from '@/components/navigation/toolbar';
 import Snackbar from '@/components/global/snackbar';
 import { mapGetters } from 'vuex';
 
 
 export default {
 	components: {
-		Navbar,
+		Toolbar,
 		Footer,
 		Snackbar,
 	},
@@ -50,9 +50,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-	.maincontent{
-		min-height: 85%;
-	}
-</style>

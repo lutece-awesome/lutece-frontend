@@ -7,6 +7,10 @@ import VueApollo from 'vue-apollo';
 import fetch from 'unfetch';
 import { getGraphQLUri } from '@/utils';
 
+/*
+	Only used to support native Apollo component to fetch data.
+*/
+
 const httpLink = createUploadLink({
 	// You should use an absolute URL here
 	uri: getGraphQLUri(),

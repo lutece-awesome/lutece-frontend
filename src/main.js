@@ -9,9 +9,9 @@ import './plugins/vue-meta';
 import './plugins/vue-moment';
 import './plugins/vuetify';
 import App from './App';
-import router from './router';
+import router from './router/index';
 import store from './store';
-import apolloProvider from './apollo';
+import apolloProvider from './apollo/provider';
 import './registerServiceWorker';
 import './stylus/main.styl';
 
