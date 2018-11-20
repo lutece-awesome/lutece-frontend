@@ -15,7 +15,6 @@ const getters = {
 	payload: state => state.payload,
 	profile: state => state.profile,
 	token: state => state.token,
-	isProfileLoaded: state => !!state.profile.username,
 	isAuthenticated: state => !!state.token,
 	hasPermission: state => permission => state.permission.indexOf(permission) !== -1,
 };
@@ -30,6 +29,8 @@ const mutations = {
 		localStorage.setItem('USER_TOKEN', data.token);
 	},
 	logout(state) {
+		// TODO: cancel all pending apollo promise, otherwise throws
+		// store reset while query was in flight(not completed in link chain) error.
 		state.token = '';
 		state.payload = {};
 		state.profile = {};

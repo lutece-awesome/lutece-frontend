@@ -1,13 +1,12 @@
 <template>
 	<v-app>
-		<Toolbar/>
+		<app-navagation-bar/>
 		<v-content>
 			<div class = "maincontent" >
 				<v-fade-transition
 					:duration="100"
 					mode="out-in">
 					<keep-alive
-						v-if = "!isAuthenticated || isProfileLoaded"
 						include = "Problem,Status,User,Article">
 						<router-view/>
 					</keep-alive>
@@ -22,21 +21,20 @@
 <script>
 import Vue from 'vue';
 import Footer from '@/components/global/footer';
-import Toolbar from '@/components/navigation/toolbar';
+import AppNavagationBar from '@/components/navigation/app';
 import Snackbar from '@/components/global/snackbar';
 import { mapGetters } from 'vuex';
 
 
 export default {
 	components: {
-		Toolbar,
+		AppNavagationBar,
 		Footer,
 		Snackbar,
 	},
 	computed: {
 		...mapGetters({
 			isAuthenticated: 'user/isAuthenticated',
-			isProfileLoaded: 'user/isProfileLoaded',
 		}),
 	},
 	metaInfo() {

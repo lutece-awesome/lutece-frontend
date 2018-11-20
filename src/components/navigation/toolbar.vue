@@ -20,29 +20,52 @@
 		<v-toolbar-items>
 			<v-btn
 				v-if = "!isAuthenticated"
-				:to = "login"
 				flat
+				@click = "toLogin"
 			>
 				<v-icon class = "mr-2" >mdi-login</v-icon>
 				<span> SIGN IN </span>
 			</v-btn>
+			<UserMenu
+				v-else
+				:profile = "profile"
+			/>
 		</v-toolbar-items>
-
 
 	</v-toolbar>
 </template>
 
 
 <script>
+
+import UserMenu from './user-menu';
+import Router from '@/router/index';
+
 export default {
+	components: {
+		UserMenu,
+	},
+
 	props: {
 		title: {
 			type: String,
 			default: null,
 		},
+		profile: {
+			type: Object,
+			default: null,
+		},
 		isAuthenticated: {
 			type: Boolean,
 			default: false,
+		},
+	},
+
+	methods: {
+		toLogin: () => {
+			Router.push({
+				name: 'Login',
+			});
 		},
 	},
 };
