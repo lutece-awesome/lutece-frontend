@@ -3,6 +3,10 @@
 		<ToolBar
 			:profile = "profile"
 			:is-authenticated = "isAuthenticated"
+			@input-toggle-drawer = "toggleEvent = !toggleEvent"
+		/>
+		<Drawer
+			:toggle-event = "toggleEvent"
 		/>
 	</div>
 </template>
@@ -12,11 +16,19 @@
 
 import { mapGetters } from 'vuex';
 import ToolBar from './toolbar';
+import Drawer from './drawer';
 
 export default {
 
 	components: {
 		ToolBar,
+		Drawer,
+	},
+
+	data() {
+		return {
+			toggleEvent: false,
+		};
 	},
 
 	computed: {

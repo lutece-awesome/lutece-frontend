@@ -14,16 +14,19 @@
 			>
 				<img :src = "profile.gravatar" >
 			</v-avatar>
-			<span class = "ml-2">
+			<span
+				class = "ml-2"
+				style = "text-transform: none"
+			>
 				{{ profile.username }}
 			</span>
 		</v-btn>
 
 		<v-list>
 			<v-list-tile
-				v-for = "item in Items"
+				v-for = "item in items"
 				:key = "item.label"
-				@click = "item.click( profile )"
+				:to = "item.to"
 			>
 				<v-icon
 					class = "mr-2"
@@ -45,8 +48,6 @@
 
 <script>
 
-import Router from '@/router/index';
-
 export default {
 	props: {
 		profile: {
@@ -55,36 +56,35 @@ export default {
 		},
 	},
 
-	data: () => ({
-		Items: [
-			{
-				icon: 'mdi-account',
-				label: 'Profile',
-				click: profileRef => Router.push({
-					name: 'UserDetail',
-					params: {
-						username: profileRef.username,
+	data() {
+		return {
+			items: [
+				{
+					icon: 'mdi-account',
+					label: 'Profile',
+					to: {
+						name: 'UserDetail',
+						params: {
+							username: this.profile.username,
+						},
 					},
-				}),
-			},
-			{
-				icon: 'mdi-settings',
-				label: 'Settings',
-				click: profileRef => Router.push({
-					name: 'UserSettings',
-					params: {
-						username: profileRef.username,
+				},
+				{
+					icon: 'mdi-settings',
+					label: 'Settings',
+					to: {
+						name: 'UserSettings',
 					},
-				}),
-			},
-			{
-				icon: 'mdi-logout',
-				label: 'Sign Out',
-				click: () => Router.push({
-					name: 'Signout',
-				}),
-			},
-		],
-	}),
+				},
+				{
+					icon: 'mdi-logout',
+					label: 'Sign Out',
+					to: {
+						name: 'Signout',
+					},
+				},
+			],
+		};
+	},
 };
 </script>

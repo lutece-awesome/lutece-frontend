@@ -2,20 +2,25 @@
 
 export const state = () => ({
 	visible: 0,
+	title: 'Lutece',
 });
 
 export const mutations = {
-	setVisible(state, visible) {
+	setProgressVisible(state, visible) {
 		if (visible === true) {
 			state.visible += 1;
 		} else if (visible === false) {
 			state.visible -= 1;
 		}
 	},
+	setTitle(state, title) {
+		state.title = title;
+	},
 };
 
 const getters = {
-	visible: state => (state.visible > 0),
+	progressVisible: state => (state.visible > 0),
+	title: state => state.title,
 };
 
 export default {

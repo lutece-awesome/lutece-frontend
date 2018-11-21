@@ -26,7 +26,11 @@
 				<v-icon class = "mr-2" >mdi-login</v-icon>
 				<span> SIGN IN </span>
 			</v-btn>
-			<UserMenu
+			<user-menu-mobile
+				v-else-if = "$vuetify.breakpoint.xsOnly"
+				:profile = "profile"
+			/>
+			<user-menu
 				v-else
 				:profile = "profile"
 			/>
@@ -39,11 +43,13 @@
 <script>
 
 import UserMenu from './user-menu';
+import UserMenuMobile from './user-menu-mobile';
 import Router from '@/router/index';
 
 export default {
 	components: {
 		UserMenu,
+		UserMenuMobile,
 	},
 
 	props: {
