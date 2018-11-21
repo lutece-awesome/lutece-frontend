@@ -5,7 +5,7 @@
 		grid-list-lg
 		class="ma-0">
 		<ApolloQuery
-			:query = "require('@/graphql/problem/detail.gql')"
+			:query = "require('@/graphql/problem/edit-detail.gql')"
 			:variables = "{ slug }"
 			@result = "onResult" >
 			<template
@@ -69,7 +69,6 @@ export default {
 	},
 
 	data: () => ({
-		slug: '',
 		problem: null,
 	}),
 

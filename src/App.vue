@@ -4,8 +4,9 @@
 		<v-content>
 			<div class = "maincontent" >
 				<v-fade-transition
-					:duration="100"
-					mode="out-in">
+					:duration = "100"
+					mode = "out-in"
+				>
 					<keep-alive
 						include = "Problem,Status,User,Article">
 						<router-view/>
@@ -19,7 +20,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import Footer from '@/components/global/footer';
 import AppNavagationBar from '@/components/navigation/app';
 import Snackbar from '@/components/global/snackbar';
@@ -32,19 +32,11 @@ export default {
 		Footer,
 		Snackbar,
 	},
+
 	computed: {
 		...mapGetters({
 			isAuthenticated: 'user/isAuthenticated',
 		}),
-	},
-	metaInfo() {
-		return {
-			title: this.$root.title || 'Lutece',
-			titleTemplate: '%s | Lutece',
-			meta: [
-				{ name: 'theme-color', content: Vue.prototype.$vuetify.theme.primary },
-			],
-		};
 	},
 };
 </script>

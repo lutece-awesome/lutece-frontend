@@ -14,7 +14,7 @@ export const mutations = {
 		}
 	},
 	setTitle(state, title) {
-		state.title = title;
+		state.title = title || 'Lutece';
 	},
 };
 
