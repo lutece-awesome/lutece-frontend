@@ -2,8 +2,8 @@
 	<v-select
 		:value = "value"
 		:items = "languageList"
-		:item-text = "each => each.full"
-		:item-value = "itemValue"
+		:item-value = "each => each"
+		:item-text = "itemText"
 		:append-icon = "appendIcon"
 		:label = "label"
 		:solo = "solo"
@@ -19,7 +19,7 @@
 
 <script>
 
-import Language from '@/plugins/language';
+import Language from '@/modules/language/main';
 
 export default {
 	props: {
@@ -35,10 +35,6 @@ export default {
 			type: String,
 			default: '',
 		},
-		itemValue: {
-			type: Function,
-			default: each => each.full,
-		},
 		solo: {
 			type: Boolean,
 			default: false,
@@ -46,6 +42,10 @@ export default {
 		flat: {
 			type: Boolean,
 			default: false,
+		},
+		itemText: {
+			type: Function,
+			default: each => each.full,
 		},
 		clearable: {
 			type: Boolean,

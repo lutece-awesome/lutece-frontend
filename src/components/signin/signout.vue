@@ -8,7 +8,7 @@ import Store from '@/store/index';
 import { goBack } from '@/router/utils';
 
 export default {
-	created() {
+	mounted() {
 		Store.dispatch('user/logout').then(
 			() => goBack(),
 		);

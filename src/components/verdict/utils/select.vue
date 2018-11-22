@@ -1,8 +1,8 @@
 <template>
 	<v-select
 		:items = "verdictList"
-		:item-text = "each => each.full"
-		:item-value = "itemValue"
+		:item-text = "itemText"
+		:item-value = "each => each"
 		:append-icon = "appendIcon"
 		:label = "label"
 		single-line
@@ -16,7 +16,7 @@
 
 <script>
 
-import Verdict from '@/plugins/verdict';
+import Verdict from '@/modules/verdict/main';
 
 export default {
 	props: {
@@ -32,7 +32,7 @@ export default {
 			type: String,
 			default: '',
 		},
-		itemValue: {
+		itemText: {
 			type: Function,
 			default: each => each.full,
 		},

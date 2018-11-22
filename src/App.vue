@@ -20,10 +20,9 @@
 </template>
 
 <script>
-import Footer from '@/components/global/footer';
+import Footer from '@/components/footer/app';
 import AppNavagationBar from '@/components/navigation/app';
-import Snackbar from '@/components/global/snackbar';
-import { mapGetters } from 'vuex';
+import Snackbar from '@/components/snackbar/app';
 
 
 export default {
@@ -31,12 +30,6 @@ export default {
 		AppNavagationBar,
 		Footer,
 		Snackbar,
-	},
-
-	computed: {
-		...mapGetters({
-			isAuthenticated: 'user/isAuthenticated',
-		}),
 	},
 };
 </script>

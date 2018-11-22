@@ -55,6 +55,9 @@
 <script>
 
 import { parseGraphqlError, getErrorMessage } from '@/utils';
+import { goBack } from '@/router/utils';
+import Router from '@/router/index';
+import Store from '@/store/index';
 
 export default {
 	metaInfo() { return { title: 'Login' }; },
@@ -75,9 +78,9 @@ export default {
 			this.loading = true;
 			this.error = null;
 			const { username, password } = this;
-			this.$store.dispatch('user/login', { username, password })
+			Store.dispatch('user/login', { username, password })
 				.then(() => {
-					this.$router.push(this.$route.query.redirect || '/');
+					goBack();
 				})
 				.catch((error) => {
 					this.error = parseGraphqlError(error);
@@ -86,11 +89,8 @@ export default {
 		},
 
 		signup() {
-			this.$router.push({
+			Router.push({
 				name: 'Signup',
-				query: {
-					redirect: this.$route.query.redirect || '/',
-				},
 			});
 		},
 	},

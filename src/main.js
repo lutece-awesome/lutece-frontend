@@ -18,6 +18,7 @@ import './plugins/util-components';
 
 Vue.config.productionTip = false;
 
+// Force refresh token before initializing the app vue.
 store.dispatch('user/refresh_token', true).then(
 	() => new Vue({
 		router,
