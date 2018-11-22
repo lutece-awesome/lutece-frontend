@@ -1,32 +1,21 @@
 <template>
-	<v-container fluid>
-		<v-layout
-			row
-			justify-center
-			wrap>
-			<v-flex
-				xs10
-				sm8>
-				<v-layout
-					row
-					justify-center
-					wrap>
-					<v-flex xs12>
-						<Curtain/>
-					</v-flex>
-					<v-flex xs12>
-						<v-divider />
-					</v-flex>
-					<v-flex xs12>
-						<Recently class = "mt-4" />
-					</v-flex>
-				</v-layout>
-			<!-- <v-flex xs6>
-				<Recently />
-			</v-flex> -->
+	<v-layout
+		row
+		justify-center
+		wrap
+	>
+		<v-flex
+			xs12
+			sm10
+		>
+			<v-flex xs12>
+				<Curtain/>
 			</v-flex>
-		</v-layout>
-	</v-container>
+			<v-flex xs12>
+				<Recently class = "mt-4" />
+			</v-flex>
+		</v-flex>
+	</v-layout>
 </template>
 
 <script>
@@ -37,7 +26,6 @@ import Recently from '@/components/home/recently';
 import UserAutoComplete from '@/components/user/utils/auto-complete';
 
 export default {
-	metaInfo() { return { title: 'Home' }; },
 
 	components: {
 		TopUser,

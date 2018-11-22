@@ -5,7 +5,6 @@ import '@mdi/font/css/materialdesignicons.css';
 import './plugins/filters';
 import './plugins/markdown-it-katex';
 import './plugins/vue-line-clamp';
-import './plugins/vue-meta';
 import './plugins/vue-moment';
 import './plugins/vuetify';
 import App from './App';

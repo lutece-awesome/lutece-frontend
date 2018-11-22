@@ -1,34 +1,53 @@
 <template>
-	<v-hover class = "mt-2 curtain">
-		<v-card
-			slot-scope = "{ hover }"
-			:class = "`elevation-${hover ? 6 : 1}`"
+	<div class = "curtain">
+		<v-tabs
+			v-model = "tab"
+			fixed-tabs
 		>
-			<v-card-text>
-				<v-layout
-					fill-height
-					align-center
-					justify-center
-					ma-0
-				>
-					<div style = "margin-top: 200px">
-						<span class = "headline font-weight-medium grey--text"> No article available </span>
-					</div>
-				</v-layout>
-			</v-card-text>
-		</v-card>
-	</v-hover>
+			<v-tab :ripple = "false">
+				Article
+			</v-tab>
+			<v-tab
+				:ripple = "false"
+				disabled
+			>
+				Guide
+			</v-tab>
+			<v-tab
+				:ripple = "false"
+				disabled
+			>
+				Honor
+			</v-tab>
+		</v-tabs>
+
+		<v-tabs-items
+			v-model = "tab"
+		>
+			<v-tab-item/>
+
+			<v-tab-item>
+				<div/>
+			</v-tab-item>
+		</v-tabs-items>
+	</div>
 </template>
 
 
 <script>
+
+import ArticleDetail from '@/components/article/detail/app';
+
 export default {
 
+	components: {
+		ArticleDetail,
+	},
 };
 </script>
 
 <style scoped>
     .curtain{
-        min-height: 600px;
+        min-height: 700px;
     }
 </style>
