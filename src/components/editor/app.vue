@@ -11,7 +11,7 @@
 						<v-spacer/>
 						<languageSelect
 							v-model = "language"
-							:item-value = "each => each"
+							:item-text = "each => each.info"
 							:clearable = "false"
 							style = "max-width: 225px"
 							append-icon = "mdi-menu-down"
@@ -38,7 +38,7 @@
 
 import codeMirror from '@/components/utils/code-mirror';
 import languageSelect from '@/components/language/utils/select';
-import Language from '@/plugins/language';
+import Language from '@/modules/language/main';
 
 export default {
 	components: {

@@ -70,8 +70,8 @@
 
 
 <script>
-import Verdict from '@/plugins/verdict';
-import Language from '@/plugins/language';
+import Verdict from '@/modules/verdict/main';
+import Language from '@/modules/language/main';
 import Code from '@/components/status/detail/code';
 import Summary from '@/components/status/detail/summary';
 import Progress from '@/components/status/detail/progress';

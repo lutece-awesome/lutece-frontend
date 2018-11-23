@@ -7,4 +7,8 @@ const goHome = () => (router.push('/'));
 
 const isAuthenticated = () => store.getters['user/isAuthenticated'];
 
-export { goHome, goBack, isAuthenticated };
+const hasPermission = permission => store.getters['user/hasPermission'](permission);
+
+export {
+	goHome, goBack, isAuthenticated, hasPermission,
+};

@@ -79,8 +79,8 @@ export default {
 				pk: this.pk,
 				user: this.user,
 				problem: this.problem,
-				judgeStatus: this.verdict,
-				language: this.language,
+				judgeStatus: this.verdict ? this.verdict.full : null,
+				language: this.language ? this.language.full : null,
 			};
 		},
 	},

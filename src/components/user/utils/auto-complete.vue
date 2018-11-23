@@ -8,6 +8,7 @@
 		<template
 			slot-scope = "{ result: { data, error }, isLoading }">
 			<v-autocomplete
+				:value = "value"
 				:search-input.sync = "filter"
 				:append-icon = "appendIcon"
 				:error = "error"

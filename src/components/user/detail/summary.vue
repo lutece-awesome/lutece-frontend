@@ -94,7 +94,7 @@
 <script>
 
 import Bar from '@/components/chart/bar';
-import Verdict from '@/plugins/verdict';
+import Verdict from '@/modules/verdict/main';
 
 export default {
 	components: {

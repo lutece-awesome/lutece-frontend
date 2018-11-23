@@ -32,6 +32,9 @@ const Router = [
 		name: 'ProblemEdit',
 		component: ProblemChange,
 		props: true,
+		meta: {
+			requirePermission: 'problem.change_problem',
+		},
 	},
 ];
 

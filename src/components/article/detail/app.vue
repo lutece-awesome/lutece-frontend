@@ -1,98 +1,77 @@
 <template>
-	<v-container>
-		<v-layout
-			row
-			wrap
-			justify-center
-		>
-			<v-flex
-				xs12
-				md8>
-				<div class = "display-2 text-xs-center mt-2">
-					{{ blog.title }}
-				</div>
-				<div
-					class = "text-xs-center mt-2"
-					style = "color:#999;"
-				>
-					<div> Created by
-						<router-link :to = "{name: 'UserDetail', params: {username: blog.user.username}}" >
-							{{ blog.user.displayName }}
-						</router-link>
-					</div>
-					<span> {{ blog.createTime | moment("MMMM Do, YYYY") }} </span>
+	<v-card
+		class = "elevation-2"
+	>
+		<v-card-title primary-title>
+			<div>
+				<h2 class = "headline"> {{ title }} </h2>
+				<div class = "mt-2 grey--text">
+					<v-avatar size = "32">
+						<img :src = "gravatar" >
+					</v-avatar>
+					<a class = "ml-2" >{{ username }}</a>
 					<span class = "ml-1 mr-1" > | </span>
-					<span> {{ blog.view }} views </span>
-					<span class = "ml-1 mr-1" > | </span>
-					<span>
-						{{ blog.vote }} stars
-						<v-icon class = "ml-1" >mdi-thumb-up-outline </v-icon>
-					</span>
+					<span> 1.5K views </span>
 				</div>
+			</div>
+		</v-card-title>
 
-				<v-divider class="my-3"/>
-				<div
-					v-mixrend = "blog.content"
-					class="subheading"/>
-				<v-divider class="my-3"/>
+		<v-card-text>
+			<pre class = "preview">{{ preview }}</pre>
+		</v-card-text>
 
+		<v-divider/>
 
-				<Commtents
-					:slug = "slug"
-					class = "mt-4"
-				/>
-			</v-flex>
-		</v-layout>
-	</v-container>
+		<v-card-actions>
+			<v-btn
+				flat
+				color = "orange"
+			>
+				Read More
+			</v-btn>
+
+			<v-spacer/>
+
+			<span class = "grey--text" > Updated on {{ createTime | moment("MMMM Do, YYYY") }}</span>
+		</v-card-actions>
+	</v-card>
 </template>
 
 
 <script>
-import ArticleGQL from '@/graphql/article/detail.gql';
-import Commtents from '@/components/comments/app';
-
-
 export default {
-	metaInfo() { return { title: this.article.title ? this.article.title : 'Loading...' }; },
-
-	components: {
-		Commtents,
-	},
-
-	data: () => ({
-		slug: '',
-		article: {
-			title: '',
-			content: '',
-			view: 0,
-			vote: 0,
-			createTime: '',
-			user: {
-				username: '',
-				displayName: '',
-			},
+	props: {
+		title: {
+			type: String,
+			default: '',
 		},
-	}),
-
-	created() {
-		this.slug = this.$route.params.slug;
-	},
-
-	mounted() {
-		this.request();
-	},
-
-	methods: {
-		request() {
-			this.$apollo.query({
-				query: ArticleGQL,
-				variables: {
-					slug: this.slug,
-				},
-			})
-				.then(response => response.data.blog)
-				.then((data) => { this.article = data; });
+		username: {
+			type: String,
+			default: '',
+		},
+		gravatar: {
+			type: String,
+			default: '',
+		},
+		preview: {
+			type: String,
+			default: '',
+		},
+		createTime: {
+			type: String,
+			default: '',
 		},
 	},
 };
 </script>
+
+
+<style scoped>
+	.preview{
+		max-height: 175px;
+		height: auto;
+		font-size: 14px;
+		line-height: 25px;
+		overflow: hidden;
+	}
+</style>
