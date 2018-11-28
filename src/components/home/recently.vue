@@ -36,12 +36,18 @@
 
 <script>
 
-import ArticleDetail from '@/components/article/detail/app';
+import ArticleDetail from '@/components/article/home/tile';
 
 export default {
 
 	components: {
 		ArticleDetail,
+	},
+
+	data() {
+		return {
+			tab: null,
+		};
 	},
 };
 </script>

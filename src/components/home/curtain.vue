@@ -8,12 +8,12 @@
 			justify-center
 			ma-0
 		>
-			<!-- <div class = "blank--text pl-4 pr-4 pt-4 pb-4">
+			<div class = "blank--text pl-4 pr-4">
 				<div class = "text-xs-center">
 					<span class = "display-3 font-weight-bold" > Lutece </span>
 					<span class = "font-weight-medium" > Ver {{ version }} </span>
 				</div>
-			</div> -->
+			</div>
 		</v-layout>
 	</div>
 
