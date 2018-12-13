@@ -1,13 +1,14 @@
 <template>
 	<v-container
-		v-if="problem"
+		v-if = "problem"
 		fiuld>
 		<v-form>
 			<div>
 				<div class = "section-title" > Title </div>
 				<v-text-field
-					v-model = "problem.title"
-					:error-messages="getErrorByDelegate('title')"/>
+					:value = "problem.title"
+					:error-messages = "getErrorByDelegate('title')"
+					@input = "$emit( 'input-title' , $event )"/>
 			</div>
 
 			<div>
@@ -16,12 +17,12 @@
 					<v-tooltip right>
 						<v-text-field
 							slot = "activator"
-							:change = "triggerLimitationUpdate()"
-							v-model = "limitation.timeLimit"
+							:value = "problem.limitation.timeLimit"
 							:error-messages="getErrorByDelegate('time_limit')"
 							prepend-icon = "mdi-clock"
 							suffix = "Ms"
 							type = "number"
+							@input = "$emit( 'input-limitation-time-limit' , $event )"
 						/>
 						<span> Time Limit </span>
 					</v-tooltip>
@@ -30,12 +31,12 @@
 					<v-tooltip right>
 						<v-text-field
 							slot = "activator"
-							:change = "triggerLimitationUpdate()"
 							:error-messages="getErrorByDelegate('memory_limit')"
-							v-model = "limitation.memoryLimit"
+							:value = "problem.limitation.memoryLimit"
 							prepend-icon = "mdi-zip-disk"
 							suffix = "Mib"
 							type= "number"
+							@input = "$emit( 'input-limitation-memory-limit' , $event )"
 						/>
 						<span> Memory Limit </span>
 					</v-tooltip>
@@ -44,12 +45,12 @@
 					<v-tooltip right>
 						<v-text-field
 							slot = "activator"
-							:change = "triggerLimitationUpdate()"
+							:value = "problem.limitation.outputLimit"
 							:error-messages="getErrorByDelegate('output_limit')"
-							v-model = "limitation.outputLimit"
 							prepend-icon = "mdi-pencil"
 							suffix = "Mib"
 							type= "number"
+							@input = "$emit( 'input-limitation-output-limit' , $event )"
 						/>
 						<span> Output Limit </span>
 					</v-tooltip>
@@ -58,65 +59,55 @@
 					<v-tooltip right>
 						<v-text-field
 							slot = "activator"
-							:change = "triggerLimitationUpdate()"
+							:value = "problem.limitation.cpuLimit"
 							:error-messages="getErrorByDelegate('cpu_limit')"
-							v-model = "limitation.cpuLimit"
 							disabled
 							prepend-icon = "mdi-laptop"
 							suffix = "Core"
 							type= "number"
+							@input = "$emit( 'input-limitation-cpu-limit' , $event )"
 						/>
 						<span> CPU Limit </span>
 					</v-tooltip>
 				</div>
-				<div class = "limitation-section" >
-					<v-tooltip right>
-						<v-text-field
-							slot = "activator"
-							:change = "triggerLimitationUpdate()"
-							:error-messages="getErrorByDelegate('cpu_limit')"
-							v-model = "limitation.cpuLimit"
-							disabled
-							prepend-icon = "mdi-laptop"
-							suffix = "Core"
-							type= "number"
-						/>
-						<span> CPU Limit </span>
-					</v-tooltip>
+				<div>
 					<v-switch
-						v-model = "problem.disable"
+						:input-value = "problem.disable"
 						label = "Disable"
+						@change = "$emit( 'input-disable' , $event )"
 					/>
 				</div>
 			</div>
 
-
 			<div>
 				<div class = "section-title" > Content </div>
 				<v-textarea
-					v-model = "problem.content"
+					:value = "problem.content"
 					:error-messages="getErrorByDelegate('content')"
 					auto-grow
 					rows="4"
+					@input = "$emit( 'input-content' , $event )"
 				/>
 			</div>
 			<div>
 				<div class = "section-title" > Standard Input </div>
 				<v-textarea
-					v-model = "problem.standardInput"
+					:value = "problem.standardInput"
 					:error-messages="getErrorByDelegate('standard_input')"
 					auto-grow
 					rows ="4"
+					@input = "$emit( 'input-standard-input' , $event )"
 				/>
 			</div>
 
 			<div>
 				<div class = "section-title" > Standard Output </div>
 				<v-textarea
-					v-model = "problem.standardOutput"
+					:value = "problem.standardOutput"
 					:error-messages="getErrorByDelegate('standard_output')"
 					auto-grow
 					rows = "4"
+					@input = "$emit( 'input-standard-output' , $event )"
 				/>
 			</div>
 
@@ -126,7 +117,7 @@
 					row
 					wrap>
 					<v-flex
-						v-for = "(sample, index) in samples.sampleList"
+						v-for = "(sample, index) in problem.samples.sampleList"
 						:key = "index"
 						d-flex
 					>
@@ -134,10 +125,10 @@
 							d-flex
 							xs5>
 							<v-textarea
-								v-model = "sample.inputContent"
-								:change = "triggerEmitSampleUpdate()"
+								:value = "sample.inputContent"
 								auto-grow
 								rows = "1"
+								@input = "$emit( 'input-sample-input' , $event , index )"
 							/>
 						</v-flex>
 
@@ -145,17 +136,21 @@
 							d-flex
 							xs5>
 							<v-textarea
-								v-model = "sample.outputContent"
-								:change = "triggerEmitSampleUpdate()"
+								:value = "sample.outputContent"
 								auto-grow
 								rows="1"
+								@input = "$emit( 'input-sample-output' , $event , index )"
 							/>
 						</v-flex>
 
 						<v-flex
 							d-flex
 							xs1>
-							<v-icon @click = "removeSample(index)" > mdi-close-circle </v-icon>
+							<v-icon
+								@click = "$emit( 'input-sample-remove' , index )"
+							>
+								mdi-close-circle
+							</v-icon>
 						</v-flex>
 					</v-flex>
 
@@ -163,35 +158,39 @@
 				<div class = "text-xs-center">
 					<v-btn
 						color = "info"
-						@click = "addSample" > Add Sample </v-btn>
+						@click = "$emit( 'input-sample-add' )" > Add Sample </v-btn>
 				</div>
 			</div>
 
 			<div>
 				<div class = "section-title" > Constraints </div>
 				<v-textarea
-					v-model="problem.constraints"
+					:value = "problem.constraints"
 					:error-messages="getErrorByDelegate('constraints')"
 					auto-grow
 					rows="4"
+					@input = "$emit( 'input-constraints' , $event )"
 				/>
 			</div>
 
 			<div>
 				<div class = "section-title" > Note </div>
 				<v-textarea
-					v-model = "problem.note"
+					:value = "problem.note"
 					:error-messages="getErrorByDelegate('note')"
 					auto-grow
 					rows="4"
+					@input = "$emit( 'input-note' , $event )"
 				/>
 			</div>
 
 			<div>
 				<div class = "section-title" > Resources </div>
 				<v-text-field
-					v-model = "problem.resources"
-					:error-messages="getErrorByDelegate('resources')"/>
+					:value = "problem.resources"
+					:error-messages="getErrorByDelegate('resources')"
+					@input = "$emit( 'input-resources' , $event )"
+				/>
 			</div>
 
 			<div class = "text-xs-center">
@@ -220,47 +219,21 @@ export default {
 			type: String,
 			default: null,
 		},
+		problem: {
+			type: Object,
+			default: null,
+		},
 	},
 
 	data: () => ({
-		problem: null,
-		samples: null,
-		limitation: null,
 		isLoading: false,
 		error: false,
 	}),
-
-	watch: {
-		data(current) {
-			this.problem = current;
-			this.samples = JSON.parse(JSON.stringify(this.problem.samples));
-			this.limitation = JSON.parse(JSON.stringify(this.problem.limitation));
-		},
-	},
 
 	methods: {
 
 		getErrorByDelegate(field) {
 			return getErrorMessage(this.error, field);
-		},
-
-		addSample() {
-			this.samples.sampleList.push({
-				inputContent: '',
-				outputContent: '',
-			});
-		},
-
-		removeSample(index) {
-			this.samples.sampleList.splice(index, 1);
-		},
-
-		triggerEmitSampleUpdate() {
-			this.$emit('triggerSampleListChanged', this.samples);
-		},
-
-		triggerLimitationUpdate() {
-			this.$emit('triggerLimitationChanged', this.limitation);
 		},
 
 		submit() {
@@ -272,16 +245,16 @@ export default {
 					title: this.problem.title,
 					content: this.problem.content,
 					note: this.problem.note,
-					timeLimit: this.limitation.timeLimit,
-					memoryLimit: this.limitation.memoryLimit,
-					outputLimit: this.limitation.outputLimit,
-					cpuLimit: this.limitation.cpuLimit,
+					timeLimit: this.problem.limitation.timeLimit,
+					memoryLimit: this.problem.limitation.memoryLimit,
+					outputLimit: this.problem.limitation.outputLimit,
+					cpuLimit: this.problem.limitation.cpuLimit,
 					constraints: this.problem.constraints,
 					resources: this.problem.resources,
 					standardInput: this.problem.standardInput,
 					standardOutput: this.problem.standardOutput,
 					slug: this.slug,
-					samples: JSON.stringify(this.samples.sampleList),
+					samples: JSON.stringify(this.problem.samples.sampleList),
 					disable: this.problem.disable,
 				},
 			})

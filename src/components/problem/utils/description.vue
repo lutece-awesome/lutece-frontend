@@ -45,6 +45,10 @@
 				<td>{{ problem.pk }}</td>
 			</tr>
 			<tr>
+				<td>Problem Title</td>
+				<td>{{ problem.title }}</td>
+			</tr>
+			<tr>
 				<td>Time Limit</td>
 				<td>{{ problem.limitation.timeLimit }} ms</td>
 			</tr>

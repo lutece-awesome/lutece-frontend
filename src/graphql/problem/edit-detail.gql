@@ -1,5 +1,6 @@
 query ProblemEditDetailGQL($slug: String!) {
 	problem(slug: $slug) {
+		pk
 		title
 		content
 		standardInput

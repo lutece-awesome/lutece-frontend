@@ -9,7 +9,7 @@
 			:variables = "{ slug }"
 			@result = "onResult" >
 			<template
-				slot-scope = "{ result: { loading , error , data } }">
+				slot-scope = "{ result: { error , data } }">
 				<error-spinner v-if = "error" />
 				<div v-show = "data">
 					<v-layout
@@ -19,16 +19,31 @@
 							xs12
 							md6>
 							<div class = "elevation-2" >
-								<div class = "text-xs-center pt-4" >
+								<div class = "text-xs-center pt-4 pb-2" >
 									<v-icon class = "mr-2" > mdi-circle-edit-outline </v-icon>
 									<span class = "headline" > Edit </span>
 								</div>
 								<div>
 									<ProblemSetting
-										:data = "problem"
+										:problem = "problem"
 										:slug = "slug"
-										@triggerSampleListChanged = "updateSampleList"
-										@triggerLimitationChanged = "updateLimitation" />
+										@input-title = "problem.title = $event"
+										@input-limitation-time-limit = "problem.limitation.timeLimit = $event"
+										@input-limitation-memory-limit = "problem.limitation.memoryLimit = $event"
+										@input-limitation-output-limit = "problem.limitation.outputLimit = $event"
+										@input-limitation-cpu-limit = "problem.limitation.cpuLimit = $event"
+										@input-disable = "problem.disable = $event ? true : false"
+										@input-content = "problem.content = $event"
+										@input-standard-input = "problem.standardInput = $event"
+										@input-standard-output = "problem.standardOutput = $event"
+										@input-sample-input = "sampleInputChange"
+										@input-sample-output = "sampleOutputChange"
+										@input-sample-remove = "sampleRemove"
+										@input-sample-add = "sampleAdd"
+										@input-constraints = "problem.constraints = $event"
+										@input-note = "problem.note = $event"
+										@input-resources = "problem.resources = $event"
+									/>
 								</div>
 							</div>
 						</v-flex>
@@ -36,7 +51,7 @@
 							xs12
 							md6>
 							<div class = "elevation-2" >
-								<div class = "text-xs-center pt-4" >
+								<div class = "text-xs-center pt-4 pb-2" >
 									<v-icon class = "mr-2" > mdi-cloud </v-icon>
 									<span class = "headline" > Preview </span>
 								</div>
@@ -53,6 +68,7 @@
 <script>
 import ProblemDescription from '@/components/problem/utils/description';
 import ProblemSetting from '@/components/problem/edit/setting';
+import Vue from 'vue';
 
 export default {
 	metaInfo() { return { title: this.problem ? `Edit ${this.problem.title}` : 'Loading...' }; },
@@ -74,12 +90,29 @@ export default {
 
 	methods: {
 
-		updateSampleList(current) {
-			this.problem.samples = current;
+		sampleInputChange(event, index) {
+			Vue.set(this.problem.samples.sampleList, index, {
+				inputContent: event,
+				outputContent: this.problem.samples.sampleList[index].outputContent,
+			});
 		},
 
-		updateLimitation(current) {
-			this.problem.limitation = current;
+		sampleOutputChange(event, index) {
+			Vue.set(this.problem.samples.sampleList, index, {
+				inputContent: this.problem.samples.sampleList[index].inputContent,
+				outputContent: event,
+			});
+		},
+
+		sampleRemove(index) {
+			this.problem.samples.sampleList.splice(index, 1);
+		},
+
+		sampleAdd() {
+			this.problem.samples.sampleList.push({
+				inputContent: '',
+				outputContent: '',
+			});
 		},
 
 		onResult(result) {
