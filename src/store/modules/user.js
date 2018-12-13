@@ -47,8 +47,8 @@ const actions = {
 		})
 			.then(response => response.data.userLogin)
 			.then((data) => {
+				commit('login', data);
 				clearApolloCache().then(() => {
-					commit('login', data);
 					resolve(data);
 				});
 			})
@@ -63,8 +63,8 @@ const actions = {
 		})
 			.then(response => response.data.userRegister)
 			.then((data) => {
+				commit('login', data);
 				clearApolloCache().then(() => {
-					commit('login', data);
 					resolve(data);
 				});
 			})
@@ -73,8 +73,8 @@ const actions = {
 			});
 	}),
 	logout: ({ commit }) => new Promise((resolve, _reject) => {
+		commit('logout');
 		clearApolloCache().then(() => {
-			commit('logout');
 			resolve();
 		});
 	}),

@@ -69,6 +69,25 @@
 						<span> CPU Limit </span>
 					</v-tooltip>
 				</div>
+				<div class = "limitation-section" >
+					<v-tooltip right>
+						<v-text-field
+							slot = "activator"
+							:change = "triggerLimitationUpdate()"
+							:error-messages="getErrorByDelegate('cpu_limit')"
+							v-model = "limitation.cpuLimit"
+							disabled
+							prepend-icon = "mdi-laptop"
+							suffix = "Core"
+							type= "number"
+						/>
+						<span> CPU Limit </span>
+					</v-tooltip>
+					<v-switch
+						v-model = "problem.disable"
+						label = "Disable"
+					/>
+				</div>
 			</div>
 
 
