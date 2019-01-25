@@ -8,39 +8,41 @@
 			<v-flex
 				xs12
 				xl10>
-				<ApolloQuery
-					:query = "require('@/graphql/submission/list.gql')"
-					:variables = "queryVariables"
-					:debounce = "128"
-					fetch-policy = "no-cache"
-					@result = "onResult" >
-					<template
-						slot-scope = "{ result: { error , data } }">
-						<error-spinner v-if = "error" />
-						<div v-else>
-							<div
-								class = "elevation-2">
-								<status-list
-									:status-item = "data ? data.submissionList.submissionList : []"
-									:is-loading = "isLoading || !data"
-									@input-pk = "isLoading = true, pk = $event"
-									@input-user = "isLoading = true, user = $event"
-									@input-problem = "isLoading = true, problem = $event"
-									@input-verdict = "isLoading = true, verdict = $event"
-									@input-language = "isLoading = true, language = $event"
-								/>
+				<div class = "mt-2" >
+					<ApolloQuery
+						:query = "require('@/graphql/submission/list.gql')"
+						:variables = "queryVariables"
+						:debounce = "128"
+						fetch-policy = "no-cache"
+						@result = "onResult" >
+						<template
+							slot-scope = "{ result: { error , data } }">
+							<error-spinner v-if = "error" />
+							<div v-else>
+								<div
+									class = "elevation-2">
+									<status-list
+										:status-item = "data ? data.submissionList.submissionList : []"
+										:is-loading = "isLoading || !data"
+										@input-pk = "isLoading = true, pk = $event"
+										@input-user = "isLoading = true, user = $event"
+										@input-problem = "isLoading = true, problem = $event"
+										@input-verdict = "isLoading = true, verdict = $event"
+										@input-language = "isLoading = true, language = $event"
+									/>
+								</div>
+								<div
+									:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
+									class = "text-xs-center mt-3">
+									<v-pagination
+										ref = "pagination"
+										v-model = "page"
+										:length = "maxPage"/>
+								</div>
 							</div>
-							<div
-								:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
-								class = "text-xs-center mt-3">
-								<v-pagination
-									ref = "pagination"
-									v-model = "page"
-									:length = "maxPage"/>
-							</div>
-						</div>
-					</template>
-				</ApolloQuery>
+						</template>
+					</ApolloQuery>
+				</div>
 			</v-flex>
 		</v-layout>
 	</v-container>

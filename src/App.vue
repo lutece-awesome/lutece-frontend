@@ -2,7 +2,10 @@
 	<v-app>
 		<app-navagation-bar/>
 		<v-content>
-			<div class = "maincontent" >
+			<div
+				class = "maincontent"
+				fill-height
+			>
 				<v-fade-transition
 					:duration = "100"
 					mode = "out-in"
