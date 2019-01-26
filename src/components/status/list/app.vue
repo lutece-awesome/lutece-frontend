@@ -8,7 +8,7 @@
 			<v-flex
 				xs12
 				xl10>
-				<div style = "margin-top: 14px">
+				<div class = "mt-2">
 					<ApolloQuery
 						:query = "require('@/graphql/submission/list.gql')"
 						:variables = "queryVariables"
