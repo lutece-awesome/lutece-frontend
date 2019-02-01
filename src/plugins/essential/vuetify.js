@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import {
 	Vuetify, // required
 	VChip,
@@ -35,6 +34,9 @@ import {
 } from 'vuetify';
 import { Resize } from 'vuetify/es5/directives';
 import colors from 'vuetify/es5/util/colors';
+import Vue from './vue';
+import '@/stylus/main.styl';
+import '@mdi/font/css/materialdesignicons.css';
 
 Vue.use(Vuetify, {
 	components: {

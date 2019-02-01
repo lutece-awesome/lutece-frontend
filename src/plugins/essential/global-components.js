@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from './vue';
 import LoadingSpinner from '@/components/utils/loading-spinner';
 import ErrorSpinner from '@/components/utils/error-spinner';
 

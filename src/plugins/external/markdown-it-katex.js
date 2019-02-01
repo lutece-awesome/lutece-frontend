@@ -1,5 +1,6 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
-import Vue from 'vue';
+
+import Vue from '../essential/vue';
 
 const mdPromise = new Promise((resolve, _reject) => {
 	Promise.all([
@@ -16,13 +17,13 @@ const mdPromise = new Promise((resolve, _reject) => {
 	});
 });
 
-Vue.directive('mixrend', (el, binding) => {
-	if (binding.value.expression) {
-		el.innerHTML = binding.value.expression;
-	} else {
-		el.innerHTML = binding.value;
-	}
-	mdPromise.then((md) => {
+export default mdPromise.then((md) => {
+	Vue.directive('mixrend', (el, binding) => {
+		if (binding.value.expression) {
+			el.innerHTML = binding.value.expression;
+		} else {
+			el.innerHTML = binding.value;
+		}
 		el.innerHTML = md.render(el.innerHTML);
 	});
 });
