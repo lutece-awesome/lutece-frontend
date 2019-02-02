@@ -1,28 +1,18 @@
-import '@babel/polyfill';
-import Vue from 'vue';
-import router from './router/index';
-import '@mdi/font/css/materialdesignicons.css';
-import './plugins/filters';
-import './plugins/markdown-it-katex';
-import './plugins/vue-line-clamp';
-import './plugins/vue-moment';
-import './plugins/vuetify';
+// import '@babel/polyfill';
+
+import loadingPlugins from './plugins/index';
+import Vue from './plugins/essential/vue';
+import router from './plugins/essential/router';
+import store from './plugins/essential/store';
+import apolloProvider from './plugins/essential/apollo-provider';
 import App from './App';
-import store from './store';
-import apolloProvider from './apollo/provider';
-import './registerServiceWorker';
-import './stylus/main.styl';
 
-import './plugins/util-components';
-
-Vue.config.productionTip = false;
-
-// Force refresh token before initializing the app vue.
-store.dispatch('user/refresh_token', true).then(
-	() => new Vue({
+loadingPlugins.loadingEssential().then(() => {
+	loadingPlugins.loadingExternal();
+	new Vue({
 		router,
 		store,
 		apolloProvider,
 		render: h => h(App),
-	}).$mount('#app'),
-);
+	}).$mount('#app');
+});

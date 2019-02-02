@@ -1,6 +1,8 @@
 const path = require('path');
 
 module.exports = {
+	entry: './src/main.js',
+
 	resolve: {
 		extensions: ['.js', '.vue', '.json'],
 		alias: {

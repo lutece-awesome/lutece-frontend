@@ -93,12 +93,11 @@
 
 <script>
 
-import Bar from '@/components/chart/bar';
 import Verdict from '@/modules/verdict/main';
 
 export default {
 	components: {
-		Bar,
+		Bar: () => import('@/components/chart/bar'),
 	},
 	props: {
 		user: {
