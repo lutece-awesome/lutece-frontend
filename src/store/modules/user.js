@@ -2,7 +2,7 @@
 import { UserLogin, RefreshToken } from '@/graphql/signin/token.gql';
 import RegisterGQL from '@/graphql/signin/register.gql';
 import { clearApolloCache } from '@/utils';
-import apolloProvider from '@/apollo/provider';
+import apolloProvider from '@/plugins/essential/apollo-provider';
 
 const state = {
 	token: localStorage.getItem('USER_TOKEN') || '',
