@@ -17,6 +17,8 @@ const essentialPlugins = () => [
     import('./essential/global-components'),
     // Line clamp
     import('./essential/vue-line-clamp'),
+    // Apollo related
+    import('./essential/apollo-provider'),
 ];
 
 const externalPlugins = () => [
