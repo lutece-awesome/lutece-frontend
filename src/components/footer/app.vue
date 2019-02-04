@@ -19,7 +19,7 @@
 						<a href = "https://github.com/lutece-awesome">
 							<strong>
 								<span class = "lutece"> Lutece </span>
-								<sup> v2 </sup>
+								<sup> + {{ version }} </sup>
 							</strong>
 						</a>
 						<span> Copyright (C) </span>
@@ -42,7 +42,14 @@
 <script>
 import { mapGetters } from 'vuex';
 
+const { version } = require('@/utils');
+
 export default {
+	data() {
+		return {
+			version,
+		};
+	},
 	computed: {
 		...mapGetters({
 			visible: 'footer/visible',
