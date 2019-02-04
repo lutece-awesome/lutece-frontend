@@ -1,0 +1,98 @@
+<template>
+	<v-container>
+		<v-layout
+			row
+			wrap
+			fill-height
+			align-center
+			justify-center
+			ma-0
+		>
+			<v-flex
+				xs12
+				md10
+				lg8
+				text-xs-center
+			>
+				<ApolloQuery
+					:query = "require('@/graphql/home/home-article-list.gql')"
+					:variables = "{ page , filter }"
+					:debounce = "300"
+					@result = "onResult" >
+					<template
+						slot-scope = "{ result: { loading, error , data } , isLoading }">
+						<search-bar
+							v-model = "filter"
+							class = "mb-4 fluid"
+							label = ""
+						/>
+						<loading-spinner
+							v-if = "( ( !data || loading || isLoading ) && (!error) ) ? true : false"
+						/>
+						<error-spinner
+							v-else-if = "error"
+						/>
+						<v-layout
+							v-else
+							justify-center
+						>
+							<v-flex
+								xs12
+								sm9
+							>
+								<div class = "elevation-1">
+									<home-artile-tile
+										v-for = " ( each , index ) in data.homeArticleList.homeArticleList "
+										:key = "index"
+										:title = "each.title"
+										:username = "each.author.username"
+										:preview = "each.preview"
+										:gravatar = "each.author.attachInfo.gravatar"
+										:last-update-time = "each.lastUpdateTime"
+									/>
+								</div>
+							</v-flex>
+						</v-layout>
+						<div
+							v-if = "!error"
+							class = "text-xs-center mt-3"
+						>
+							<v-pagination
+								ref = "pagination"
+								v-model = "page"
+								:length = "maxPage"
+							/>
+						</div>
+					</template>
+				</ApolloQuery>
+			</v-flex>
+		</v-layout>
+	</v-container>
+</template>
+
+<script>
+
+import SearchBar from '@/components/utils/search-bar';
+import HomeArtileTile from '@/components/article/home/tile';
+
+export default {
+	components: {
+		SearchBar,
+		HomeArtileTile,
+	},
+
+	data() {
+		return {
+			page: 1,
+			maxPage: 0,
+			filter: '',
+		};
+	},
+
+	methods: {
+		onResult(result) {
+			this.maxPage = result.data.homeArticleList.maxpage;
+		},
+	},
+};
+</script>

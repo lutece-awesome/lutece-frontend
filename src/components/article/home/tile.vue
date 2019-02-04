@@ -1,38 +1,49 @@
 <template>
-	<v-card
-		class = "elevation-2"
-	>
-		<v-card-title primary-title>
-			<div>
-				<h2 class = "headline"> {{ title }} </h2>
-				<div class = "mt-2 grey--text">
-					<v-avatar size = "32">
-						<img :src = "gravatar" >
-					</v-avatar>
-					<a class = "ml-2" >{{ username }}</a>
-					<span class = "ml-1 mr-1" > | </span>
-					<span> 1.5K views </span>
-				</div>
-			</div>
-		</v-card-title>
+	<v-card hover>
+		<div style = "width: 100%">
+			<h2
+				class = "headline pt-3 pl-3 pb-2"
+				style = "text-align: start"
+			>
+				{{ title }}
+			</h2>
+		</div>
 
 		<v-card-text>
-			<pre class = "preview">{{ preview }}</pre>
+			<div
+				v-line-clamp:20 = "2"
+				class = "content"
+				fill-height
+				align-center
+				justify-center
+				ma-0
+			>
+				{{ preview }}
+			</div>
 		</v-card-text>
 
 		<v-divider/>
 
-		<v-card-actions>
-			<v-btn
-				flat
-				color = "orange"
-			>
-				Read More
-			</v-btn>
+		<v-card-actions class = "mt-1 mb-3 ml-2 mr-2 " >
+
+			<div class = "grey--text">
+				<router-link
+					:to = "{name: 'UserDetail', params: {username}}"
+				>
+					<v-avatar size = "32">
+						<img :src = "gravatar" >
+					</v-avatar>
+					<span class = "ml-2">
+						{{ username }}
+					</span>
+				</router-link>
+			</div>
 
 			<v-spacer/>
 
-			<span class = "grey--text" > Updated on {{ createTime | moment("MMMM Do, YYYY") }}</span>
+			<span class = "grey--text" >
+				<span> 1.5K views </span>
+			</span>
 		</v-card-actions>
 	</v-card>
 </template>
@@ -57,7 +68,7 @@ export default {
 			type: String,
 			default: '',
 		},
-		createTime: {
+		lastUpdateTime: {
 			type: String,
 			default: '',
 		},
@@ -65,13 +76,8 @@ export default {
 };
 </script>
 
-
 <style scoped>
-	.preview{
-		max-height: 175px;
-		height: auto;
-		font-size: 14px;
-		line-height: 25px;
-		overflow: hidden;
+	.content {
+		text-align: start;
 	}
 </style>

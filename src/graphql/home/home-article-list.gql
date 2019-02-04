@@ -1,0 +1,17 @@
+query HomeArticleListGQL($page: Int!, $filter: String) {
+	homeArticleList(page: $page, filter: $filter) {
+		maxpage
+		homeArticleList {
+			title
+            slug
+            preview
+			author {
+				username
+				attachInfo{
+					gravatar
+				}
+			}
+			lastUpdateTime
+		}
+	}
+}

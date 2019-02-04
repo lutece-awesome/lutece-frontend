@@ -1,4 +1,5 @@
 import Home from '@/components/home/home';
+import Blog from '@/components/home/blog';
 
 const Router = [
 	{
@@ -11,6 +12,11 @@ const Router = [
 		path: '/home',
 		name: 'Home',
 		component: Home,
+	},
+	{
+		path: '/blog',
+		name: 'Blog',
+		component: Blog,
 	},
 ];
 
