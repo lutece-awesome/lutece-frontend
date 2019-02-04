@@ -1,21 +1,47 @@
 <template>
-	<div
+	<v-layout
 		class = "curtain"
+		fill-height
+		align-center
+		justify-center
+		ma-0
 	>
-		<v-layout
-			fill-height
-			align-center
-			justify-center
-			ma-0
-		>
-			<div class = "blank--text pl-4 pr-4">
-				<div class = "text-xs-center">
-					<span class = "display-3 font-weight-bold" > Lutece </span>
-					<span class = "font-weight-medium" > Ver {{ version }} </span>
+		<div class = "pl-4 pr-4">
+			<div class = "text-xs-center">
+				<div class = "font-weight-black display-3">
+					<v-img
+						:src = "require('@/assets/logo.png')"
+						height = "128"
+						contain
+					>
+						<loading-spinner slot = "placeholder" />
+					</v-img>
+				</div>
+				<v-divider
+					color = "white"
+					class = "mt-2 mb-4"
+				/>
+				<div class = "sub-title red--text font-weight-bold" >
+					- Develop better Online Judge
+				</div>
+				<div class = "sub-title blue--text font-weight-bold mt-2" >
+					- Learn computer science
+				</div>
+				<div class = "sub-title green--text font-weight-bold mt-2" >
+					- Make programming contest easy
+				</div>
+				<div class = "mt-4" >
+					<v-btn
+						v-for = "( each , index ) in item"
+						:key = "index"
+						:color = "each.color"
+					>
+						{{ each.info }}
+					</v-btn>
 				</div>
 			</div>
-		</v-layout>
-	</div>
+		</div>
+	</v-layout>
 
 </template>
 
@@ -27,14 +53,40 @@ const { version } = require('@/utils');
 export default {
 	data: () => ({
 		version,
+		item: [
+			{
+				info: 'Start',
+				color: 'success',
+			},
+			{
+				info: 'BLOG',
+				color: 'info',
+			},
+			{
+				info: 'DEVELOP',
+				color: 'yellow',
+			},
+			{
+				info: 'CODEBASE',
+				color: 'indigo',
+			},
+			{
+				info: 'HONOR',
+				color: 'red',
+			},
+		],
 	}),
 };
 </script>
 
 <style scoped>
     .curtain {
-		opacity:0.7;
+		opacity: 0.8;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 10px;
+		margin-left: 10px;
+		margin-right: 10px;
+		height: 600px;
     }
+
 </style>
