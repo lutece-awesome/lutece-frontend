@@ -1,6 +1,6 @@
 <template>
 	<v-card hover>
-		<div style = "width: 100%">
+		<div>
 			<h2
 				class = "headline pt-3 pl-3 pb-2"
 				style = "text-align: start"
@@ -42,7 +42,9 @@
 			<v-spacer/>
 
 			<span class = "grey--text" >
-				<span> 1.5K views </span>
+				<span>
+					{{ getThoundNumberic(count) }} views
+				</span>
 			</span>
 		</v-card-actions>
 	</v-card>
@@ -50,6 +52,9 @@
 
 
 <script>
+
+import { getThoundNumberic } from '@/utils';
+
 export default {
 	props: {
 		title: {
@@ -71,6 +76,16 @@ export default {
 		lastUpdateTime: {
 			type: String,
 			default: '',
+		},
+		count: {
+			type: Number,
+			default: 0,
+		},
+	},
+
+	methods: {
+		getThoundNumberic(number) {
+			return getThoundNumberic(number);
 		},
 	},
 };

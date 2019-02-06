@@ -11,7 +11,9 @@ query HomeArticleListGQL($page: Int!, $filter: String) {
 					gravatar
 				}
 			}
-			lastUpdateTime
+			record {
+				count
+			}
 		}
 	}
 }

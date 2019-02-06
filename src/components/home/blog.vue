@@ -49,6 +49,7 @@
 										:preview = "each.preview"
 										:gravatar = "each.author.attachInfo.gravatar"
 										:last-update-time = "each.lastUpdateTime"
+										:count = "each.record.count"
 									/>
 								</div>
 							</v-flex>
@@ -74,6 +75,7 @@
 
 import SearchBar from '@/components/utils/search-bar';
 import HomeArtileTile from '@/components/article/home/tile';
+import { getThoundNumberic } from '@/utils';
 
 export default {
 	components: {
@@ -92,6 +94,9 @@ export default {
 	methods: {
 		onResult(result) {
 			this.maxPage = result.data.homeArticleList.maxpage;
+		},
+		getThoundNumberic(number) {
+			return getThoundNumberic(number);
 		},
 	},
 };
