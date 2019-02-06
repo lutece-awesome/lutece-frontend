@@ -44,11 +44,10 @@
 		/>
 		<v-card v-if = "preview">
 			<v-card-text>
-				<div>
-					<div
-						v-mixrend = "content"
-						class = "commentContent" />
-				</div>
+				<async-mixrend-component
+					:content = "content"
+					class = "commentContent"
+				/>
 			</v-card-text>
 		</v-card>
 	</div>
@@ -59,9 +58,13 @@
 
 import UploadImageGQL from '@/graphql/utils/uploadimage.gql';
 import { getServerUri } from '@/utils';
-
+import { AsyncMixrendComponent } from '@/components/async/index';
 
 export default {
+
+	components: {
+		AsyncMixrendComponent,
+	},
 
 	props: {
 		display: {

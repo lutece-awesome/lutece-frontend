@@ -19,15 +19,15 @@ const essentialPlugins = () => [
     import('./essential/vue-line-clamp'),
     // Apollo related
     import('./essential/apollo-provider'),
+	// Filter plugin, support nl2br
+    import('./essential/filters'),
+    // Vue moment
+    import('./essential/vue-moment'),
 ];
 
 const externalPlugins = () => [
-	// Filter plugin, support nl2br
-	import('./external/filters'),
 	// Markdown it katex plugin
-    import('./external/markdown-it-katex'),
-    // Vue moment
-    import('./external/vue-moment'),
+	import('./external/markdown-it-katex'),
 ];
 
 export default {

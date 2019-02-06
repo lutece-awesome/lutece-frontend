@@ -31,11 +31,12 @@
 				</div>
 
 				<v-divider class="my-3"/>
-				<div
-					v-mixrend = "blog.content"
-					class="subheading"/>
-				<v-divider class="my-3"/>
+				<async-mixrend-component
+					:content = "blog.content"
+					class = "subheading"
+				/>
 
+				<v-divider class="my-3"/>
 
 				<Commtents
 					:slug = "slug"
@@ -50,6 +51,7 @@
 <script>
 import ArticleGQL from '@/graphql/article/detail.gql';
 import Commtents from '@/components/comments/app';
+import { AsyncMixrendComponent } from '@/components/async/index';
 
 
 export default {
@@ -57,6 +59,7 @@ export default {
 
 	components: {
 		Commtents,
+		AsyncMixrendComponent,
 	},
 
 	data: () => ({

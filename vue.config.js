@@ -49,6 +49,11 @@ module.exports = {
 	parallel: undefined,
 	css: undefined,
 	chainWebpack: (_config) => {
+		_config.module.rule('md')
+			.test(/\.md$/)
+			.use('raw-loader')
+			.loader('raw-loader')
+			.end();
 		_config.when(process.env.NODE_ENV === 'production', (config) => {
 			config
 				.plugins.delete('prefetch').end()

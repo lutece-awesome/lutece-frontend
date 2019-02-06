@@ -31,9 +31,10 @@
 							</span>
 						</span>
 					</div>
-					<div
-						v-mixrend = "data.content"
-						class = "mt-3 commentContent"/>
+					<async-mixrend-component
+						:content = "data.content"
+						class = "mt-3 commentContent"
+					/>
 					<div
 						class = "mb-0 mt-2 subheader"
 					>
@@ -76,11 +77,13 @@
 import { mapGetters } from 'vuex';
 import textEditor from '@/components/basic/texteditor';
 import VoteDiscussionGQL from '@/graphql/votediscussion/vote.gql';
+import { AsyncMixrendComponent } from '@/components/async/index';
 
 export default {
 
 	components: {
 		textEditor,
+		AsyncMixrendComponent,
 	},
 
 	props: {

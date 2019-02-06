@@ -20,9 +20,10 @@
 			<v-flex
 				xs12
 				md6>
-				<div
-					v-mixrend = "value.content"
-					class="mb-3" />
+				<async-mixrend-component
+					:content = "value.content"
+					class = "mb-3"
+				/>
 			</v-flex>
 		</v-layout>
 	</v-container>
@@ -33,10 +34,12 @@
 
 import ArticleEdit from '@/components/article/basic/edit';
 import CreateArticleGQL from '@/graphql/article/create.gql';
+import { AsyncMixrendComponent } from '@/components/async/index';
 
 export default {
 	components: {
 		ArticleEdit,
+		AsyncMixrendComponent,
 	},
 	data: () => ({
 		value: {

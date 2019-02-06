@@ -19,7 +19,7 @@
 				</div>
 				<v-divider
 					color = "white"
-					class = "mt-2 mb-4"
+					class = "mt-4 mb-4"
 				/>
 				<div class = "sub-title red--text font-weight-bold" >
 					- Develop better Online Judge
@@ -35,8 +35,18 @@
 						v-for = "( each , index ) in item"
 						:key = "index"
 						:color = "each.color"
+						:to = "each.to"
 					>
-						{{ each.info }}
+						<a
+							v-if = "each.url"
+							:href = "each.url"
+							class = "white--text"
+						>
+							{{ each.info }}
+						</a>
+						<span v-else>
+							{{ each.info }}
+						</span>
 					</v-btn>
 				</div>
 			</div>
@@ -61,14 +71,21 @@ export default {
 			{
 				info: 'BLOG',
 				color: 'info',
+				to: {
+					name: 'Blog',
+				},
 			},
 			{
 				info: 'DEVELOP',
 				color: 'yellow',
+				to: {
+					name: 'Develop',
+				},
 			},
 			{
 				info: 'CODEBASE',
 				color: 'indigo',
+				url: 'https://github.com/lutece-awesome',
 			},
 			{
 				info: 'HONOR',

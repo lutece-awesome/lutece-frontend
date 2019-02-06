@@ -21,6 +21,10 @@ module.exports = {
 					'stylus-loader',
 				],
 			},
+			{
+				test: /.md$/,
+				use: 'text-loader',
+			},
 		],
 	},
 };
