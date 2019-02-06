@@ -53,10 +53,6 @@ export default {
 	},
 
 	props: {
-		title: {
-			type: String,
-			default: null,
-		},
 		profile: {
 			type: Object,
 			default: null,
@@ -64,6 +60,12 @@ export default {
 		isAuthenticated: {
 			type: Boolean,
 			default: false,
+		},
+	},
+
+	computed: {
+		title() {
+			return this.$root.title;
 		},
 	},
 

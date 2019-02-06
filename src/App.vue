@@ -34,5 +34,12 @@ export default {
 		Footer,
 		Snackbar,
 	},
+
+	metaInfo() {
+		return {
+			title: this.$root.title || 'Lutece',
+			titleTemplate: '%s | Lutece',
+		};
+	},
 };
 </script>

@@ -78,6 +78,9 @@ export default {
 			{
 				info: 'DEVELOP',
 				color: 'yellow',
+				to: {
+					name: 'Develop',
+				},
 			},
 			{
 				info: 'CODEBASE',

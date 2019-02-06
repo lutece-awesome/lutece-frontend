@@ -1,29 +1,25 @@
-/* eslint no-param-reassign: ["error", { "props": false }] */
+import MarkdownIt from 'markdown-it';
+import TexMathPlugin from 'markdown-it-texmath';
+import Katex from 'katex';
+import 'katex/dist/katex.css';
 
-import Vue from '../essential/vue';
+TexMathPlugin.use(Katex);
 
-const mdPromise = new Promise((resolve, _reject) => {
-	Promise.all([
-		/* webpackChunkName: "markdown-it-katex" */ import('markdown-it'),
-		/* webpackChunkName: "markdown-it-katex" */ import('@neilsustc/markdown-it-katex'),
-		/* webpackChunkName: "markdown-it-katex" */ import('markdown-it-imsize'),
-		/* webpackChunkName: "markdown-it-katex" */ import('katex/dist/katex.css'),
-	]).then(([{ default: MD }, { default: mk }, { default: mdimsize }, _]) => {
-		const md = MD({
-			typographer: true,
-		}).use(mdimsize);
-		md.use(mk);
-		resolve(md);
-	});
-});
+/**
+ * For markdown it options, ref to https://github.com/markdown-it/markdown-it.
+ * For security settings, ref to https://github.com/markdown-it/markdown-it/blob/master/docs/security.md.
+ */
+const StrictMarkdownParser = MarkdownIt({
+	html: true, // Enable HTML tags in source
+	xhtmlOut: false, // Use '/' to close single tags (<br />).
+	// This is only for full CommonMark compatibility.
+	breaks: false, // Convert '\n' in paragraphs into <br>
+	// useful for external highlighters.
+	linkify: false, // Autoconvert URL-like text to links
+	typographer: true,
+	quotes: '“”‘’',
+})
+	.use(TexMathPlugin);
 
-export default mdPromise.then((md) => {
-	Vue.directive('mixrend', (el, binding) => {
-		if (binding.value.expression) {
-			el.innerHTML = binding.value.expression;
-		} else {
-			el.innerHTML = binding.value;
-		}
-		el.innerHTML = md.render(el.innerHTML);
-	});
-});
+
+export default StrictMarkdownParser;

@@ -2,27 +2,27 @@
 	<v-container
 		v-if = "problem"
 		fiuld>
-		<div
-			v-mixrend = "problem.content"
-			class="mb-3" />
+		<async-mixrend-component
+			:content = "problem.content"
+			class = "mb-3" />
 		<h2
 			v-if = "problem.standardInput"
 			class="headline mb-3">Standard Input</h2>
-		<div
-			v-mixrend = "problem.standardInput"
-			class="mb-3" />
+		<async-mixrend-component
+			:content = "problem.standardInput"
+			class = "mb-3" />
 		<h2
 			v-if="problem.standardOutput"
 			class="headline mb-3">Standard Output</h2>
-		<div
-			v-mixrend = "problem.standardOutput"
-			class="mb-3" />
+		<async-mixrend-component
+			:content = "problem.standardOutput"
+			class = "mb-3" />
 		<h2 class="headline mb-3">Samples</h2>
 		<table class="sample-table mb-3">
 			<tr><th>Input</th><th>Output</th></tr>
 			<tr
-				v-for="(sample, index) in problem.samples.sampleList"
-				:key="index">
+				v-for = "(sample, index) in problem.samples.sampleList"
+				:key = "index">
 				<td><pre>{{ sample.inputContent }}</pre></td>
 				<td><pre>{{ sample.outputContent }}</pre></td>
 			</tr>
@@ -30,15 +30,15 @@
 		<h2
 			v-if="problem.constraints"
 			class="headline mb-3">Constraints</h2>
-		<div
-			v-mixrend = "problem.constraints"
-			class="mb-3" />
+		<async-mixrend-component
+			:content = "problem.constraints"
+			class = "mb-3" />
 		<h2
 			v-if = "problem.note"
 			class = "headline mb-3">Note</h2>
-		<div
-			v-mixrend = "problem.note"
-			class="mb-3" />
+		<async-mixrend-component
+			:content = "problem.note"
+			class = "mb-3" />
 		<table class="guideline-table" >
 			<tr>
 				<td>Problem ID</td>
@@ -69,7 +69,12 @@
 </template>
 
 <script>
+import { AsyncMixrendComponent } from '@/components/async/index';
+
 export default {
+	components: {
+		AsyncMixrendComponent,
+	},
 	props: {
 		problem: {
 			type: Object,
