@@ -58,7 +58,7 @@
 
 import UploadImageGQL from '@/graphql/utils/uploadimage.gql';
 import { getServerUri } from '@/utils';
-import { AsyncMixrendComponent } from '@/components/async/index';
+import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
 
 export default {
 

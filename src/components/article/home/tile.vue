@@ -1,5 +1,8 @@
 <template>
-	<v-card hover>
+	<v-card
+		:to = "{name: 'BlogDetail', params: {slug} }"
+		hover
+	>
 		<div>
 			<h2
 				class = "headline pt-3 pl-3 pb-2"
@@ -58,6 +61,10 @@ import { getThoundNumberic } from '@/utils';
 export default {
 	props: {
 		title: {
+			type: String,
+			default: '',
+		},
+		slug: {
 			type: String,
 			default: '',
 		},

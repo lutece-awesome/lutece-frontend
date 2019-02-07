@@ -45,6 +45,7 @@
 										v-for = " ( each , index ) in data.homeArticleList.homeArticleList "
 										:key = "index"
 										:title = "each.title"
+										:slug = "each.slug"
 										:username = "each.author.username"
 										:preview = "each.preview"
 										:gravatar = "each.author.attachInfo.gravatar"

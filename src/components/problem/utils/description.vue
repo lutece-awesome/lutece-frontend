@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { AsyncMixrendComponent } from '@/components/async/index';
+import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
 
 export default {
 	components: {

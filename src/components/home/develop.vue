@@ -27,7 +27,7 @@
 
 <script>
 
-import { AsyncMixrendComponentWithLoadingSpinner } from '@/components/async/index';
+import { AsyncMixrendComponentWithLoadingSpinner } from '@/components/async/mixrend/index';
 
 export default {
 	components: {
