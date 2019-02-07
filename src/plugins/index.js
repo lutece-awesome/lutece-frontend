@@ -23,6 +23,8 @@ const essentialPlugins = () => [
     import('./essential/filters'),
     // Vue moment
     import('./essential/vue-moment'),
+    // Graphql Tag
+    import('./essential/graphql-tag'),
 ];
 
 const externalPlugins = () => [

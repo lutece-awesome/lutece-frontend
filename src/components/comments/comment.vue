@@ -77,7 +77,7 @@
 import { mapGetters } from 'vuex';
 import textEditor from '@/components/basic/texteditor';
 import VoteDiscussionGQL from '@/graphql/votediscussion/vote.gql';
-import { AsyncMixrendComponent } from '@/components/async/index';
+import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
 
 export default {
 

@@ -23,7 +23,7 @@
 							</strong>
 						</a>
 						<span> Copyright (C) </span>
-						<span> 2018 </span>
+						<span> 2018-2019 </span>
 					</div>
 					<div class = "mt-1" >
 						Judgecore Powered by

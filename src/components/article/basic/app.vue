@@ -34,7 +34,7 @@
 
 import ArticleEdit from '@/components/article/basic/edit';
 import CreateArticleGQL from '@/graphql/article/create.gql';
-import { AsyncMixrendComponent } from '@/components/async/index';
+import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
 
 export default {
 	components: {
