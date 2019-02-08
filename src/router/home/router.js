@@ -1,7 +1,6 @@
 import Home from '@/components/home/home';
 import Blog from '@/components/home/blog';
 import Develop from '@/components/home/develop';
-import HomeManager from '@/components/home/manager';
 import BlogDetail from '@/components/article/home/detail';
 
 const Router = [
@@ -15,14 +14,6 @@ const Router = [
 		path: '/home',
 		name: 'Home',
 		component: Home,
-	},
-	{
-		path: '/home/manager',
-		name: 'HomeManager',
-		component: HomeManager,
-		meta: {
-			requirePermission: 'article.change_homearticle',
-		},
 	},
 	{
 		path: '/blog',

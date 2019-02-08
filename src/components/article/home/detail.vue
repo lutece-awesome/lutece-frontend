@@ -23,6 +23,18 @@
 					:create-time = "createTime"
 					:last-update-time = "lastUpdateTime"
 				/>
+				<v-btn
+					v-if = "hasPermission('article.change_homearticle')"
+					:to = "{name: 'HomeArticleEdit', params: {slug}}"
+					color = "accent"
+					dark
+					fab
+					fixed
+					bottom
+					right
+				>
+					<v-icon>mdi-pencil</v-icon>
+				</v-btn>
 			</v-flex>
 		</v-layout>
 	</v-container>
@@ -33,6 +45,7 @@
 import gql from '@/plugins/essential/graphql-tag';
 import updateArticleRecord from '../basic/update-record';
 import HomeArticleDetail from '../detail/app';
+import { mapGetters } from 'vuex';
 
 export default {
 
@@ -68,6 +81,12 @@ export default {
 		};
 	},
 
+	computed: {
+		...mapGetters({
+			hasPermission: 'user/hasPermission',
+		}),
+	},
+
 	mounted() {
 		const query = gql`
 			query queryHomeArticle($slug: ID!){
@@ -85,6 +104,7 @@ export default {
 						count
 					}
 					createTime
+					lastUpdateTime
 				}
 			}
 		`;

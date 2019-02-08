@@ -83,6 +83,11 @@ export default {
 					to: '/user',
 				},
 				{
+					title: 'Blog',
+					icon: 'mdi-calendar-text',
+					to: '/blog',
+				},
+				{
 					title: 'About',
 					icon: 'mdi-information',
 					to: '/about',
