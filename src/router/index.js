@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import NotFound from '@/components/global/404';
 import AboutRouter from '@/router/about/router';
+import ArticleRouter from '@/router/article/router';
 import HomeRouter from '@/router/home/router';
 import ProblemRouter from '@/router/problem/router';
 import SignRouter from '@/router/sign/router';
@@ -26,6 +27,7 @@ const router = new Router({
 	mode: 'history',
 	routes: [
 		...AboutRouter,
+		...ArticleRouter,
 		...HomeRouter,
 		...ProblemRouter,
 		...SignRouter,

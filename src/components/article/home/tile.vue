@@ -16,10 +16,6 @@
 			<div
 				v-line-clamp:20 = "2"
 				class = "content"
-				fill-height
-				align-center
-				justify-center
-				ma-0
 			>
 				{{ preview }}
 			</div>

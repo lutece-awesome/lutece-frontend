@@ -7,8 +7,15 @@
 			class = "text-xs-center mt-2"
 			style = "color:#999;"
 		>
-			<div> Created by
-				<router-link :to = "{name: 'UserDetail', params: {username: author.attachInfo.gravatar }}" >
+			<div>
+				<span> Created by </span>
+				<v-avatar
+					size = "28"
+					class = "ml-2 mr-2"
+				>
+					<img :src = "author.attachInfo.gravatar" >
+				</v-avatar>
+				<router-link :to = "{name: 'UserDetail', params: {username: author.username }}" >
 					{{ author.username }}
 				</router-link>
 			</div>
