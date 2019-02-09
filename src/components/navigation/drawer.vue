@@ -60,7 +60,7 @@ export default {
 
 	data() {
 		return {
-			drawer: true,
+			drawer: !this.$vuetify.breakpoint.xsOnly,
 			items: [
 				{
 					title: 'Home',
