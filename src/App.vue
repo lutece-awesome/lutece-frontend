@@ -1,7 +1,7 @@
 <template>
 	<v-app>
-		<app-navagation-bar/>
 		<v-content>
+			<app-navagation-bar/>
 			<div
 				class = "maincontent"
 				fill-height
