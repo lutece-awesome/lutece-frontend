@@ -7,7 +7,7 @@
 		<v-avatar
 			size = "36"
 			contain
-			@click.once = "toUserDetail"
+			@click = "toUserDetail"
 		>
 			<img :src = "profile.gravatar" >
 		</v-avatar>
