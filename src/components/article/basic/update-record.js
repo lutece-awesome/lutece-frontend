@@ -2,7 +2,7 @@ import ApolloProvider from '@/plugins/essential/apollo-provider';
 import gql from '@/plugins/essential/graphql-tag';
 
 const mutate = gql`
-    mutation updateArticleRecord($pk: ID!){
+    mutation UpdateArticleRecord($pk: ID!){
         updateArticleRecord(pk:$pk){
           state
         }
