@@ -22,6 +22,8 @@
 					:record = "record"
 					:create-time = "createTime"
 					:last-update-time = "lastUpdateTime"
+					:vote = "vote"
+					:self-attitude = "selfAttitude"
 				/>
 				<v-btn
 					v-if = "hasPermission('article.change_homearticle')"
@@ -76,6 +78,8 @@ export default {
 			},
 			createTime: '',
 			lastUpdateTime: '',
+			vote: 0,
+			selfAttitude: false,
 			isLoading: true,
 			isError: false,
 		};
@@ -105,6 +109,8 @@ export default {
 					}
 					createTime
 					lastUpdateTime
+					vote
+					selfAttitude
 				}
 			}
 		`;
