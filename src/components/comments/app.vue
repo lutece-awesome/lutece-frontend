@@ -1,68 +1,58 @@
 <template>
 	<div>
-		<div class = "mb-3">
-			<v-icon class = "mdi-20px" > mdi-comment </v-icon>
+		<div>
+			<v-icon size = "20" > mdi-comment </v-icon>
 			<span class = "title ml-1" > Comments: </span>
 		</div>
-		<ApolloQuery
-			:query = "require('@/graphql/article/discussion.gql')"
-			:variables = "{ page , slug }"
-			@result = "onResult" >
-			<template
-				slot-scope = "{ result: { loading , error , data } }">
-				<loading-spinner v-if = "loading" />
-				<error-spinner v-else-if = "error" />
-				<div v-else-if = "data">
-					<Comments v-model = "data.blogDiscussionList.discussionList" />
-					<div
-						:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
-						class = "text-xs-center mt-2">
-						<v-pagination
-							ref = "pagination"
-							v-model = "page"
-							:length = "data.blogDiscussionList.maxpage"/>
-					</div>
-				</div>
-			</template>
-		</ApolloQuery>
-
+		<div
+			v-if = "!isAuthenticated"
+			class = "mt-3"
+		>
+			<v-card
+				:to = "{ name: 'Login' }"
+				elevation = "1"
+			>
+				<v-card-title class = "justify-center grey--text">
+					<strong> Login to Comment </strong>
+					<v-icon
+						size = "20"
+						class = "ml-2"
+					>
+						mdi-comment-text
+					</v-icon>
+				</v-card-title>
+			</v-card>
+		</div>
+		<comment-editor
+			v-else
+			:content = "replyComment"
+			class = "mt-3"
+			@input-content = "replyComment = $event"
+		/>
 	</div>
 </template>
 
 
 <script>
-
-import Comments from '@/components/comments/comments';
+import { mapGetters } from 'vuex';
+import CommentEditor from './editor';
 
 export default {
 
 	components: {
-		Comments,
+		CommentEditor,
 	},
 
-	props: {
-		slug: {
-			type: String,
-			required: true,
-		},
+	data() {
+		return {
+			replyComment: '',
+		};
 	},
 
-	data: () => ({
-		page: 1,
-		maxpage: 0,
-	}),
-
-	activated() {
-		this.$refs.pagination.init();
+	computed: {
+		...mapGetters({
+			isAuthenticated: 'user/isAuthenticated',
+		}),
 	},
-
-	methods: {
-
-		onResult(result) {
-			this.maxpage = result.data.blogDiscussionList.maxpage;
-		},
-
-	},
-
 };
 </script>
