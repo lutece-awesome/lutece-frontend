@@ -26,6 +26,7 @@
 		<comment-editor
 			v-else
 			:content = "replyComment"
+			:trigger-promise = "submitComment"
 			class = "mt-3"
 			@input-content = "replyComment = $event"
 		/>
@@ -36,6 +37,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import CommentEditor from './editor';
+// import gql from '@/plugins/essential/graphql-tag';
 
 export default {
 
@@ -53,6 +55,17 @@ export default {
 		...mapGetters({
 			isAuthenticated: 'user/isAuthenticated',
 		}),
+	},
+
+	methods: {
+		submitComment() {
+			// const mutation = gql`
+
+			// `;
+			// return new Promise((resolve, reject) => {
+
+			// });
+		},
 	},
 };
 </script>

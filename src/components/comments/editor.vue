@@ -9,6 +9,7 @@
 			<v-textarea
 				v-else
 				:value = "content"
+				:loading = "isLoading"
 				auto-grow
 				rows = "4"
 				@input = "$emit( 'input-content' , $event )"
@@ -52,6 +53,10 @@ export default {
 			type: String,
 			required: true,
 		},
+		triggerPromise: {
+			type: Promise,
+			required: true,
+		},
 	},
 
 	data() {
@@ -64,7 +69,8 @@ export default {
 
 	methods: {
 		triggerSubmit() {
-
+			this.isError = false;
+			this.isLoading = true;
 		},
 	},
 };
