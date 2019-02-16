@@ -15,7 +15,7 @@
 				v-if = "text"
 				class = "mt-2"
 			>
-				{{ text }}
+				<strong> {{ text }} </strong>
 			</div>
 		</v-flex>
 	</v-layout>
