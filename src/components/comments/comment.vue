@@ -35,6 +35,25 @@
 						:content = "content"
 						class = "mt-3 commentContent"
 					/>
+					<div
+						v-if = "hasEditPermission"
+						class = "mt-3 subheader"
+					>
+						<span
+							style = "cursor:pointer;"
+							@click = "dialogVisiable = !dialogVisiable"
+						>
+							Edit
+						</span>
+					</div>
+					<update-dialog
+						v-if = "dialogVisiable"
+						:value = "dialogVisiable"
+						:pk = "pk"
+						:content = "content"
+						@input = "dialogVisiable = !dialogVisiable"
+						@update-success = "$emit( 'update-success' , $event )"
+					/>
 				</v-card-text>
 			</div>
 		</v-card>
@@ -45,14 +64,20 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
+import UpdateDialog from './update';
 
 export default {
 
 	components: {
 		AsyncMixrendComponent,
+		UpdateDialog,
 	},
 
 	props: {
+		pk: {
+			type: Number,
+			required: true,
+		},
 		content: {
 			type: String,
 			required: true,
@@ -71,10 +96,19 @@ export default {
 		},
 	},
 
+	data() {
+		return {
+			dialogVisiable: false,
+		};
+	},
+
 	computed: {
 		...mapGetters({
 			isAuthenticated: 'user/isAuthenticated',
 		}),
+		hasEditPermission() {
+			return this.author.username === this.$store.getters['user/profile'].username || this.$store.getters['user/hasPermission']('reply.change_basereply');
+		},
 	},
 };
 </script>

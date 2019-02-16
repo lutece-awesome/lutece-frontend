@@ -166,6 +166,7 @@ export default {
 					articleCommentList(pk: $pk, page: $page){
 						maxPage
 						articleCommentList{
+							pk
 							content
 							createTime
 							lastUpdateTime
@@ -185,6 +186,7 @@ export default {
 					pk: this.pk,
 					page,
 				},
+				fetchPolicy: 'no-cache',
 			}).then(response => response.data.articleCommentList);
 		},
 	},

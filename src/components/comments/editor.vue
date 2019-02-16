@@ -76,6 +76,11 @@ export default {
 				content: this.content,
 				reply: null,
 			})
+				.then(() => {
+					this.$emit('submit-success');
+					this.withRender = false;
+					this.$emit('input-content', '');
+				})
 				.catch(() => {
 					this.isError = true;
 				})

@@ -1,14 +1,14 @@
 <template>
 	<div>
-		<loading-spinner v-if = "isLoading"/>
-		<error-spinner v-else-if = "isError"/>
 		<comment
 			v-for = "( each , index ) in articleCommentList"
 			:key = "index"
+			:pk = "parseInt(each.pk,10)"
 			:author = "each.author"
 			:content = "each.content"
 			:create-time = "each.createTime"
 			:last-update-time = "each.lastUpdateTime"
+			@update-success = "update"
 		/>
 		<div class = "text-xs-center mt-3">
 			<v-pagination
@@ -33,6 +33,10 @@ export default {
 			type: Function,
 			required: true,
 		},
+		reFetch: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	data() {
@@ -49,6 +53,10 @@ export default {
 		page() {
 			this.update();
 		},
+		reFetch() {
+			this.page = 1;
+			this.update();
+		},
 	},
 
 	mounted() {
@@ -57,10 +65,15 @@ export default {
 
 	methods: {
 		update() {
+			const currentPage = this.page;
 			this.isLoading = true;
 			this.isError = false;
 			this.fetchComments(this.page)
-				.then(data => Object.assign(this, data))
+				.then((data) => {
+					if (currentPage === this.page) {
+						Object.assign(this, data);
+					}
+				})
 				.catch(() => {
 					this.isError = true;
 				}).finally(() => {

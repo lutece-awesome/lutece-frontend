@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<div>
+		<div class = "mb-3">
 			<v-icon size = "20" > mdi-comment </v-icon>
 			<span class = "title ml-1" > Comments: </span>
 		</div>
-		<div
+		<!-- <div
 			v-if = "!isAuthenticated"
 			class = "mt-3"
 		>
@@ -22,18 +22,21 @@
 					</v-icon>
 				</v-card-title>
 			</v-card>
-		</div>
+		</div> -->
 		<comment-list
 			:fetch-comments = "fetchComments"
+			:re-fetch = "reFetch"
 		/>
-		<v-divider class = "mt-3 mb-3"/>
-		<comment-editor
-			v-if = "isAuthenticated"
-			:content = "replyComment"
-			:submit = "submit"
-			class = "mt-3"
-			@input-content = "replyComment = $event"
-		/>
+		<div v-if = "isAuthenticated">
+			<v-divider class = "mt-3 mb-3"/>
+			<comment-editor
+				:content = "replyComment"
+				:submit = "submit"
+				class = "mt-3"
+				@submit-success = "reFetch = !reFetch"
+				@input-content = "replyComment = $event"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -65,6 +68,7 @@ export default {
 		return {
 			replyComment: '',
 			commentsArray: [],
+			reFetch: false,
 		};
 	},
 
