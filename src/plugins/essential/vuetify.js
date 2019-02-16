@@ -1,5 +1,6 @@
 import {
 	Vuetify, // required
+	VDialog,
 	VCheckbox,
 	VChip,
 	VAlert,
@@ -41,6 +42,7 @@ import '@mdi/font/css/materialdesignicons.css';
 
 Vue.use(Vuetify, {
 	components: {
+		VDialog,
 		VCheckbox,
 		VChip,
 		VAlert,

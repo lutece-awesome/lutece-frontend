@@ -28,12 +28,12 @@
 					<v-pagination
 						ref = "pagination"
 						v-model = "page"
-						:length = "maxpage"/>
+						:length = "maxPage"/>
 				</div>
 				<v-btn
 					v-if = "this.$store.getters['user/isAuthenticated']"
-					:to="{name: 'ArticleCreate'}"
-					color="accent"
+					:to = "{name: 'ArticleCreate'}"
+					color = "accent"
 					dark
 					fab
 					fixed
@@ -60,7 +60,7 @@ export default {
 
 	data: () => ({
 		page: 1,
-		maxpage: 0,
+		maxPage: 0,
 	}),
 
 	activated() {
@@ -69,7 +69,7 @@ export default {
 
 	methods: {
 		onResult(result) {
-			this.maxpage = result.data.blogList.maxpage;
+			this.maxPage = result.data.blogList.maxPage;
 		},
 	},
 };

@@ -13,18 +13,24 @@
 			>
 				<loading-spinner v-if = "isLoading"/>
 				<error-spinner v-else-if = "isError"/>
-				<home-article-detail
-					v-else
-					:pk = "parseInt(pk,10)"
-					:title = "title"
-					:content = "content"
-					:author = "author"
-					:record = "record"
-					:create-time = "createTime"
-					:last-update-time = "lastUpdateTime"
-					:vote = "vote"
-					:self-attitude = "selfAttitude"
-				/>
+				<div v-else>
+					<home-article-detail
+						:pk = "parseInt(pk,10)"
+						:title = "title"
+						:content = "content"
+						:author = "author"
+						:record = "record"
+						:create-time = "createTime"
+						:last-update-time = "lastUpdateTime"
+						:vote = "vote"
+						:self-attitude = "selfAttitude"
+					/>
+					<v-divider class = "mt-3 mb-3" />
+					<comments
+						:fetch-comments = "fetchComments"
+						:submit = "submitComment"
+					/>
+				</div>
 				<v-btn
 					v-if = "hasPermission('article.change_homearticle')"
 					:to = "{name: 'HomeArticleEdit', params: {slug}}"
@@ -48,11 +54,13 @@ import gql from '@/plugins/essential/graphql-tag';
 import updateArticleRecord from '../basic/update-record';
 import HomeArticleDetail from '../detail/app';
 import { mapGetters } from 'vuex';
+import Comments from '@/components/comments/app';
 
 export default {
 
 	components: {
 		HomeArticleDetail,
+		Comments,
 	},
 
 	props: {
@@ -130,6 +138,57 @@ export default {
 			.then(() => { this.isLoading = false; })
 			.then(() => updateArticleRecord(this.pk))
 			.catch(() => { this.isLoading = false; this.isError = true; });
+	},
+
+	methods: {
+		submitComment(data) {
+			const mutation = gql`
+				mutation CreateArticleComment( $pk: ID!, $content: String!, $reply: ID ){
+					createArticleComment(pk: $pk, content: $content, reply: $reply){
+						pk
+					}
+				}
+			`;
+			return this.$apollo.mutate({
+				mutation,
+				variables: {
+					pk: this.pk,
+					content: data.content,
+					reply: data.reply,
+				},
+			})
+				.then(response => response.data.CreateArticleComment);
+		},
+
+		fetchComments(page) {
+			const query = gql`
+				query ArticleCommentList( $pk: ID!, $page: Int! ){
+					articleCommentList(pk: $pk, page: $page){
+						maxPage
+						articleCommentList{
+							pk
+							content
+							createTime
+							lastUpdateTime
+							author{
+								username
+								attachInfo{
+									gravatar
+								}
+							}
+						}
+					}
+				}
+			`;
+			return this.$apollo.query({
+				query,
+				variables: {
+					pk: this.pk,
+					page,
+				},
+				fetchPolicy: 'no-cache',
+			}).then(response => response.data.articleCommentList);
+		},
 	},
 };
 </script>

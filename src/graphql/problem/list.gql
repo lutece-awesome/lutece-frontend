@@ -1,6 +1,6 @@
 query ProblemListGQL($page: Int!, $filter: String) {
 	problemList(page: $page, filter: $filter) {
-		maxpage
+		maxPage
 		problemList {
 			pk
 			title

@@ -1,6 +1,6 @@
 query BLogListGQL($page: Int!) {
 	blogList(page: $page) {
-		maxpage
+		maxPage
 		blogList {
             title
             vote

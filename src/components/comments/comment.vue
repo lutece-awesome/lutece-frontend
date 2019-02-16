@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<v-card
-			:class = "{ 'ml-5' : isReply }"
 			hover
 			class = "mt-2 card"
 		>
@@ -10,13 +9,13 @@
 					class = "mb-4" >
 					<div>
 						<v-avatar size = "40" >
-							<img :src = "data.user.gravataremail" >
+							<img :src = "author.attachInfo.gravatar" >
 						</v-avatar>
 						<router-link
-							:to = "{name: 'UserDetail', params: {username: data.user.username}}"
+							:to = "{name: 'UserDetail', params: {username: author.username}}"
 							class = "ml-2"
 						>
-							{{ data.user.displayName }}
+							{{ author.username }}
 						</router-link>
 						<span
 							class = "ml-2"
@@ -25,150 +24,90 @@
 								mdi-clock-outline
 							</v-icon>
 							<span
-								:title = "data.submitTime | moment('Y-MM-DD HH:mm:ss')"
-								class="humanize-time" >
-								{{ data.submitTime | moment("from") }}
+								:title = "createTime | moment('Y-MM-DD HH:mm:ss')"
+								class = "humanize-time"
+							>
+								{{ createTime | moment("from") }}
 							</span>
 						</span>
 					</div>
 					<async-mixrend-component
-						:content = "data.content"
+						:content = "content"
 						class = "mt-3 commentContent"
 					/>
 					<div
-						class = "mb-0 mt-2 subheader"
+						v-if = "hasEditPermission"
+						class = "mt-3 subheader"
 					>
-						<span> {{ data.vote }} </span>
-						<span class = "ml-1" >
-							<v-icon
-								:color = "data.attitude === 'Agree' ? 'green darkgen-2' : 'grey' "
-								@click = "voteDiscussion( true )"
-							>
-								mdi-chevron-up
-							</v-icon>
-						</span>
-						<span>
-							<v-icon
-								:color = "data.attitude === 'Disagree' ? 'red darkgen-2' : 'grey' "
-								@click = "voteDiscussion( false )"
-							>
-								mdi-chevron-down
-							</v-icon>
-						</span>
-						<span class = "ml-2 mr-2" > | </span>
 						<span
 							style = "cursor:pointer;"
-							@click = "Reply" >
-							Reply
+							@click = "dialogVisiable = !dialogVisiable"
+						>
+							Edit
 						</span>
 					</div>
+					<update-dialog
+						v-if = "dialogVisiable"
+						:value = "dialogVisiable"
+						:pk = "pk"
+						:content = "content"
+						@input = "dialogVisiable = !dialogVisiable"
+						@update-success = "$emit( 'update-success' , $event )"
+					/>
 				</v-card-text>
 			</div>
 		</v-card>
-		<textEditor
-			:class = "{ 'ml-5' : isReply }"
-			:display = "editorDisplay"
-			@close-editor = "closeEditor" />
 	</div>
 </template>
 
 
 <script>
 import { mapGetters } from 'vuex';
-import textEditor from '@/components/basic/texteditor';
-import VoteDiscussionGQL from '@/graphql/votediscussion/vote.gql';
 import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
+import UpdateDialog from './update';
 
 export default {
 
 	components: {
-		textEditor,
 		AsyncMixrendComponent,
+		UpdateDialog,
 	},
 
 	props: {
-		value: {
-			type: Object,
-			default: () => null,
+		pk: {
+			type: Number,
+			required: true,
 		},
-		isReply: {
-			type: Boolean,
-			default: false,
+		content: {
+			type: String,
+			required: true,
+		},
+		author: {
+			type: Object,
+			required: true,
+		},
+		createTime: {
+			type: String,
+			required: true,
+		},
+		lastUpdateTime: {
+			type: String,
+			required: true,
 		},
 	},
 
-	data: () => ({
-		data: {
-			user: {
-				displayName: '',
-				username: '',
-				gravataremail: '',
-			},
-			pk: 0,
-			submitTime: 0,
-			attitude: 'Neutral',
-			vote: 0,
-			content: '',
-		},
-		editorDisplay: false,
-	}),
+	data() {
+		return {
+			dialogVisiable: false,
+		};
+	},
 
 	computed: {
 		...mapGetters({
 			isAuthenticated: 'user/isAuthenticated',
 		}),
-	},
-
-	created() {
-		this.data = JSON.parse(JSON.stringify(this.value));
-	},
-
-	methods: {
-		Reply() {
-			if (!this.isAuthenticated) {
-				this.$router.push({
-					name: 'Login',
-					query: {
-						redirect: this.$route.path,
-					},
-				});
-				return;
-			}
-			this.editorDisplay = true;
-		},
-
-		voteDiscussion(attitude) {
-			if (!this.isAuthenticated) {
-				this.$router.push({
-					name: 'Login',
-					query: {
-						redirect: this.$route.path,
-					},
-				});
-				return;
-			}
-			if (this.uploading) {
-				this.$store.commit('snackbar/setSnack', 'Please wait a moment...');
-				return;
-			}
-			this.uploading = true;
-			this.$apollo.mutate({
-				mutation: VoteDiscussionGQL,
-				variables: {
-					pk: this.data.pk,
-					attitude,
-				},
-			})
-				.then(response => response.data.UpdateDiscussionVote)
-				.then((data) => {
-					this.data.attitude = data.result;
-					this.data.vote = data.vote;
-				})
-				.finally(() => { this.uploading = false; });
-		},
-
-		closeEditor() {
-			this.editorDisplay = false;
+		hasEditPermission() {
+			return this.author.username === this.$store.getters['user/profile'].username || this.$store.getters['user/hasPermission']('reply.change_basereply');
 		},
 	},
 };

@@ -32,7 +32,7 @@
 								<v-pagination
 									ref = "pagination"
 									v-model = "page"
-									:length = "maxpage"/>
+									:length = "maxPage"/>
 							</div>
 						</div>
 					</template>
@@ -65,14 +65,14 @@ export default {
 	data() {
 		return {
 			page: 1,
-			maxpage: 0,
+			maxPage: 0,
 			filter: '',
 		};
 	},
 
 	methods: {
 		onResult(result) {
-			this.maxpage = result.data.userList.maxpage;
+			this.maxPage = result.data.userList.maxPage;
 		},
 	},
 
