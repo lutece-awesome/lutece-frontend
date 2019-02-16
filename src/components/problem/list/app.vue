@@ -38,6 +38,20 @@
 						</div>
 					</template>
 				</ApolloQuery>
+				<v-btn
+					v-if = "hasPermission('problem.add_problem')"
+					:to = "{
+						name: 'ProblemCreate',
+					}"
+					color = "accent"
+					dark
+					fab
+					fixed
+					bottom
+					right
+				>
+					<v-icon>mdi-pencil</v-icon>
+				</v-btn>
 			</v-flex>
 		</v-layout>
 	</v-container>
@@ -46,6 +60,7 @@
 <script>
 import ProblemList from '@/components/problem/list/list';
 import SearchBar from '@/components/utils/search-bar';
+import { mapGetters } from 'vuex';
 
 export default {
 
@@ -68,6 +83,12 @@ export default {
 			maxPage: 0,
 			filter: '',
 		};
+	},
+
+	computed: {
+		...mapGetters({
+			hasPermission: 'user/hasPermission',
+		}),
 	},
 
 	activated() {

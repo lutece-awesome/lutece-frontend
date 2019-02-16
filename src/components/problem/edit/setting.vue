@@ -206,8 +206,7 @@
 
 <script>
 
-import updateProblemGQL from '@/graphql/problem/edit.gql';
-import { clearApolloCache, getErrorMessage, parseGraphqlError } from '@/utils';
+import { getErrorMessage, parseGraphqlError } from '@/utils';
 
 export default {
 	props: {
@@ -215,13 +214,13 @@ export default {
 			type: Object,
 			default: null,
 		},
-		slug: {
-			type: String,
-			default: null,
-		},
 		problem: {
 			type: Object,
 			default: null,
+		},
+		triggerSubmit: {
+			type: Function,
+			required: true,
 		},
 	},
 
@@ -239,33 +238,7 @@ export default {
 		submit() {
 			this.isLoading = true;
 			this.isError = false;
-			this.$apollo.mutate({
-				mutation: updateProblemGQL,
-				variables: {
-					title: this.problem.title,
-					content: this.problem.content,
-					note: this.problem.note,
-					timeLimit: this.problem.limitation.timeLimit,
-					memoryLimit: this.problem.limitation.memoryLimit,
-					outputLimit: this.problem.limitation.outputLimit,
-					cpuLimit: this.problem.limitation.cpuLimit,
-					constraints: this.problem.constraints,
-					resources: this.problem.resources,
-					standardInput: this.problem.standardInput,
-					standardOutput: this.problem.standardOutput,
-					slug: this.slug,
-					samples: JSON.stringify(this.problem.samples.sampleList),
-					disable: this.problem.disable,
-				},
-			})
-				.then(() => {
-					clearApolloCache().then(() => {
-						this.$router.push({
-							name: 'ProblemDetailDescription',
-							params: { slug: this.slug },
-						});
-					});
-				})
+			this.triggerSubmit()
 				.catch((error) => {
 					this.error = parseGraphqlError(error);
 				})

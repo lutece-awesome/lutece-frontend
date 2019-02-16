@@ -3,12 +3,18 @@ import ProblemList from '@/components/problem/list/app';
 import ProblemDescription from '@/components/problem/utils/description';
 import ProblemEditor from '@/components/problem/detail/editor';
 import ProblemChange from '@/components/problem/edit/app';
+import ProblemCreate from '@/components/problem/create/app';
 
 const Router = [
 	{
 		path: '/problem',
 		name: 'Problem',
 		component: ProblemList,
+	},
+	{
+		path: '/problem-create',
+		name: 'ProblemCreate',
+		component: ProblemCreate,
 	},
 	{
 		path: '/problem/:slug',
@@ -28,7 +34,7 @@ const Router = [
 		props: true,
 	},
 	{
-		path: '/problem/edit/:slug',
+		path: '/problem-edit/:slug',
 		name: 'ProblemEdit',
 		component: ProblemChange,
 		props: true,

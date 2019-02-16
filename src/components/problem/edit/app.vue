@@ -26,7 +26,7 @@
 								<div>
 									<ProblemSetting
 										:problem = "problem"
-										:slug = "slug"
+										:trigger-submit = "triggerSubmit"
 										@input-title = "problem.title = $event"
 										@input-limitation-time-limit = "problem.limitation.timeLimit = $event"
 										@input-limitation-memory-limit = "problem.limitation.memoryLimit = $event"
@@ -66,12 +66,17 @@
 </template>
 
 <script>
+
+import updateProblemGQL from '@/graphql/problem/edit.gql';
 import ProblemDescription from '@/components/problem/utils/description';
 import ProblemSetting from '@/components/problem/edit/setting';
 import Vue from 'vue';
+import { clearApolloCache } from '@/utils';
 
 export default {
+
 	metaInfo() { return { title: this.problem ? `Edit ${this.problem.title}` : 'Loading...' }; },
+
 	components: {
 		ProblemDescription,
 		ProblemSetting,
@@ -117,6 +122,35 @@ export default {
 
 		onResult(result) {
 			this.problem = Object.assign({}, result.data.problem);
+		},
+
+		triggerSubmit() {
+			return this.$apollo.mutate({
+				mutation: updateProblemGQL,
+				variables: {
+					title: this.problem.title,
+					content: this.problem.content,
+					note: this.problem.note,
+					timeLimit: this.problem.limitation.timeLimit,
+					memoryLimit: this.problem.limitation.memoryLimit,
+					outputLimit: this.problem.limitation.outputLimit,
+					cpuLimit: this.problem.limitation.cpuLimit,
+					constraints: this.problem.constraints,
+					resources: this.problem.resources,
+					standardInput: this.problem.standardInput,
+					standardOutput: this.problem.standardOutput,
+					slug: this.slug,
+					samples: JSON.stringify(this.problem.samples.sampleList),
+					disable: this.problem.disable,
+				},
+			}).then(() => {
+				clearApolloCache().then(() => {
+					this.$router.push({
+						name: 'ProblemDetailDescription',
+						params: { slug: this.slug },
+					});
+				});
+			});
 		},
 	},
 };
