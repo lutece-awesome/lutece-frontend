@@ -14,7 +14,7 @@ query SubmissionListGQL(
 		judgeStatus: $judgeStatus
 		language: $language
 	) {
-		maxpage
+		maxPage
 		submissionList {
 			pk
 			failedCase

@@ -23,10 +23,14 @@
 				</v-card-title>
 			</v-card>
 		</div>
+		<comment-list
+			:fetch-comments = "fetchComments"
+		/>
+		<v-divider class = "mt-3 mb-3"/>
 		<comment-editor
-			v-else
+			v-if = "isAuthenticated"
 			:content = "replyComment"
-			:trigger-promise = "submitComment"
+			:submit = "submit"
 			class = "mt-3"
 			@input-content = "replyComment = $event"
 		/>
@@ -37,17 +41,30 @@
 <script>
 import { mapGetters } from 'vuex';
 import CommentEditor from './editor';
-// import gql from '@/plugins/essential/graphql-tag';
+import CommentList from './comments';
 
 export default {
 
 	components: {
 		CommentEditor,
+		CommentList,
+	},
+
+	props: {
+		fetchComments: {
+			type: Function,
+			required: true,
+		},
+		submit: {
+			type: Function,
+			required: true,
+		},
 	},
 
 	data() {
 		return {
 			replyComment: '',
+			commentsArray: [],
 		};
 	},
 
@@ -55,17 +72,6 @@ export default {
 		...mapGetters({
 			isAuthenticated: 'user/isAuthenticated',
 		}),
-	},
-
-	methods: {
-		submitComment() {
-			// const mutation = gql`
-
-			// `;
-			// return new Promise((resolve, reject) => {
-
-			// });
-		},
 	},
 };
 </script>

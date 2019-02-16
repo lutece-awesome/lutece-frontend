@@ -78,7 +78,7 @@ export default {
 
 	methods: {
 		onResult(result) {
-			this.maxPage = result.data.problemList.maxpage;
+			this.maxPage = result.data.problemList.maxPage;
 		},
 	},
 };

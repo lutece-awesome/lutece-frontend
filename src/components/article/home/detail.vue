@@ -26,7 +26,10 @@
 						:self-attitude = "selfAttitude"
 					/>
 					<v-divider class = "mt-3 mb-3" />
-					<comments/>
+					<comments
+						:fetch-comments = "fetchComments"
+						:submit = "submitComment"
+					/>
 				</div>
 				<v-btn
 					v-if = "hasPermission('article.change_homearticle')"
@@ -135,6 +138,55 @@ export default {
 			.then(() => { this.isLoading = false; })
 			.then(() => updateArticleRecord(this.pk))
 			.catch(() => { this.isLoading = false; this.isError = true; });
+	},
+
+	methods: {
+		submitComment(data) {
+			const mutation = gql`
+				mutation CreateArticleComment( $pk: ID!, $content: String!, $reply: ID ){
+					createArticleComment(pk: $pk, content: $content, reply: $reply){
+						pk
+					}
+				}
+			`;
+			return this.$apollo.mutate({
+				mutation,
+				variables: {
+					pk: this.pk,
+					content: data.content,
+					reply: data.reply,
+				},
+			})
+				.then(response => response.data.CreateArticleComment);
+		},
+
+		fetchComments(page) {
+			const query = gql`
+				query ArticleCommentList( $pk: ID!, $page: Int! ){
+					articleCommentList(pk: $pk, page: $page){
+						maxPage
+						articleCommentList{
+							content
+							createTime
+							lastUpdateTime
+							author{
+								username
+								attachInfo{
+									gravatar
+								}
+							}
+						}
+					}
+				}
+			`;
+			return this.$apollo.query({
+				query,
+				variables: {
+					pk: this.pk,
+					page,
+				},
+			}).then(response => response.data.articleCommentList);
+		},
 	},
 };
 </script>

@@ -116,7 +116,7 @@ export default {
 
 	methods: {
 		onResult(result) {
-			this.maxPage = result.data.homeArticleList.maxpage;
+			this.maxPage = result.data.homeArticleList.maxPage;
 		},
 		getThoundNumberic(number) {
 			return getThoundNumberic(number);

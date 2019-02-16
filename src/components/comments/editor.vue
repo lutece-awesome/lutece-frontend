@@ -1,23 +1,24 @@
 <template>
 	<div class = "elevation-1">
-		<div class = "pl-3 pr-3 pb-3">
+		<div class = "pl-3 pr-3 mt-3">
 			<async-mixrend-component-with-loading-spinner
 				v-if = "withRender"
 				:content = "content"
-				class = "pt-3"
+				class = "pt-2"
 			/>
 			<v-textarea
 				v-else
 				:value = "content"
 				:loading = "isLoading"
 				auto-grow
-				rows = "4"
+				rows = "9"
 				@input = "$emit( 'input-content' , $event )"
 			/>
 		</div>
 		<v-toolbar
 			dense
 			height = "48"
+			flat
 		>
 			<v-switch
 				v-model = "withRender"
@@ -53,8 +54,8 @@ export default {
 			type: String,
 			required: true,
 		},
-		triggerPromise: {
-			type: Promise,
+		submit: {
+			type: Function,
 			required: true,
 		},
 	},
@@ -71,6 +72,16 @@ export default {
 		triggerSubmit() {
 			this.isError = false;
 			this.isLoading = true;
+			this.submit({
+				content: this.content,
+				reply: null,
+			})
+				.catch(() => {
+					this.isError = true;
+				})
+				.finally(() => {
+					this.isLoading = false;
+				});
 		},
 	},
 };

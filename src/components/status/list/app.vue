@@ -94,7 +94,7 @@ export default {
 	methods: {
 		onResult(result) {
 			this.isLoading = false;
-			this.maxPage = result.data.submissionList.maxpage;
+			this.maxPage = result.data.submissionList.maxPage;
 		},
 	},
 };

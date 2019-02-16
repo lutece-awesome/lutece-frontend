@@ -1,6 +1,6 @@
 query HomeArticleListGQL($page: Int!, $filter: String) {
 	homeArticleList(page: $page, filter: $filter) {
-		maxpage
+		maxPage
 		homeArticleList {
 			title
             slug

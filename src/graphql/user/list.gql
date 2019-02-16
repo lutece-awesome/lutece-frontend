@@ -1,6 +1,6 @@
 query UserListGQL($page: Int!, $filter: String) {
 	userList(page: $page, filter: $filter) {
-		maxpage
+		maxPage
 		userList {
 			username
 			attachInfo{
