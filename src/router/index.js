@@ -8,6 +8,7 @@ import ProblemRouter from '@/router/problem/router';
 import SignRouter from '@/router/sign/router';
 import StatusRouter from '@/router/status/router';
 import UserRouter from '@/router/user/router';
+import SettingRouter from '@/router/setting/router';
 import Store from '@/store/index';
 import { isAuthenticated, goHome, hasPermission } from './utils';
 
@@ -33,6 +34,7 @@ const router = new Router({
 		...SignRouter,
 		...StatusRouter,
 		...UserRouter,
+		...SettingRouter,
 		{
 			path: '*',
 			name: '404',

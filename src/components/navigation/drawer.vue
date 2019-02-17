@@ -88,6 +88,11 @@ export default {
 					to: '/blog',
 				},
 				{
+					title: 'Setting',
+					icon: 'mdi-settings',
+					to: '/setting',
+				},
+				{
 					title: 'About',
 					icon: 'mdi-information',
 					to: '/about',
