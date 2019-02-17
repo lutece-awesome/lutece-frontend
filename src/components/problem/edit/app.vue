@@ -68,7 +68,7 @@
 <script>
 
 import updateProblemGQL from '@/graphql/problem/edit.gql';
-import ProblemDescription from '@/components/problem/utils/description';
+import ProblemDescription from '@/components/problem/utils/preview';
 import ProblemSetting from '@/components/problem/edit/setting';
 import Vue from 'vue';
 import { clearApolloCache } from '@/utils';
@@ -146,7 +146,7 @@ export default {
 			}).then(() => {
 				clearApolloCache().then(() => {
 					this.$router.push({
-						name: 'ProblemDetailDescription',
+						name: 'ProblemDetail',
 						params: { slug: this.slug },
 					});
 				});

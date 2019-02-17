@@ -19,7 +19,7 @@
 								<v-btn
 									v-for = "each in user.statistics.solve"
 									:key = "each.pk"
-									:to = "{name: 'ProblemDetailDescription', params: {slug: each.slug }}"
+									:to = "{name: 'ProblemDetail', params: {slug: each.slug }}"
 									:color = " each.status ? 'success' : 'error' "
 									small
 								>
