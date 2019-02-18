@@ -1,5 +1,6 @@
 <template>
 	<v-layout
+		class = "spinner"
 		fill-height
 		align-center
 		justify-center

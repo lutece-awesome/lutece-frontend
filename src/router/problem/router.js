@@ -34,6 +34,7 @@ const Router = [
 				path: 'editor',
 				name: 'ProblemEditor',
 				component: ProblemEditor,
+				props: true,
 			},
 		],
 		props: true,

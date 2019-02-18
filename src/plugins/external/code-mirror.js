@@ -3,6 +3,8 @@ import { codemirror } from 'vue-codemirror';
 // require styles
 import 'codemirror/lib/codemirror.css';
 
+import languageList from '@/modules/language/main';
+
 // for theme dir, ref to https://codemirror.net/theme/
 const themePlugins = [
 	{
@@ -250,9 +252,11 @@ const keymapPlugins = [
 	},
 ];
 
+const languagePlugins = languageList.all();
 
 export default {
 	component: codemirror,
 	themePlugins,
 	keymapPlugins,
+	languagePlugins,
 };

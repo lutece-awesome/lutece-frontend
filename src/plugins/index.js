@@ -29,7 +29,9 @@ const essentialPlugins = () => [
 
 const externalPlugins = () => [
 	// Markdown it katex plugin
-	import('./external/markdown-it-katex'),
+    import('./external/markdown-it-katex'),
+    // Code Mirror
+    import('./external/code-mirror'),
 ];
 
 export default {

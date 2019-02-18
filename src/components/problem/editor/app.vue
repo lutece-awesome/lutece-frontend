@@ -45,14 +45,20 @@ export default {
 		codeMirror,
 		languageSelect,
 	},
-
 	props: {
 		slug: {
 			type: String,
 			required: true,
 		},
+		option: {
+			type: Object,
+			default: null,
+		},
+		gql: {
+			type: Object,
+			default: null,
+		},
 	},
-
 	data: () => ({
 		code: '',
 		language: Language.first(),
@@ -62,32 +68,32 @@ export default {
 
 	methods: {
 		submit() {
-		// 	if (!this.gql) {
-		// 		return;
-		// 	}
-		// 	this.isLoading = true;
-		// 	this.isError = false;
-		// 	this.$apollo.mutate({
-		// 		mutation: this.gql,
-		// 		variables: {
-		// 			problemSlug: this.slug,
-		// 			language: this.language.full,
-		// 			code: this.code,
-		// 			...this.option,
-		// 		},
-		// 	})
-		// 		.then((response) => {
-		// 			this.$router.push({
-		// 				name: 'StatusDetail',
-		// 				params: {
-		// 					pk: response.data.submitSubmission.pk,
-		// 				},
-		// 			});
-		// 		})
-		// 		.catch(() => {
-		// 			this.isError = true;
-		// 		})
-		// 		.finally(() => { this.isLoading = false; });
+			if (!this.gql) {
+				return;
+			}
+			this.isLoading = true;
+			this.isError = false;
+			this.$apollo.mutate({
+				mutation: this.gql,
+				variables: {
+					problemSlug: this.slug,
+					language: this.language.full,
+					code: this.code,
+					...this.option,
+				},
+			})
+				.then((response) => {
+					this.$router.push({
+						name: 'StatusDetail',
+						params: {
+							pk: response.data.submitSubmission.pk,
+						},
+					});
+				})
+				.catch(() => {
+					this.isError = true;
+				})
+				.finally(() => { this.isLoading = false; });
 		},
 	},
 };
