@@ -6,26 +6,49 @@
 			class = "CodeMirror"
 			@input = "$emit( 'input' , $event )"
 		/>
-		<slot name = "extension" />
+		<v-toolbar
+			dense
+			flat
+			class = "pl-3 pt-2 pb-3"
+		>
+			<languageSelect
+				v-model = "language"
+				:item-text = "each => each.info"
+				:clearable = "false"
+				style = "max-width: 225px"
+				append-icon = "mdi-menu-down"
+			/>
+			<v-icon class = "ml-3 mt-3">
+				mdi-settings
+			</v-icon>
+			<v-spacer/>
+			<v-btn
+				class = "mt-3"
+				color = "primary"
+			>
+				Submit
+			</v-btn>
+		</v-toolbar>
 	</div>
 </template>
 
 <script>
 
-import LoadingSpinner from '@/components/utils/loading-spinner';
+import LoadingSpinnerWrapper from './loading-wrapper';
 import ErrorSpinner from '@/components/utils/error-spinner';
+import languageSelect from '@/components/language/utils/select';
+import Language from '@/modules/language/main';
 
 export default {
 	components: {
-		// TODO: Split those promise to configuration files and
-		// support async theme / language-mode / keymap download.
-		codemirror: () => {
-			const cmPromise = import('@/plugins/external/code-mirror');
+		languageSelect,
+
+		codemirror() {
 			return {
-				component: cmPromise.then(md => md.default.component),
-				loading: LoadingSpinner,
+				component: import('@/plugins/external/code-mirror').then(md => md.default),
+				loading: LoadingSpinnerWrapper,
 				error: ErrorSpinner,
-				dealy: 0,
+				delay: 0,
 			};
 		},
 	},
@@ -35,38 +58,49 @@ export default {
 			type: String,
 			default: '',
 		},
-		option: {
-			type: Object,
-			default: () => ({}),
-		},
 	},
+
 
 	data() {
 		return {
 			isLoading: false,
 			isError: false,
+			language: null,
 			defaultOption: {
 				indentUnit: 4,
 				line: true,
 				lineNumbers: true,
-				// keyMap: 'sublime',
-				// tabindex: '0',
-				// line: true,
-				// styleActiveLine: true,
-				// matchBrackets: true,
-				// theme: 'neo',
-				// autoRefresh: true,
+				lineWrapping: true,
+				tabindex: '0',
+				autoRefresh: true,
+				scrollbarStyle: 'overlay',
+				styleActiveLine: true,
+				matchBrackets: true,
+				autoCloseBrackets: true,
 			},
 		};
 	},
 
 	computed: {
 		getOptions() {
+			const lang = this.$store.getters['editor/importLanguage'];
 			return {
 				...this.defaultOption,
-				...this.option,
+				...{
+					mode: lang ? lang.codeMirror : null,
+				},
 			};
 		},
+	},
+
+	watch: {
+		language(current) {
+			this.$store.dispatch('editor/updateLanguage', current);
+		},
+	},
+
+	mounted() {
+		this.language = this.$store.getters['editor/currentLanguage'] || Language.first();
 	},
 };
 </script>
@@ -74,10 +108,8 @@ export default {
 
 <style>
     .CodeMirror {
-        height: auto !important;
-        border: 1px solid #eee;
-    }
-    .CodeMirror-scroll{
-        min-height: 512px;
+        min-height: 512px !important;
+        font-family: Courier New, monospace !important;
+        font-size: 16px;
     }
 </style>

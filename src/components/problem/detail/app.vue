@@ -29,7 +29,9 @@
 								Editor
 							</v-tab>
 						</v-tabs>
-						<router-view/>
+						<keep-alive>
+							<router-view/>
+						</keep-alive>
 					</v-card>
 				</v-flex>
 			</v-layout>

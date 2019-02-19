@@ -4,7 +4,7 @@
 			v-model = "code"
 			:option = "{ mode: language.codeMirror }"
 		>
-			<template slot = "extension">
+			<!-- <template slot = "extension">
 				<v-divider />
 				<v-card class = "pl-2 pr-2 pb-2" >
 					<v-card-actions>
@@ -29,7 +29,7 @@
 						</v-btn>
 					</v-card-actions>
 				</v-card>
-			</template>
+			</template> -->
 		</code-mirror>
 	</div>
 </template>

@@ -15,6 +15,9 @@ const Router = [
 		path: '/problem-create',
 		name: 'ProblemCreate',
 		component: ProblemCreate,
+		meta: {
+			requirePermission: 'problem.add_problem',
+		},
 	},
 	{
 		path: '/problem/:slug',

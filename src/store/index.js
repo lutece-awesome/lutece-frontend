@@ -4,6 +4,7 @@ import user from './modules/user';
 import snackbar from './modules/snackbar';
 import navbar from './modules/navbar';
 import footer from './modules/footer';
+import editor from './modules/editor';
 
 
 Vue.use(Vuex);
@@ -14,5 +15,6 @@ export default new Vuex.Store({
 		snackbar,
 		navbar,
 		footer,
+		editor,
 	},
 });
