@@ -143,6 +143,12 @@ export default {
 			this.$store.dispatch('editor/updateLanguage', current);
 		},
 	},
+
+	mounted() {
+		if (this.language) {
+			this.$store.dispatch('editor/updateLanguage', this.language);
+		}
+	},
 };
 </script>
 
