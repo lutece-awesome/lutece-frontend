@@ -58,7 +58,7 @@
 
 <script>
 
-import ProblemDescription from '@/components/problem/utils/description';
+import ProblemDescription from '@/components/problem/utils/preview';
 import ProblemSetting from '@/components/problem/edit/setting';
 import Vue from '@/plugins/essential/vue';
 import gql from '@/plugins/essential/graphql-tag';
@@ -168,7 +168,7 @@ export default {
 			}).then((response) => {
 				clearApolloCache().then(
 					this.$router.push({
-						name: 'ProblemDetailDescription',
+						name: 'ProblemDetail',
 						params: { slug: response.data.createProblem.slug },
 					}),
 				);

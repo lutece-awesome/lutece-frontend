@@ -2,8 +2,10 @@
 	<v-card>
 		<v-card-text>
 			<code-mirror
-				:value = "code"
-				:option = "option"
+				:code = "code"
+				:language = "language"
+				hide-tool-bar
+				read-only
 			/>
 			<div
 				v-if = "errorInfo"
@@ -30,7 +32,7 @@
 
 <script>
 
-import CodeMirror from '@/components/utils/code-mirror';
+import CodeMirror from '@/components/async/code-mirror/app';
 
 export default {
 
@@ -43,6 +45,10 @@ export default {
 			type: String,
 			default: null,
 		},
+		language: {
+			type: Object,
+			default: null,
+		},
 		compileInfo: {
 			type: String,
 			default: null,
@@ -51,14 +57,6 @@ export default {
 			type: String,
 			default: null,
 		},
-	},
-
-	data() {
-		return {
-			option: {
-				readOnly: true,
-			},
-		};
 	},
 };
 </script>

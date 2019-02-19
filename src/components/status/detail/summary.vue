@@ -27,7 +27,7 @@
 					<td class = "pl-1">
 						<router-link
 							:to = "{
-								name: 'ProblemDetailDescription',
+								name: 'ProblemDetail',
 								params: {
 									slug: problemSlug
 								}

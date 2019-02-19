@@ -1,5 +1,6 @@
 <template>
 	<v-layout
+		class = "spinner"
 		fill-height
 		align-center
 		justify-center
@@ -15,7 +16,7 @@
 				v-if = "text"
 				class = "mt-2"
 			>
-				{{ text }}
+				<strong> {{ text }} </strong>
 			</div>
 		</v-flex>
 	</v-layout>

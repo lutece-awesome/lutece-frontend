@@ -1,6 +1,6 @@
 import ProblemDetail from '@/components/problem/detail/app';
 import ProblemList from '@/components/problem/list/app';
-import ProblemDescription from '@/components/problem/utils/description';
+import ProblemDescription from '@/components/problem/detail/description';
 import ProblemEditor from '@/components/problem/detail/editor';
 import ProblemChange from '@/components/problem/edit/app';
 import ProblemCreate from '@/components/problem/create/app';
@@ -15,20 +15,29 @@ const Router = [
 		path: '/problem-create',
 		name: 'ProblemCreate',
 		component: ProblemCreate,
+		meta: {
+			requirePermission: 'problem.add_problem',
+		},
 	},
 	{
 		path: '/problem/:slug',
+		name: 'ProblemDetail',
 		component: ProblemDetail,
+		redirect: {
+			name: 'ProblemDescription',
+		},
 		children: [
 			{
 				path: 'description',
-				name: 'ProblemDetailDescription',
+				name: 'ProblemDescription',
 				component: ProblemDescription,
+				props: true,
 			},
 			{
 				path: 'editor',
-				name: 'ProblemDetailEditor',
+				name: 'ProblemEditor',
 				component: ProblemEditor,
+				props: true,
 			},
 		],
 		props: true,

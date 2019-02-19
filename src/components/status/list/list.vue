@@ -102,7 +102,7 @@
 				</td>
 				<td class="text-xs-center">
 					<router-link
-						:to = "{ name: 'ProblemDetailDescription' , params: {slug: props.item.problem.slug } }"
+						:to = "{ name: 'ProblemDetail' , params: {slug: props.item.problem.slug } }"
 					>
 						{{ props.item.problem.title }}
 					</router-link>

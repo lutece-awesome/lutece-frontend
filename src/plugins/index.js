@@ -1,7 +1,5 @@
 
 // essential plugins, which would block the initializing.
-import authPromise from './essential/auth';
-
 const essentialPlugins = () => [
     // Vue.js as JS Framework
     import('./essential/vue'),
@@ -11,8 +9,6 @@ const essentialPlugins = () => [
     import('./essential/router'),
     // Apollo Provider
     import('./essential/apollo-provider'),
-    // Pre auth
-    authPromise,
     // Global components
     import('./essential/global-components'),
     // Line clamp
@@ -29,7 +25,9 @@ const essentialPlugins = () => [
 
 const externalPlugins = () => [
 	// Markdown it katex plugin
-	import('./external/markdown-it-katex'),
+    import('./external/markdown-it-katex'),
+    // Code Mirror
+    import('./external/code-mirror'),
 ];
 
 export default {
