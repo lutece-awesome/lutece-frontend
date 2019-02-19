@@ -1,34 +1,42 @@
 <template>
 	<div>
 		<codemirror
-			:value = "value"
+			:value = "code"
 			:options = "getOptions"
 			class = "CodeMirror"
-			@input = "$emit( 'input' , $event )"
+			@input = "$emit( 'input-code' , $event )"
 		/>
 		<v-toolbar
+			v-if = "!hideToolBar"
 			dense
 			flat
 			class = "pl-3 pt-2 pb-3"
 		>
 			<languageSelect
-				v-model = "language"
+				:value = "language"
 				:item-text = "each => each.info"
 				:clearable = "false"
 				style = "max-width: 225px"
 				append-icon = "mdi-menu-down"
+				@input = "$emit( 'input-language' , $event )"
 			/>
-			<v-icon class = "ml-3 mt-3">
+			<v-icon
+				class = "ml-3 mt-3"
+				@click = "setting = !setting"
+			>
 				mdi-settings
 			</v-icon>
 			<v-spacer/>
 			<v-btn
+				:loading = "isLoading"
+				:color = "isError ? 'error' : 'primary'"
 				class = "mt-3"
-				color = "primary"
+				@click = "$emit( 'input-submit' , $event )"
 			>
 				Submit
 			</v-btn>
 		</v-toolbar>
+		<setting-dialog v-model = "setting"/>
 	</div>
 </template>
 
@@ -37,11 +45,13 @@
 import LoadingSpinnerWrapper from './loading-wrapper';
 import ErrorSpinner from '@/components/utils/error-spinner';
 import languageSelect from '@/components/language/utils/select';
-import Language from '@/modules/language/main';
+import settingDialog from './settings';
 
 export default {
+
 	components: {
 		languageSelect,
+		settingDialog,
 
 		codemirror() {
 			return {
@@ -54,18 +64,34 @@ export default {
 	},
 
 	props: {
-		value: {
+		code: {
 			type: String,
-			default: '',
+			required: true,
+		},
+		language: {
+			type: Object,
+			default: null,
+		},
+		isLoading: {
+			type: Boolean,
+			default: false,
+		},
+		isError: {
+			type: Boolean,
+			default: false,
+		},
+		hideToolBar: {
+			type: Boolean,
+			default: false,
+		},
+		readOnly: {
+			type: Boolean,
+			default: false,
 		},
 	},
 
-
 	data() {
 		return {
-			isLoading: false,
-			isError: false,
-			language: null,
 			defaultOption: {
 				indentUnit: 4,
 				line: true,
@@ -78,17 +104,36 @@ export default {
 				matchBrackets: true,
 				autoCloseBrackets: true,
 			},
+			setting: false,
 		};
 	},
 
 	computed: {
 		getOptions() {
 			const lang = this.$store.getters['editor/importLanguage'];
+			let theme = this.$store.getters['editor/importTheme'];
+			if (theme && theme.name === 'default') {
+				theme = null;
+			}
+			let keymap = this.$store.getters['editor/importKeymap'];
+			if (keymap && keymap.name === 'default') {
+				keymap = null;
+			}
+			const options = {
+				readOnly: this.readOnly,
+			};
+			if (lang) {
+				options.mode = lang.codeMirror;
+			}
+			if (theme) {
+				options.theme = theme.name;
+			}
+			if (keymap) {
+				options.keymap = keymap.name;
+			}
 			return {
 				...this.defaultOption,
-				...{
-					mode: lang ? lang.codeMirror : null,
-				},
+				...options,
 			};
 		},
 	},
@@ -97,10 +142,6 @@ export default {
 		language(current) {
 			this.$store.dispatch('editor/updateLanguage', current);
 		},
-	},
-
-	mounted() {
-		this.language = this.$store.getters['editor/currentLanguage'] || Language.first();
 	},
 };
 </script>

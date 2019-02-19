@@ -5,223 +5,223 @@ const themePlugins = [
 		import: () => Promise.resolve(),
 	},
 	{
-		name: '3024-day.css',
+		name: '3024-day',
 		import: () => import('codemirror/theme/3024-day.css'),
 	},
 	{
-		name: '3024-night.css',
+		name: '3024-night',
 		import: () => import('codemirror/theme/3024-night.css'),
 	},
 	{
-		name: 'abcdef.css',
+		name: 'abcdef',
 		import: () => import('codemirror/theme/abcdef.css'),
 	},
 	{
-		name: 'ambiance-mobile.css',
+		name: 'ambiance-mobile',
 		import: () => import('codemirror/theme/ambiance-mobile.css'),
 	},
 	{
-		name: 'ambiance.css',
+		name: 'ambiance',
 		import: () => import('codemirror/theme/ambiance.css'),
 	},
 	{
-		name: 'base16-dark.css',
+		name: 'base16-dark',
 		import: () => import('codemirror/theme/base16-dark.css'),
 	},
 	{
-		name: 'base16-light.css',
+		name: 'base16-light',
 		import: () => import('codemirror/theme/base16-light.css'),
 	},
 	{
-		name: 'bespin.css',
+		name: 'bespin',
 		import: () => import('codemirror/theme/bespin.css'),
 	},
 	{
-		name: 'blackboard.css',
+		name: 'blackboard',
 		import: () => import('codemirror/theme/blackboard.css'),
 	},
 	{
-		name: 'cobalt.css',
+		name: 'cobalt',
 		import: () => import('codemirror/theme/cobalt.css'),
 	},
 	{
-		name: 'colorforth.css',
+		name: 'colorforth',
 		import: () => import('codemirror/theme/colorforth.css'),
 	},
 	{
-		name: 'darcula.css',
+		name: 'darcula',
 		import: () => import('codemirror/theme/darcula.css'),
 	},
 	{
-		name: 'dracula.css',
+		name: 'dracula',
 		import: () => import('codemirror/theme/dracula.css'),
 	},
 	{
-		name: 'duotone-dark.css',
+		name: 'duotone-dark',
 		import: () => import('codemirror/theme/duotone-dark.css'),
 	},
 	{
-		name: 'duotone-light.css',
+		name: 'duotone-light',
 		import: () => import('codemirror/theme/duotone-light.css'),
 	},
 	{
-		name: 'eclipse.css',
+		name: 'eclipse',
 		import: () => import('codemirror/theme/eclipse.css'),
 	},
 	{
-		name: 'elegant.css',
+		name: 'elegant',
 		import: () => import('codemirror/theme/elegant.css'),
 	},
 	{
-		name: 'erlang-dark.css',
+		name: 'erlang-dark',
 		import: () => import('codemirror/theme/erlang-dark.css'),
 	},
 	{
-		name: 'gruvbox-dark.css',
+		name: 'gruvbox-dark',
 		import: () => import('codemirror/theme/gruvbox-dark.css'),
 	},
 	{
-		name: 'hopscotch.css',
+		name: 'hopscotch',
 		import: () => import('codemirror/theme/hopscotch.css'),
 	},
 	{
-		name: 'icecoder.css',
+		name: 'icecoder',
 		import: () => import('codemirror/theme/icecoder.css'),
 	},
 	{
-		name: 'idea.css',
+		name: 'idea',
 		import: () => import('codemirror/theme/idea.css'),
 	},
 	{
-		name: 'isotope.css',
+		name: 'isotope',
 		import: () => import('codemirror/theme/isotope.css'),
 	},
 	{
-		name: 'lesser-dark.css',
+		name: 'lesser-dark',
 		import: () => import('codemirror/theme/lesser-dark.css'),
 	},
 	{
-		name: 'liquibyte.css',
+		name: 'liquibyte',
 		import: () => import('codemirror/theme/liquibyte.css'),
 	},
 	{
-		name: 'lucario.css',
+		name: 'lucario',
 		import: () => import('codemirror/theme/lucario.css'),
 	},
 	{
-		name: 'material.css',
+		name: 'material',
 		import: () => import('codemirror/theme/material.css'),
 	},
 	{
-		name: 'mbo.css',
+		name: 'mbo',
 		import: () => import('codemirror/theme/mbo.css'),
 	},
 	{
-		name: 'mdn-like.css',
+		name: 'mdn-like',
 		import: () => import('codemirror/theme/mdn-like.css'),
 	},
 	{
-		name: 'midnight.css',
+		name: 'midnight',
 		import: () => import('codemirror/theme/midnight.css'),
 	},
 	{
-		name: 'monokai.css',
+		name: 'monokai',
 		import: () => import('codemirror/theme/monokai.css'),
 	},
 	{
-		name: 'neat.css',
+		name: 'neat',
 		import: () => import('codemirror/theme/neat.css'),
 	},
 	{
-		name: 'neo.css',
+		name: 'neo',
 		import: () => import('codemirror/theme/neo.css'),
 	},
 	{
-		name: 'night.css',
+		name: 'night',
 		import: () => import('codemirror/theme/night.css'),
 	},
 	{
-		name: 'oceanic-next.css',
+		name: 'oceanic-next',
 		import: () => import('codemirror/theme/oceanic-next.css'),
 	},
 	{
-		name: 'panda-syntax.css',
+		name: 'panda-syntax',
 		import: () => import('codemirror/theme/panda-syntax.css'),
 	},
 	{
-		name: 'paraiso-dark.css',
+		name: 'paraiso-dark',
 		import: () => import('codemirror/theme/paraiso-dark.css'),
 	},
 	{
-		name: 'paraiso-light.css',
+		name: 'paraiso-light',
 		import: () => import('codemirror/theme/paraiso-light.css'),
 	},
 	{
-		name: 'pastel-on-dark.css',
+		name: 'pastel-on-dark',
 		import: () => import('codemirror/theme/pastel-on-dark.css'),
 	},
 	{
-		name: 'railscasts.css',
+		name: 'railscasts',
 		import: () => import('codemirror/theme/railscasts.css'),
 	},
 	{
-		name: 'rubyblue.css',
+		name: 'rubyblue',
 		import: () => import('codemirror/theme/rubyblue.css'),
 	},
 	{
-		name: 'seti.css',
+		name: 'seti',
 		import: () => import('codemirror/theme/seti.css'),
 	},
 	{
-		name: 'shadowfox.css',
+		name: 'shadowfox',
 		import: () => import('codemirror/theme/shadowfox.css'),
 	},
 	{
-		name: 'solarized.css',
+		name: 'solarized',
 		import: () => import('codemirror/theme/solarized.css'),
 	},
 	{
-		name: 'ssms.css',
+		name: 'ssms',
 		import: () => import('codemirror/theme/ssms.css'),
 	},
 	{
-		name: 'the-matrix.css',
+		name: 'the-matrix',
 		import: () => import('codemirror/theme/the-matrix.css'),
 	},
 	{
-		name: 'tomorrow-night-bright.css',
+		name: 'tomorrow-night-bright',
 		import: () => import('codemirror/theme/tomorrow-night-bright.css'),
 	},
 	{
-		name: 'tomorrow-night-eighties.css',
+		name: 'tomorrow-night-eighties',
 		import: () => import('codemirror/theme/tomorrow-night-eighties.css'),
 	},
 	{
-		name: 'ttcn.css',
+		name: 'ttcn',
 		import: () => import('codemirror/theme/ttcn.css'),
 	},
 	{
-		name: 'twilight.css',
+		name: 'twilight',
 		import: () => import('codemirror/theme/twilight.css'),
 	},
 	{
-		name: 'vibrant-ink.css',
+		name: 'vibrant-ink',
 		import: () => import('codemirror/theme/vibrant-ink.css'),
 	},
 	{
-		name: 'xq-dark.css',
+		name: 'xq-dark',
 		import: () => import('codemirror/theme/xq-dark.css'),
 	},
 	{
-		name: 'xq-light.css',
+		name: 'xq-light',
 		import: () => import('codemirror/theme/xq-light.css'),
 	},
 	{
-		name: 'yeti.css',
+		name: 'yeti',
 		import: () => import('codemirror/theme/yeti.css'),
 	},
 	{
-		name: 'zenburn.css',
+		name: 'zenburn',
 		import: () => import('codemirror/theme/zenburn.css'),
 	},
 ];

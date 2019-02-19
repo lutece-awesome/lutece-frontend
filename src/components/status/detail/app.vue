@@ -50,6 +50,7 @@
 						<v-tab-item v-if = "hasCode">
 							<Code
 								:code = "code"
+								:language = "language"
 								:compileInfo = "compileInfo"
 								:errorInfo = "errorInfo"
 							/>

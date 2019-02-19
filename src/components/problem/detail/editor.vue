@@ -1,37 +1,14 @@
 <template>
-	<div>
-		<code-mirror
-			v-model = "code"
-			:option = "{ mode: language.codeMirror }"
-		>
-			<!-- <template slot = "extension">
-				<v-divider />
-				<v-card class = "pl-2 pr-2 pb-2" >
-					<v-card-actions>
-						<v-spacer/>
-						<languageSelect
-							v-model = "language"
-							:item-text = "each => each.info"
-							:clearable = "false"
-							style = "max-width: 225px"
-							append-icon = "mdi-menu-down"
-						/>
-						<v-btn
-							:loading = "isLoading"
-							:color = "isError ? 'error' : 'primary'"
-							flat
-							large
-							class = "ml-1 mt-2"
-							@click = "submit"
-						>
-							<v-icon > mdi-send </v-icon>
-							<span class = "ml-2"> Submit </span>
-						</v-btn>
-					</v-card-actions>
-				</v-card>
-			</template> -->
-		</code-mirror>
-	</div>
+	<code-mirror
+		:code = "code"
+		:language = "language"
+		:submit = "submit"
+		:is-loading = "isLoading"
+		:is-error = "isError"
+		@input-code = "code = $event"
+		@input-language = "language = $event"
+		@input-submit = "submit"
+	/>
 </template>
 
 <script>
@@ -39,6 +16,7 @@
 import codeMirror from '@/components/async/code-mirror/app';
 import languageSelect from '@/components/language/utils/select';
 import Language from '@/modules/language/main';
+import gql from 'graphql-tag';
 
 export default {
 	components: {
@@ -55,39 +33,48 @@ export default {
 
 	data: () => ({
 		code: '',
-		language: Language.first(),
+		language: null,
 		isLoading: false,
 		isError: false,
 	}),
 
+	created() {
+		this.language = this.$store.getters['editor/currentLanguage'] || Language.first();
+	},
+
 	methods: {
 		submit() {
-		// 	if (!this.gql) {
-		// 		return;
-		// 	}
-		// 	this.isLoading = true;
-		// 	this.isError = false;
-		// 	this.$apollo.mutate({
-		// 		mutation: this.gql,
-		// 		variables: {
-		// 			problemSlug: this.slug,
-		// 			language: this.language.full,
-		// 			code: this.code,
-		// 			...this.option,
-		// 		},
-		// 	})
-		// 		.then((response) => {
-		// 			this.$router.push({
-		// 				name: 'StatusDetail',
-		// 				params: {
-		// 					pk: response.data.submitSubmission.pk,
-		// 				},
-		// 			});
-		// 		})
-		// 		.catch(() => {
-		// 			this.isError = true;
-		// 		})
-		// 		.finally(() => { this.isLoading = false; });
+			this.isError = false;
+			this.isLoading = true;
+			const mutation = gql`
+				mutation SubmitSubmission($code: String!, $problemSlug: String! , $language: String!) {
+					submitSubmission(code: $code, problemSlug: $problemSlug , language: $language) {
+						pk
+					}
+				}
+			`;
+			return this.$apollo.mutate({
+				mutation,
+				variables: {
+					problemSlug: this.slug,
+					language: this.language.full,
+					code: this.code,
+				},
+			})
+				.then((response) => {
+					this.$router.push({
+						name: 'StatusDetail',
+						params: {
+							pk: response.data.submitSubmission.pk,
+						},
+					});
+				})
+				.catch((_error) => {
+					this.isError = true;
+				})
+				.finally(() => {
+					this.isLoading = false;
+				});
 		},
 	},
 };

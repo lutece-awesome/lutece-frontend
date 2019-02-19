@@ -1,7 +1,7 @@
 const keymapPlugins = [
 	{
 		name: 'default',
-		import: Promise.resolve(),
+		import: () => Promise.resolve(),
 	},
 	{
 		name: 'sublime',
