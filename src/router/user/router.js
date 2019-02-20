@@ -20,6 +20,7 @@ const Router = [
 		path: '/user/:username',
 		name: 'UserDetail',
 		component: UserDetail,
+		props: true,
 	},
 ];
 

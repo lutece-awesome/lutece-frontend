@@ -52,10 +52,14 @@ export default {
 		Layout,
 	},
 
-	computed: {
-		username() {
-			return this.$route.params.username;
+	props: {
+		username: {
+			type: String,
+			required: true,
 		},
+	},
+
+	computed: {
 		isxs() {
 			return this.$vuetify.breakpoint.smAndDown;
 		},

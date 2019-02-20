@@ -95,7 +95,7 @@ export default {
 			defaultOption: {
 				indentUnit: 4,
 				line: true,
-				lineNumbers: true,
+				lineNumbers: !this.$vuetify.breakpoint.xsOnly,
 				lineWrapping: true,
 				tabindex: '0',
 				autoRefresh: true,
@@ -156,7 +156,7 @@ export default {
 <style>
     .CodeMirror {
         min-height: 512px !important;
-        font-family: Courier New, monospace !important;
+        font-family: Courier New, monospace, Lucida Console !important;
         font-size: 16px;
     }
 </style>

@@ -1,5 +1,8 @@
 <template>
-	<v-container>
+	<v-container
+		:class = "{'pa-0': $vuetify.breakpoint.xsOnly }"
+		fluid
+	>
 		<v-layout
 			row
 			wrap
@@ -7,7 +10,7 @@
 			<v-flex
 				xs12
 				md10
-				lg8
+				lg9
 			>
 				<ApolloQuery
 					:query = "require('@/graphql/user/list.gql')"

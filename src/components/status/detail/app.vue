@@ -1,5 +1,8 @@
 <template>
-	<v-container fluid>
+	<v-container
+		:class = "{'pa-0': $vuetify.breakpoint.xsOnly }"
+		fluid
+	>
 		<v-layout
 			row
 			justify-center>
