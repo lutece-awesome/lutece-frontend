@@ -24,6 +24,21 @@
 
 		<v-list>
 			<v-list-tile
+				:to = "{ name: 'UserDetail' , params: { username: profile.username } }"
+			>
+				<v-icon
+					class = "mr-2"
+					flat
+				>
+					mdi-account
+				</v-icon>
+				<v-list-tile-content>
+					<v-list-tile-title>
+						Profile
+					</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+			<v-list-tile
 				v-for = "item in items"
 				:key = "item.label"
 				:to = "item.to"
@@ -41,13 +56,11 @@
 				</v-list-tile-content>
 			</v-list-tile>
 		</v-list>
-
 	</v-menu>
 </template>
 
 
 <script>
-
 export default {
 	props: {
 		profile: {
@@ -59,16 +72,6 @@ export default {
 	data() {
 		return {
 			items: [
-				{
-					icon: 'mdi-account',
-					label: 'Profile',
-					to: {
-						name: 'UserDetail',
-						params: {
-							username: this.profile.username,
-						},
-					},
-				},
 				{
 					icon: 'mdi-settings',
 					label: 'Settings',

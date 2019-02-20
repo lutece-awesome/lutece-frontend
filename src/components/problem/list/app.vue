@@ -1,13 +1,17 @@
 <template>
-	<v-container>
+	<v-container
+		:class = "{'pa-0': $vuetify.breakpoint.xsOnly }"
+		fluid
+	>
 		<v-layout
 			row
 			wrap
-			justify-center>
+			justify-center
+		>
 			<v-flex
 				xs12
 				md10
-				lg8>
+				lg9>
 				<ApolloQuery
 					:query = "require('@/graphql/problem/list.gql')"
 					:variables = "{ page , filter }"

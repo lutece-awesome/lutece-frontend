@@ -21,8 +21,8 @@ const getters = {
 
 const mutations = {
 	login(state, data) {
-		const { username, attachInfo } = data.user;
 		state.token = data.token;
+		const { username, attachInfo } = data.user;
 		state.payload = data.payload;
 		state.profile = { username, ...attachInfo };
 		state.permission = data.permission;

@@ -26,6 +26,7 @@
 import Router from '@/router/index';
 
 export default {
+
 	props: {
 		profile: {
 			type: Object,
