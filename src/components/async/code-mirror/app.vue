@@ -111,14 +111,8 @@ export default {
 	computed: {
 		getOptions() {
 			const lang = this.$store.getters['editor/importLanguage'];
-			let theme = this.$store.getters['editor/importTheme'];
-			if (theme && theme.name === 'default') {
-				theme = null;
-			}
-			let keymap = this.$store.getters['editor/importKeymap'];
-			if (keymap && keymap.name === 'default') {
-				keymap = null;
-			}
+			const theme = this.$store.getters['editor/importTheme'];
+			const keymap = this.$store.getters['editor/importKeymap'];
 			const options = {
 				readOnly: this.readOnly,
 			};
@@ -129,7 +123,7 @@ export default {
 				options.theme = theme.name;
 			}
 			if (keymap) {
-				options.keymap = keymap.name;
+				options.keyMap = keymap.name;
 			}
 			return {
 				...this.defaultOption,
