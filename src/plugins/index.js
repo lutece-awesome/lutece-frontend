@@ -1,6 +1,10 @@
 
+import authPromise from './essential/auth';
+
 // essential plugins, which would block the initializing.
 const essentialPlugins = () => [
+	// Pre auth
+	authPromise,
     // Vue.js as JS Framework
     import('./essential/vue'),
     // Vuetify UI Framework

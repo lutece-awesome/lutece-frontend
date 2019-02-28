@@ -1,13 +1,17 @@
 <template>
 	<v-container
-		:class="{'pa-0': $vuetify.breakpoint.xsOnly }"
+		:class = "{'pa-0': $vuetify.breakpoint.xsOnly }"
+		fluid
 	>
 		<v-layout
 			row
-			justify-center>
+			wrap
+			justify-center
+		>
 			<v-flex
 				xs12
-				xl10>
+				md10
+				lg9>
 				<div class = "mt-2">
 					<ApolloQuery
 						:query = "require('@/graphql/submission/list.gql')"

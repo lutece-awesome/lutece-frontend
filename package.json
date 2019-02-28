@@ -1,6 +1,6 @@
 {
   "name": "lutece-frontend",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,20 +9,20 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
-    "@mdi/font": "^3.4.93",
-    "apollo-cache-inmemory": "^1.4.3",
-    "apollo-client": "^2.4.13",
+    "@mdi/font": "^3.5.95",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
     "apollo-link-context": "^1.0.14",
     "apollo-upload-client": "^9.1.0",
     "chart.js": "^2.7.3",
-    "codemirror": "^5.43.0",
-    "katex": "^0.10.0",
+    "codemirror": "^5.44.0",
+    "katex": "^0.10.1",
     "lodash.debounce": "^4.0.8",
     "markdown-it": "^8.4.2",
     "markdown-it-texmath": "^0.5.5",
-    "register-service-worker": "^1.6.1",
+    "register-service-worker": "^1.6.2",
     "unfetch": "^4.0.1",
-    "vue": "^2.6.6",
+    "vue": "^2.6.7",
     "vue-apollo": "^3.0.0-beta.28",
     "vue-chartjs": "^3.4.0",
     "vue-codemirror": "^4.0.6",
@@ -30,7 +30,7 @@
     "vue-meta": "^1.5.8",
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.2",
-    "vuetify": "^1.5.1",
+    "vuetify": "^1.5.3",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
@@ -53,7 +53,7 @@
     "vue-cli-plugin-apollo": "^0.18.1",
     "vue-cli-plugin-vuetify": "^0.4.6",
     "vue-cli-plugin-webpack-bundle-analyzer": "^1.2.0",
-    "vue-template-compiler": "^2.6.6",
+    "vue-template-compiler": "^2.6.7",
     "webpack-cli": "^3.2.3"
   },
   "gitHooks": {
