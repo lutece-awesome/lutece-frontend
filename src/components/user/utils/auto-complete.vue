@@ -1,54 +1,44 @@
 <template>
-	<ApolloQuery
-		:query = "require('@/graphql/user/search.gql')"
-		:variables = "{ filter: filter }"
-		:skip = "skip"
-		:debounce = "300"
-	>
-		<template
-			slot-scope = "{ result: { data, error }, isLoading }">
-			<v-autocomplete
-				:value = "value"
-				:search-input.sync = "filter"
-				:append-icon = "appendIcon"
-				:error = "error"
-				:loading = "( !skip && ( !data || isLoading ) ) ? true : false"
-				:items = "data ? data.userSearch.userList : []"
-				:label = "label"
-				:item-text = "each => each.username"
-				:item-value = "each => each.username"
-				single-line
-				dense
-				hide-no-data
-				hide-selected
-				clearable
-				@input = "$emit( 'input' , $event )"
+	<div>
+		<v-autocomplete
+			v-model = "userData"
+			:append-icon = "appendIcon"
+			:loading = "isLoading"
+			:error = "isError"
+			:items = "userResultList"
+			:label = "label"
+			:search-input.sync = "searchInput"
+			:item-text = "getItemText"
+			:item-value = "getItemValue"
+			hide-selected
+			single-line
+			dense
+			hide-no-data
+			clearable
+		>
+			<template
+				slot = "item"
+				slot-scope = "{ item }"
 			>
-				<template
-					slot = "item"
-					slot-scope = "{ item }"
-				>
-					<v-list-tile-avatar>
-						<v-img
-							:src = "item.attachInfo.gravatar"
-							height = "32"
-							contain/>
-					</v-list-tile-avatar>
-					<v-list-tile-content v-text = "item.username" />
-				</template>
-			</v-autocomplete>
-		</template>
-	</ApolloQuery>
+				<v-list-tile-avatar>
+					<v-img
+						:src = "item.attachInfo.gravatar"
+						height = "32"
+						contain/>
+				</v-list-tile-avatar>
+				<v-list-tile-content v-text = "item.username" />
+			</template>
+		</v-autocomplete>
+	</div>
 </template>
 
 <script>
 
+import gql from 'graphql-tag';
+import debounce from 'lodash/debounce';
+
 export default {
 	props: {
-		value: {
-			type: Object,
-			default: null,
-		},
 		label: {
 			type: String,
 			default: '',
@@ -57,16 +47,73 @@ export default {
 			type: String,
 			default: '',
 		},
+		debounce: {
+			type: Number,
+			default: 200,
+		},
+		inputValue: {
+			type: Function,
+			default: each => each.username,
+		},
 	},
 
 	data: () => ({
+		userData: null,
 		filter: '',
-		skip: true,
+		searchInput: null,
+		userResultList: [],
+		isLoading: false,
+		isError: false,
 	}),
 
 	watch: {
-		filter(current) {
-			this.skip = !current;
+		searchInput(val) {
+			this.debounceFetchData(val);
+		},
+		userData(val) {
+			this.$emit('input', val ? this.inputValue(val) : null);
+		},
+	},
+
+	mounted() {
+		this.debounceFetchData = debounce(this.fetchData, this.debounce);
+	},
+
+	methods: {
+		getItemText(item) {
+			return item.username;
+		},
+		getItemValue(item) {
+			return item;
+		},
+		fetchData(val) {
+			if (!val) {
+				this.userData = null;
+				this.userResultList = [];
+				return;
+			}
+			const query = gql`
+				query UserSearchGQL($filter: String) {
+					userSearch(filter: $filter) {
+						userList {
+							username
+							attachInfo{
+								gravatar
+							}
+						}
+					}
+				}`;
+			this.isLoading = true;
+			this.isError = false;
+			this.$apollo.query({
+				query,
+				variables: {
+					filter: val,
+				},
+			})
+				.then((response) => { this.userResultList = response.data.userSearch.userList; })
+				.catch(() => { this.isError = true; })
+				.finally(() => { this.isLoading = false; });
 		},
 	},
 };

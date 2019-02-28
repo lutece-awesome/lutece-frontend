@@ -11,9 +11,12 @@
 			indeterminate
 		/>
 		<template
-			slot="headers"
-			slot-scope="props">
-			<tr>
+			slot = "headers"
+		>
+			<tr
+				justify-center
+				align-center
+			>
 				<th
 					role="columnheader"
 					scope="col"

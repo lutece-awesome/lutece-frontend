@@ -68,6 +68,11 @@ export default {
 					to: '/home',
 				},
 				{
+					title: 'Contest',
+					icon: 'mdi-rocket',
+					to: '/contest',
+				},
+				{
 					title: 'Problem',
 					icon: 'mdi-view-list',
 					to: '/problem',

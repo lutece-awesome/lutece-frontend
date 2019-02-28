@@ -15,8 +15,8 @@
 				:loading = "( !skip && ( !data || isLoading ) ) ? true : false"
 				:items = "data ? data.problemSearch.problemList : []"
 				:label = "label"
-				:item-text = "each => each.title"
-				:item-value = "each => each.slug"
+				:item-text = "getItemText"
+				:item-value = "getItemValue"
 				:filter = "() => true"
 				single-line
 				hide-no-data
@@ -62,6 +62,15 @@ export default {
 	watch: {
 		filter(current) {
 			this.skip = !current;
+		},
+	},
+
+	methods: {
+		getItemText(item) {
+			return item.title;
+		},
+		getItemValue(item) {
+			return item.slug;
 		},
 	},
 };
