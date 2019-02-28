@@ -11,7 +11,7 @@
 					mode = "out-in"
 				>
 					<keep-alive
-						include = "Problem,Status,User,Article">
+						include = "Problem,Status,User,Article,Blog,Contest">
 						<router-view/>
 					</keep-alive>
 				</v-fade-transition>

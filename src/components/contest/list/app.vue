@@ -37,6 +37,9 @@ import gql from 'graphql-tag';
 import debounce from 'lodash/debounce';
 
 export default {
+
+	name: 'Contest',
+
 	components: {
 		ContestList,
 		SearchBar,
