@@ -14,7 +14,7 @@
 			slot = "items"
 			slot-scope = "props">
 			<router-link
-				:to = "{name: 'Home' }"
+				:to = "{name: 'ContestDetail', params: {pk: props.item.pk }}"
 				:style = "{cursor: 'pointer'}"
 				tile
 				tag = "tr">
@@ -23,13 +23,24 @@
 					<span>{{ props.item.title }}</span>
 				</td>
 				<td class="text-xs-center">
-					{{ getRunningStatus( props.item.settings.startTime , props.item.settings.endTime ) }}
-				</td>
-				<td class="text-xs-center">
 					{{ props.item.settings.startTime | moment('Y-MM-DD HH:mm') }}
 				</td>
 				<td class="text-xs-center">
-					{{ getTimeLength(props.item.settings.endTime, props.item.settings.startTime) }}
+					{{ getTimeLength(props.item.settings.startTime, props.item.settings.endTime) }}
+				</td>
+				<td class = "text-xs-center blue--text text--darken-2">
+					<strong>
+						{{ getRunningStatus( props.item.settings.startTime , props.item.settings.endTime ) }}
+						<span class = "ml-1 mr-1"> | </span>
+						<v-icon
+							small
+							class = "postive"
+							flat
+						>
+							mdi-account
+						</v-icon>
+						x {{ props.item.registerMemberNumber }}
+					</strong>
 				</td>
 			</router-link>
 		</template>
@@ -39,6 +50,7 @@
 
 <script>
 
+import { mapGetters } from 'vuex';
 import { getRunningStatus, getTimeLength } from '../utils';
 
 export default {
@@ -68,12 +80,6 @@ export default {
 					sortable: false,
 				},
 				{
-					text: 'Status',
-					align: 'center',
-					sortable: false,
-					class: 'hidden-sm-and-down',
-				},
-				{
 					text: 'Time',
 					align: 'center',
 					sortable: false,
@@ -83,8 +89,19 @@ export default {
 					align: 'center',
 					sortable: false,
 				},
+				{
+					text: 'Status',
+					align: 'center',
+					sortable: false,
+				},
 			],
 		};
+	},
+
+	computed: {
+		...mapGetters({
+			hasPermission: 'user/hasPermission',
+		}),
 	},
 
 	methods: {

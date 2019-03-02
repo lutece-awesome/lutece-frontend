@@ -84,7 +84,7 @@ export default {
 				page: this.page,
 				pk: this.pk,
 				user: this.user,
-				problem: this.problem,
+				problem: this.problem ? this.problem.slug : null,
 				judgeStatus: this.verdict ? this.verdict.full : null,
 				language: this.language ? this.language.full : null,
 			};

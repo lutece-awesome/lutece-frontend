@@ -25,6 +25,20 @@
 				</div>
 			</v-flex>
 		</v-layout>
+		<v-btn
+			v-if = "hasPermission('contest.add_contest')"
+			:to = "{
+				name: 'ContestCreate',
+			}"
+			color = "accent"
+			dark
+			fab
+			fixed
+			bottom
+			right
+		>
+			<v-icon>mdi-pencil</v-icon>
+		</v-btn>
 	</v-container>
 </template>
 
@@ -35,6 +49,7 @@ import SearchBar from '@/components/utils/search-bar';
 import ContestList from './list';
 import gql from 'graphql-tag';
 import debounce from 'lodash/debounce';
+import { mapGetters } from 'vuex';
 
 export default {
 
@@ -54,6 +69,12 @@ export default {
 			maxPage: 0,
 			debounce: 250,
 		};
+	},
+
+	computed: {
+		...mapGetters({
+			hasPermission: 'user/hasPermission',
+		}),
 	},
 
 	watch: {
@@ -84,6 +105,7 @@ export default {
 								startTime
 								endTime
 							}
+							registerMemberNumber
 						}
 					}
 				}`;
