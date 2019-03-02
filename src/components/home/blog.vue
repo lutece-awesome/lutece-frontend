@@ -98,6 +98,9 @@ import HomeArtileTile from '@/components/article/home/tile';
 import { getThoundNumberic } from '@/utils';
 
 export default {
+
+	name: 'Blog',
+
 	components: {
 		SearchBar,
 		HomeArtileTile,

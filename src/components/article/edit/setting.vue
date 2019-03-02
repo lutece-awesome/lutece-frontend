@@ -33,7 +33,7 @@
 					xs12
 				>
 					<v-checkbox
-						:value = "disable"
+						:input-value = "disable"
 						:disabled = "withRender"
 						:label = "disable ? 'disable' : 'non-disable'"
 						@change = "$emit( 'input-disable' , $event )"

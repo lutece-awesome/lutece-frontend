@@ -41,8 +41,8 @@
 export default {
 	props: {
 		value: {
-			type: String,
-			default: '',
+			type: Object,
+			default: null,
 		},
 		label: {
 			type: String,
@@ -70,7 +70,7 @@ export default {
 			return item.title;
 		},
 		getItemValue(item) {
-			return item.slug;
+			return item;
 		},
 	},
 };

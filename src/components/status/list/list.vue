@@ -18,9 +18,9 @@
 				align-center
 			>
 				<th
-					role="columnheader"
-					scope="col"
-					class="column text-xs-center">
+					role = "columnheader"
+					scope = "col"
+					class = "column text-xs-center">
 					<v-text-field
 						label = "#"
 						single-line

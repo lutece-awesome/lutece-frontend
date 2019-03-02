@@ -26,8 +26,10 @@
 						:variables = "{ username }"
 					>
 						<template
-							slot-scope = "{ result: { loading , error , data } }">
-							<loading-spinner v-if = "loading" />
+							slot-scope = "{ result: { loading , error , data } , isLoading }">
+							<loading-spinner
+								v-if = "loading || isLoading"
+								style = "height: 600px" />
 							<error-spinner v-else-if = "error" />
 							<div v-else-if = "data">
 								<Layout :user = "data.user"/>

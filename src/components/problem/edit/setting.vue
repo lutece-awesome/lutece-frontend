@@ -73,7 +73,7 @@
 				<div>
 					<v-switch
 						:input-value = "problem.disable"
-						label = "Disable"
+						:label = " problem.disable ? 'disable' : 'non disable' "
 						@change = "$emit( 'input-disable' , $event )"
 					/>
 				</div>
