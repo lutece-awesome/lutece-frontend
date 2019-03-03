@@ -43,6 +43,13 @@ export default {
 	data: () => ({
 		contributor: [
 			{
+				name: 'Zhu He',
+				company: 'Alibaba',
+				location: 'Hangzhou',
+				title: 'Algorithm Engineer',
+				gravataremail: 'https://secure.gravatar.com/avatar/ec21fbe82157f45b8cab83f91f0cac69.jpg?s=250&d=mm&r=g',
+			},
+			{
 				name: 'Jun Qing',
 				company: 'Bytedance',
 				location: 'Beijing',

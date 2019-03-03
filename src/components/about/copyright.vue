@@ -13,8 +13,7 @@
 						<v-divider class = "mb-3" />
 						<div>
 							Lutece Copyright<i class = "copyright icon"/> 2018, Ke Shen(
-							<a href = "Mailto:xipersup@gmail.com">xipersup@gmail.com</a> ), Zhu He(
-							<a href = "Mailto:hezhu1688@gmail.com">hezhu1688@gmail.com</a> ). All rights reserved.
+							<a href = "Mailto:xipersup@gmail.com">xipersup@gmail.com</a> ). All rights reserved.
 						</div>
 					</v-flex>
 				</v-layout>
