@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<div class = "mb-3">
+		<div
+			v-if = "displayTitle"
+			class = "mb-3"
+		>
 			<v-icon size = "20" > mdi-comment </v-icon>
 			<span class = "title ml-1" > Comments: </span>
 		</div>
@@ -54,6 +57,10 @@ export default {
 	},
 
 	props: {
+		displayTitle: {
+			type: Boolean,
+			default: true,
+		},
 		fetchComments: {
 			type: Function,
 			required: true,

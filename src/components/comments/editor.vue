@@ -1,5 +1,5 @@
 <template>
-	<div class = "elevation-1">
+	<div class = "elevation-2">
 		<div class = "pl-3 pr-3 mt-3">
 			<async-mixrend-component-with-loading-spinner
 				v-if = "withRender"
