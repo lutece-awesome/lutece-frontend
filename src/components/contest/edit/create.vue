@@ -48,6 +48,7 @@
 
 import gql from 'graphql-tag';
 import Preview from './preview';
+import { clearApolloCache } from '@/utils';
 
 export default {
 	components: {
@@ -119,11 +120,13 @@ export default {
 			})
 				.then(response => response.data.createContest)
 				.then((data) => {
-					this.$router.push({
-						name: 'ContestDetail',
-						params: {
-							pk: data.pk,
-						},
+					clearApolloCache().then(() => {
+						this.$router.push({
+							name: 'ContestDetail',
+							params: {
+								pk: data.pk,
+							},
+						});
 					});
 				});
 		},
