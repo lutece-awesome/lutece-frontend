@@ -17,8 +17,8 @@ const getRunningStatus = (st, ed) => {
 };
 
 const getTimeLength = (st, ed) => {
-	const len = Math.floor((new Date(ed) - new Date(st)) / 1000 / 60);
-	const hour = String(Math.floor(len / 60));
+	const len = Math.round((new Date(ed) - new Date(st)) / 1000 / 60);
+	const hour = String(Math.round(len / 60));
 	let minute = String(len % 60);
 	if (minute.length === 1) {
 		minute = `0${minute}`;
