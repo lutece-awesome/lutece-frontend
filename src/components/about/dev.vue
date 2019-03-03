@@ -49,13 +49,6 @@ export default {
 				title: 'Software Engineer',
 				gravataremail: 'https://secure.gravatar.com/avatar/79bc21937a1f625d1cf08c919f8c70c2.jpg?s=250&d=mm&r=g',
 			},
-			{
-				name: 'Zhu He',
-				company: 'Alibaba',
-				location: 'Hangzhou',
-				title: 'Algorithm Engineer',
-				gravataremail: 'https://secure.gravatar.com/avatar/ec21fbe82157f45b8cab83f91f0cac69.jpg?s=250&d=mm&r=g',
-			},
 		],
 	}),
 };
