@@ -187,7 +187,12 @@ export default {
 					page,
 				},
 				fetchPolicy: 'no-cache',
-			}).then(response => response.data.articleCommentList);
+			})
+				.then(response => response.data.articleCommentList)
+				.then(data => ({
+					maxPage: data.maxPage,
+					list: data.articleCommentList,
+				}));
 		},
 	},
 };

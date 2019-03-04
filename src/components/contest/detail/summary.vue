@@ -21,6 +21,12 @@
 						<td>{{ contest.settings.endTime | moment('Y-MM-DD HH:mm') }}</td>
 					</tr>
 					<tr>
+						<td>Privacy</td>
+						<td>
+							{{ contest.isPublic ? 'Public' : 'Private' }}
+						</td>
+					</tr>
+					<tr>
 						<td>Status</td>
 						<td>
 							{{ runningStatus }}
@@ -99,6 +105,7 @@ export default {
                         }
                         registered
                         registerMemberNumber
+						isPublic
                     }
                 }
             `;

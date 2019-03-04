@@ -1,6 +1,11 @@
 <template>
 	<v-container fiuld>
+		<error-spinner
+			v-if = "error"
+			:msg = "error"
+		/>
 		<comments
+			v-else
 			:fetch-comments = "fetchClarifications"
 			:submit = "submitClarification"
 			:display-title = "false"
@@ -26,25 +31,30 @@ export default {
 		},
 	},
 
+	data() {
+		return {
+			error: null,
+		};
+	},
+
 	methods: {
-		submitClarification(_data) {
-			return Promise.resolve();
-			// const mutation = gql`
-			// 	mutation CreateArticleComment( $pk: ID!, $content: String!, $reply: ID ){
-			// 		createArticleComment(pk: $pk, content: $content, reply: $reply){
-			// 			pk
-			// 		}
-			// 	}
-			// `;
-			// return this.$apollo.mutate({
-			// 	mutation,
-			// 	variables: {
-			// 		pk: this.pk,
-			// 		content: data.content,
-			// 		reply: data.reply,
-			// 	},
-			// })
-			// 	.then(response => response.data.CreateArticleComment);
+		submitClarification(data) {
+			const mutation = gql`
+				mutation CreateContestClarification( $pk: ID!, $content: String!, $reply: ID ){
+					createContestClarification(pk: $pk, content: $content, reply: $reply){
+						pk
+					}
+				}
+			`;
+			return this.$apollo.mutate({
+				mutation,
+				variables: {
+					pk: this.pk,
+					content: data.content,
+					reply: data.reply,
+				},
+			})
+				.then(response => response.data.createContestClarification);
 		},
 
 		fetchClarifications(page) {
@@ -74,7 +84,13 @@ export default {
 					page,
 				},
 				fetchPolicy: 'no-cache',
-			}).then(response => response.data.contestClarificationList);
+			})
+				.then(response => response.data.contestClarificationList)
+				.then(data => ({
+					maxPage: data.maxPage,
+					list: data.contestClarificationList,
+				}))
+				.catch((error) => { this.error = error; });
 		},
 	},
 
