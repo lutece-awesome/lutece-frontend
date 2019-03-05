@@ -10,18 +10,49 @@
 			:msg = "error"
 		/>
 		<div v-else>
-			<v-navigation-drawer permanent>
-				<v-list class = "pt-0">
-					<v-list-tile
-						v-for = "(each, index) in problemPreviewList"
-						:key = "index"
+			<v-layout>
+				<v-item-group
+					v-model = "current"
+					:class = "{ 'mobile-shrink' : $vuetify.breakpoint.xsOnly }"
+					class = "shrink"
+					tag = "v-flex"
+				>
+					<v-item
+						v-for = "each in problemList.length"
+						:key = "each"
 					>
-						<v-list-tile-content>
-							<v-list-tile-title>{{ each.title }}</v-list-tile-title>
-						</v-list-tile-content>
-					</v-list-tile>
-				</v-list>
-			</v-navigation-drawer>
+						<div slot-scope="{ active, toggle }">
+							<v-btn
+								:input-value = "active"
+								icon
+								@click = "toggle"
+							>
+								<v-icon :color = "colorList[each % colorList.length]">
+									mdi-record
+								</v-icon>
+							</v-btn>
+						</div>
+					</v-item>
+				</v-item-group>
+				<v-flex>
+					<v-window
+						v-model = "current"
+						vertical
+						mandatory
+					>
+						<v-window-item
+							v-for = "(each, index) in problemList"
+							:key = "index"
+							:reverse-transition = "false"
+							:transition = "false"
+						>
+							<problem-preview
+								:problem = "each"
+							/>
+						</v-window-item>
+					</v-window>
+				</v-flex>
+			</v-layout>
 		</div>
 	</v-container>
 </template>
@@ -29,8 +60,13 @@
 <script>
 
 import gql from 'graphql-tag';
+import ProblemPreview from '@/components/problem/detail/preview';
 
 export default {
+	components: {
+		ProblemPreview,
+	},
+
 	props: {
 		pk: {
 			type: String,
@@ -42,7 +78,29 @@ export default {
 		return {
 			isLoading: true,
 			error: null,
-			problemPreviewList: [],
+			problemList: [],
+			current: null,
+			colorList: [
+				'red',
+				'pink',
+				'purple',
+				'deep-purple',
+				'indigo',
+				'blue',
+				'light-blue',
+				'cyan',
+				'teal',
+				'green',
+				'light-green',
+				'lime',
+				'yellow',
+				'amber',
+				'orange',
+				'deep-orange',
+				'brown',
+				'blue-grey',
+				'grey',
+			],
 		};
 	},
 
@@ -56,9 +114,27 @@ export default {
 			const query = gql`
 				query ContestProblemList($pk: ID!){
 					contestProblemList(pk: $pk){
-						title
-						slug
 						solved
+						pk
+						title
+						content
+						standardInput
+						standardOutput
+						constraints
+						resources
+						note
+						limitation{
+							timeLimit
+							memoryLimit
+							outputLimit
+							cpuLimit
+						}
+						samples {
+							sampleList{
+								inputContent
+								outputContent
+							}
+						}
 					}
 				}
 			`;
@@ -70,7 +146,7 @@ export default {
 			})
 				.then(response => response.data.contestProblemList)
 				.then((data) => {
-					this.problemPreviewList = data;
+					this.problemList = data;
 				})
 				.catch((error) => { this.error = error; })
 				.finally(() => { this.isLoading = false; });
@@ -78,3 +154,14 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+	.shrink {
+		margin-left: -25px;
+		margin-right: 5px;
+	}
+
+	.mobile-shrink {
+		margin-right: -5px
+	}
+</style>

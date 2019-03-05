@@ -2,7 +2,7 @@
 	<v-select
 		:items = "verdictList"
 		:item-text = "itemText"
-		:item-value = "each => each"
+		:item-value = "itemValue"
 		:append-icon = "appendIcon"
 		:label = "label"
 		single-line
@@ -21,7 +21,7 @@ import Verdict from '@/modules/verdict/main';
 export default {
 	props: {
 		value: {
-			type: String,
+			type: Object,
 			default: null,
 		},
 		label: {
@@ -35,6 +35,10 @@ export default {
 		itemText: {
 			type: Function,
 			default: each => each.full,
+		},
+		itemValue: {
+			type: Function,
+			default: each => each,
 		},
 	},
 

@@ -144,10 +144,11 @@ export default {
 					disable: this.problem.disable,
 				},
 			}).then((response) => {
-				clearApolloCache();
-				this.$router.push({
-					name: 'ProblemDetail',
-					params: { slug: response.data.updateProblem.slug },
+				clearApolloCache().then(() => {
+					this.$router.push({
+						name: 'ProblemDetail',
+						params: { slug: response.data.updateProblem.slug },
+					});
 				});
 			});
 		},

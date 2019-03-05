@@ -20,7 +20,9 @@
 				<th
 					role = "columnheader"
 					scope = "col"
-					class = "column text-xs-center">
+					class = "column text-xs-center"
+					style = "width: 12.5%"
+				>
 					<v-text-field
 						label = "#"
 						single-line
@@ -34,15 +36,19 @@
 				<th
 					role = "columnheader"
 					scope = "col"
-					class = "column text-xs-center">
+					style = "width: 12.5%"
+					class = "column text-xs-center"
+				>
 					<user-auto-complete
 						style = "padding-top: 20px"
 						label = "User"
-						@input = "$emit( 'input-user' , $event )"/>
+						@input = "$emit( 'input-user' , $event )"
+					/>
 				</th>
 				<th
 					role="columnheader"
 					scope="col"
+					style = "width: 12.5%"
 					class="column text-xs-center">
 					<problem-auto-complete
 						style = "padding-top: 20px"
@@ -52,6 +58,7 @@
 				<th
 					role = "columnheader"
 					scope = "col"
+					style = "width: 12.5%"
 					class = "column text-xs-center">
 					<verdict-select
 						@input = "$emit( 'input-verdict' , $event )"
@@ -60,19 +67,23 @@
 				<th
 					role = "columnheader"
 					scope = "col"
+					style = "width: 12.5%"
 					class = "column text-xs-center pt-3 hidden-sm-and-down">
 					Time (ms)
 				</th>
 				<th
 					role = "columnheader"
 					scope = "col"
+					style = "width: 12.5%"
 					class = "column text-xs-center pt-3 hidden-sm-and-down">Memory (KiB)</th>
 				<th
 					role = "columnheader"
 					scope = "col"
+					style = "width: 12.5%"
 					class = "column text-xs-center pt-3 hidden-sm-and-down">Submit Time</th>
 				<th
 					role = "columnheader"
+					style = "width: 12.5%"
 					scope = "col"
 					class = "column text-xs-center hidden-sm-and-down">
 					<language-select
@@ -142,6 +153,7 @@ export default {
 		LanguageSelect,
 		VerdictSelect,
 	},
+
 	props: {
 		statusItem: {
 			type: Array,
@@ -151,6 +163,8 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+
 	},
+
 };
 </script>
