@@ -16,8 +16,10 @@ const getRunningStatus = (st, ed) => {
 	return 'Unknown';
 };
 
+const getMinutesBetweenTwo = (st, ed) => Math.round((new Date(ed) - new Date(st)) / 1000 / 60);
+
 const getTimeLength = (st, ed) => {
-	const len = Math.round((new Date(ed) - new Date(st)) / 1000 / 60);
+	const len = getMinutesBetweenTwo(st, ed);
 	const hour = String(Math.round(len / 60));
 	let minute = String(len % 60);
 	if (minute.length === 1) {
@@ -26,4 +28,5 @@ const getTimeLength = (st, ed) => {
 	return `${hour}:${minute}`;
 };
 
-export { getRunningStatus, getTimeLength };
+
+export { getRunningStatus, getTimeLength, getMinutesBetweenTwo };
