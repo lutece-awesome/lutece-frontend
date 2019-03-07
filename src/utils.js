@@ -33,7 +33,7 @@ function formatRank(rk) {
 }
 
 function clearApolloCache() {
-	return apolloProvider.defaultClient.clearStore();
+	return apolloProvider.defaultClient.resetStore();
 }
 
 // To use this function gain the specific fied error message, the catch error must be

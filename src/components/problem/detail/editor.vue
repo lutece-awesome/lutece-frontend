@@ -2,7 +2,6 @@
 	<code-mirror
 		:code = "code"
 		:language = "language"
-		:submit = "submit"
 		:is-loading = "isLoading"
 		:is-error = "isError"
 		@input-code = "code = $event"
@@ -14,14 +13,12 @@
 <script>
 
 import codeMirror from '@/components/async/code-mirror/app';
-import languageSelect from '@/components/language/utils/select';
 import Language from '@/modules/language/main';
 import gql from 'graphql-tag';
 
 export default {
 	components: {
 		codeMirror,
-		languageSelect,
 	},
 
 	props: {

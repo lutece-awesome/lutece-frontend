@@ -3,7 +3,7 @@
 		<v-data-table
 			:items = "renderingRankingList"
 			:loading = "isLoading > 0"
-			:headers-length = "2"
+			:headers-length = "3 + problemLength"
 			hide-actions
 		>
 			<v-progress-linear
@@ -16,6 +16,7 @@
 				<tr
 					justify-center
 					align-center
+
 				>
 					<th
 						role = "columnheader"
@@ -74,9 +75,6 @@
 						{{ item.details[index].tried }}
 					</td>
 				</tr>
-			</template>
-			<template v-slot:no-data>
-				<div/>
 			</template>
 		</v-data-table>
 	</v-container>
@@ -145,6 +143,9 @@ export default {
 		},
 
 		updateRenderingList(submissions, problems, meta) {
+			if (!submissions || !problems || !meta) {
+				return;
+			}
 			const slugToIdx = new Map();
 			const minimumSolvedTime = new Map();
 			for (let i = 0; i < problems.length; i += 1) {

@@ -7,7 +7,7 @@ import ContestClarification from '@/components/contest/detail/clarification';
 import ContestProblem from '@/components/contest/detail/problem';
 import ContestRank from '@/components/contest/detail/rank';
 import ContestSubmission from '@/components/contest/detail/submission';
-
+import ContestSubmissionSubmit from '@/components/contest/detail/submit';
 
 const Router = [
 	{
@@ -47,6 +47,12 @@ const Router = [
 				path: 'problem',
 				name: 'ContestProblem',
 				component: ContestProblem,
+				props: true,
+			},
+			{
+				path: 'submit',
+				name: 'ContestSubmissionSubmit',
+				component: ContestSubmissionSubmit,
 				props: true,
 			},
 			{

@@ -23,26 +23,18 @@
 						headers-length = "2"
 						role = "columnheader"
 						scope = "col"
-						class = "column text-xs-center"
+						class = "column text-xs-center pt-3"
 						style = "width: 14.2%"
 					>
-						<user-auto-complete
-							v-model = "user"
-							style = "padding-top: 20px;"
-							label = "User"
-						/>
+						User
 					</th>
 					<th
 						role = "columnheader"
 						scope = "col"
-						class = "column text-xs-center"
+						class = "column text-xs-center pt-3"
 						style = "width: 14.2%"
 					>
-						<problem-auto-complete
-							v-model = "problem"
-							style = "padding-top: 20px;"
-							label = "Problem"
-						/>
+						Problem
 					</th>
 					<th
 						role = "columnheader"
@@ -110,11 +102,7 @@
 						</router-link>
 					</td>
 					<td class="text-xs-center">
-						<router-link
-							:to = "{ name: 'ProblemDetail' , params: {slug: props.item.problem.slug } }"
-						>
-							{{ props.item.problem.title }}
-						</router-link>
+						{{ props.item.problem.title }}
 					</td>
 					<td
 						:class = "props.item.result.color + '--text'"
@@ -191,6 +179,11 @@ export default {
 		},
 	},
 
+	activated() {
+		this.debounceFetchData();
+	},
+
+
 	mounted() {
 		this.fetchData();
 		this.debounceFetchData = debounce(this.fetchData, this.debounce);
@@ -248,11 +241,11 @@ export default {
 				variables: {
 					pk: this.pk,
 					page: this.page,
-					user: this.user,
-					problem: this.problem,
-					judgeStatus: this.judgeStatus,
-					language: this.language,
+					problem: this.problem ? this.problem.slug : null,
+					judgeStatus: this.verdict ? this.verdict.full : null,
+					language: this.language ? this.language.full : null,
 				},
+				fetchPolicy: 'no-cache',
 			})
 				.then(response => response.data.contestSubmissionList)
 				.then((data) => {

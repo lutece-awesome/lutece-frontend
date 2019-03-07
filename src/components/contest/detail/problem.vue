@@ -27,7 +27,9 @@
 								icon
 								@click = "toggle"
 							>
-								<v-icon :color = "colorList[each % colorList.length]">
+								<v-icon
+									:color = "problemList[each - 1].solved ?
+									'light-green' : colorList[each % colorList.length]">
 									mdi-record
 								</v-icon>
 							</v-btn>
@@ -90,8 +92,6 @@ export default {
 				'light-blue',
 				'cyan',
 				'teal',
-				'green',
-				'light-green',
 				'lime',
 				'yellow',
 				'amber',

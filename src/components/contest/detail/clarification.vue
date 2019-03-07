@@ -9,6 +9,7 @@
 			:fetch-comments = "fetchClarifications"
 			:submit = "submitClarification"
 			:display-title = "false"
+			:actived-update = "true"
 		/>
 	</v-container>
 </template>
@@ -34,6 +35,7 @@ export default {
 	data() {
 		return {
 			error: null,
+			reFetch: false,
 		};
 	},
 

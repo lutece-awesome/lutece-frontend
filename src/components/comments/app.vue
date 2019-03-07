@@ -29,6 +29,7 @@
 		<comment-list
 			:fetch-comments = "fetchComments"
 			:re-fetch = "reFetch"
+			:re-fresh = "reFresh"
 		/>
 		<div v-if = "isAuthenticated">
 			<v-divider class = "mt-3 mb-3"/>
@@ -69,6 +70,10 @@ export default {
 			type: Function,
 			required: true,
 		},
+		activedUpdate: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	data() {
@@ -76,6 +81,7 @@ export default {
 			replyComment: '',
 			commentsArray: [],
 			reFetch: false,
+			reFresh: false,
 		};
 	},
 
@@ -83,6 +89,12 @@ export default {
 		...mapGetters({
 			isAuthenticated: 'user/isAuthenticated',
 		}),
+	},
+
+	activated() {
+		if (this.activedUpdate) {
+			this.reFresh = !this.reFresh;
+		}
 	},
 };
 </script>

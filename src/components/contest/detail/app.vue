@@ -26,7 +26,9 @@
 							{{ contest.title }}
 						</div>
 						<v-progress-linear
-							indeterminate
+							:indeterminate = " !isStarted && !isFinished"
+							:value = "progress"
+							:color = " ( !isStarted && !isFinished ) ? 'primary' : 'green' "
 							height = "2"
 						/>
 					</div>
@@ -41,21 +43,27 @@
 						>
 							<v-tab
 								:ripple = "false"
-								:to = "{name: 'ContestSummary'}"
+								to = "summary"
 							>
 								Summary
 							</v-tab>
 							<v-tab
 								:ripple = "false"
-								:to = "{name: 'ContestClarification'}"
+								to = "clarification"
 							>
 								Clarification
 							</v-tab>
 							<v-tab
 								:ripple = "false"
-								:to = "{name: 'ContestProblem'}"
+								to = "problem"
 							>
 								Problem
+							</v-tab>
+							<v-tab
+								:ripple = "false"
+								:to = "{name: 'ContestSubmissionSubmit'}"
+							>
+								Submit
 							</v-tab>
 							<v-tab
 								:ripple = "false"
@@ -98,11 +106,31 @@ export default {
 			isLoading: true,
 			isError: false,
 			formTitle: '',
+			startTime: null,
+			endTime: null,
+			currentTime: null,
+			isFinished: null,
+			isStarted: null,
 		};
 	},
+
+	computed: {
+		progress() {
+			if (this.isStarted) {
+				return ((this.currentTime - this.startTime) / (this.endTime - this.startTime)) * 100;
+			}
+			if (this.isFinished) {
+				return 100;
+			}
+			return 0;
+		},
+	},
+
 	mounted() {
 		this.fetchData();
 	},
+
+
 	methods: {
 		fetchData() {
 			this.isLoading = true;
@@ -110,7 +138,16 @@ export default {
 			const query = gql`
                 query Contest($pk: ID!){
                     contest(pk: $pk){
-                        title
+						title
+                        settings {
+                            note
+                            startTime
+                            endTime
+                            maxTeamMemberNumber
+                        }
+                        registered
+                        registerMemberNumber
+						isPublic
                     }
                 }
             `;
@@ -121,9 +158,24 @@ export default {
 				},
 			})
 				.then(response => response.data.contest)
-				.then((data) => { this.contest = data; })
+				.then((data) => { this.contest = data; this.initializeTime(); })
 				.catch(() => { this.isError = true; })
 				.finally(() => { this.isLoading = false; });
+		},
+
+		initializeTime() {
+			let { startTime, endTime } = this.contest.settings;
+			const cur = this.$moment.unix(Date.now());
+			startTime = this.$moment.unix(new Date(startTime));
+			endTime = this.$moment.unix(new Date(endTime));
+			this.startTime = startTime;
+			this.endTime = endTime;
+			this.currentTime = cur;
+			if (cur >= startTime && cur < endTime) {
+				this.isStarted = true;
+			} else if (cur >= endTime) {
+				this.isFinished = true;
+			}
 		},
 	},
 };

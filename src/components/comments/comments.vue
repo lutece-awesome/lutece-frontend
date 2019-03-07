@@ -37,6 +37,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		reFresh: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	data() {
@@ -55,6 +59,9 @@ export default {
 		},
 		reFetch() {
 			this.page = 1;
+			this.update();
+		},
+		reFresh() {
 			this.update();
 		},
 	},
