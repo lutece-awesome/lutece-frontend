@@ -1,5 +1,5 @@
-query HomeArticleListGQL($page: Int!, $filter: String) {
-	homeArticleList(page: $page, filter: $filter) {
+query HomeArticleListGQL($page: Int!, $filter: String, $choice: String) {
+	homeArticleList(page: $page, filter: $filter, choice: $choice) {
 		maxPage
 		homeArticleList {
 			title
