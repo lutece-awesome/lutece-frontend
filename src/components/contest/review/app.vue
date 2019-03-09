@@ -25,14 +25,14 @@
 					>
 						<v-tab
 							:ripple = "false"
-							to = "overall"
+							:to = "{name: 'ContestReviewOverall'}"
 						>
 							Overall
 						</v-tab>
 						<v-tab
 							v-if = "isAuthenticated"
 							:ripple = "false"
-							to = "mine"
+							:to = "{name: 'ContestReviewMine'}"
 						>
 							Mine
 						</v-tab>
