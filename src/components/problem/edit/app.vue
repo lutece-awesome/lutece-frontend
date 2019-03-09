@@ -143,11 +143,11 @@ export default {
 					samples: JSON.stringify(this.problem.samples.sampleList),
 					disable: this.problem.disable,
 				},
-			}).then(() => {
+			}).then((response) => {
 				clearApolloCache().then(() => {
 					this.$router.push({
 						name: 'ProblemDetail',
-						params: { slug: this.slug },
+						params: { slug: response.data.updateProblem.slug },
 					});
 				});
 			});

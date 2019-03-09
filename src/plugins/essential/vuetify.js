@@ -1,5 +1,7 @@
 import {
 	Vuetify, // required
+	VWindow,
+	VItemGroup,
 	VSlider,
 	VTimePicker,
 	VDatePicker,
@@ -49,6 +51,8 @@ Vue.use(DatetimePicker);
 
 Vue.use(Vuetify, {
 	components: {
+		VWindow,
+		VItemGroup,
 		VSlider,
 		VTimePicker,
 		VDatePicker,

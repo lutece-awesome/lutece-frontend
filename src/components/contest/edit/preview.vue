@@ -49,7 +49,7 @@
 				<v-flex xs12>
 					<div class = "section-title" > Max Team Member Number </div>
 					<v-slider
-						:input-value = "maxTeamMemberNumber"
+						:value = "maxTeamMemberNumber"
 						:tick-labels = "[1, 2, 3, 4, 5]"
 						:min = "1"
 						:max = "5"
@@ -59,20 +59,6 @@
 						ticks = "always"
 						tick-size = "2"
 						@input = "$emit( 'input-maxTeamMemberNumber' , $event)"
-					/>
-				</v-flex>
-				<v-flex xs12>
-					<v-checkbox
-						:input-value = "canJoinAfterContestBegin"
-						:disabled = "withRender"
-						:label = "(canJoinAfterContestBegin ? 'can' : 'can not') + ' join after contest begin' "
-						@change = "$emit( 'input-canJoinAfterContestBegin' , $event )"
-					/>
-					<v-checkbox
-						:input-value = "joinNeedApprove"
-						:disabled = "withRender"
-						:label = "(joinNeedApprove ? 'need' : 'no need') + ' approve to join contest' "
-						@change = "$emit( 'input-joinNeedApprove' , $event )"
 					/>
 				</v-flex>
 				<v-flex xs12>
@@ -216,10 +202,6 @@ export default {
 		canJoinAfterContestBegin: {
 			type: Boolean,
 			default: false,
-		},
-		joinNeedApprove: {
-			type: Boolean,
-			default: true,
 		},
 		problemList: {
 			type: Array,

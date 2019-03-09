@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<div class = "mb-3">
+		<div
+			v-if = "displayTitle"
+			class = "mb-3"
+		>
 			<v-icon size = "20" > mdi-comment </v-icon>
 			<span class = "title ml-1" > Comments: </span>
 		</div>
@@ -26,6 +29,7 @@
 		<comment-list
 			:fetch-comments = "fetchComments"
 			:re-fetch = "reFetch"
+			:re-fresh = "reFresh"
 		/>
 		<div v-if = "isAuthenticated">
 			<v-divider class = "mt-3 mb-3"/>
@@ -54,6 +58,10 @@ export default {
 	},
 
 	props: {
+		displayTitle: {
+			type: Boolean,
+			default: true,
+		},
 		fetchComments: {
 			type: Function,
 			required: true,
@@ -62,6 +70,10 @@ export default {
 			type: Function,
 			required: true,
 		},
+		activedUpdate: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	data() {
@@ -69,6 +81,7 @@ export default {
 			replyComment: '',
 			commentsArray: [],
 			reFetch: false,
+			reFresh: false,
 		};
 	},
 
@@ -76,6 +89,12 @@ export default {
 		...mapGetters({
 			isAuthenticated: 'user/isAuthenticated',
 		}),
+	},
+
+	activated() {
+		if (this.activedUpdate) {
+			this.reFresh = !this.reFresh;
+		}
 	},
 };
 </script>

@@ -14,7 +14,16 @@
 				md10
 				lg8
 			>
+				<loading-spinner
+					v-if = "isLoading"
+					style = "height: 600px"
+				/>
+				<error-spinner
+					v-else-if = "isError"
+					style = "height: 600px"
+				/>
 				<preview
+					v-else
 					:title = "title"
 					:start-time = "startTime"
 					:end-time = "endTime"
@@ -22,10 +31,10 @@
 					:password = "password"
 					:problem-list = "problemList"
 					:note = "note"
-					:submit = "createContest"
+					:submit = "updateContest"
 					:can-join-after-contest-begin = "canJoinAfterContestBegin"
 					:max-team-member-number = "maxTeamMemberNumber"
-					form-title = "Create Contest"
+					form-title = "Update Contest"
 					@input-title = "title = $event"
 					@input-disable = "disable = $event"
 					@input-startTime = "startTime = $event"
@@ -53,6 +62,13 @@ export default {
 		Preview,
 	},
 
+	props: {
+		pk: {
+			type: String,
+			required: true,
+		},
+	},
+
 	data() {
 		return {
 			title: '',
@@ -64,10 +80,65 @@ export default {
 			canJoinAfterContestBegin: false,
 			problemList: [],
 			note: '',
+			isLoading: false,
+			isError: false,
 		};
 	},
 
+	created() {
+		this.fetchData();
+	},
+
 	methods: {
+		fetchData() {
+			this.isLoading = true;
+			this.isError = false;
+			const query = gql`
+				query Contest($pk: ID!){
+					contest(pk: $pk){
+						title
+						settings {
+							note
+							disable
+							startTime
+							endTime
+							maxTeamMemberNumber
+							password
+							canJoinAfterContestBegin
+						}
+						problems {
+							pk
+							title
+							slug
+						}
+					}
+				}
+			`;
+			this.$apollo.query({
+				query,
+				variables: {
+					pk: this.pk,
+				},
+			})
+				.then(response => response.data.contest)
+				.then((data) => {
+					this.title = data.title;
+					this.note = data.settings.note;
+					this.disable = data.settings.disable;
+					this.startTime = new Date(data.settings.startTime);
+					this.endTime = new Date(data.settings.endTime);
+					this.maxTeamMemberNumber = data.settings.maxTeamMemberNumber;
+					this.password = data.settings.password;
+					this.canJoinAfterContestBegin = data.settings.canJoinAfterContestBegin;
+					this.problemList = data.problems;
+				})
+				.catch(() => {
+					this.isError = true;
+				})
+				.finally(() => {
+					this.isLoading = false;
+				});
+		},
 		appendProblem(problem) {
 			if (problem && !this.problemList.find(each => each.pk === problem.pk)) {
 				this.problemList.push({
@@ -80,10 +151,11 @@ export default {
 		removeProblem(index) {
 			this.problemList.splice(index, 1);
 		},
-		createContest() {
+		updateContest() {
 			const mutation = gql`
-				mutation CreateContest($title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $password: String!, $canJoinAfterContestBegin: Boolean!, $problems: String!) {
-					createContest(
+				mutation UpdateContest($pk: ID!, $title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $password: String!, $canJoinAfterContestBegin: Boolean!, $problems: String!) {
+					updateContest(
+						pk: $pk,
 						title: $title,
 						note: $note,
 						disable: $disable,
@@ -102,6 +174,7 @@ export default {
 			return this.$apollo.mutate({
 				mutation,
 				variables: {
+					pk: this.pk,
 					title: this.title,
 					note: this.note,
 					disable: this.disable,
@@ -113,7 +186,7 @@ export default {
 					problems: JSON.stringify(this.problemList.map(each => each.pk)),
 				},
 			})
-				.then(response => response.data.createContest)
+				.then(response => response.data.updateContest)
 				.then((data) => {
 					clearApolloCache().then(() => {
 						this.$router.push({

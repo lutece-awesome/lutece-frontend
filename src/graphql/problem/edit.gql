@@ -15,6 +15,6 @@ mutation UpdateProblemGQL($title: String!, $content: String!, $note: String!, $t
         samples: $samples,
         disable: $disable
     ) {
-        state
+        slug
 	}
 }

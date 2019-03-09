@@ -19,12 +19,23 @@
 					text = "Loading ..."
 					style = "height: 600px"
 				/>
-				<error-spinner
-					v-else-if = "isError"
-					style = "height: 600px"
-				/>
+				<error-spinner v-else-if = "isError"/>
 				<div v-else>
-					<v-card>
+					<div class = "elevation-2">
+						<div class = "headline pt-4 pl-4 primary--text">
+							{{ contest.title }}
+						</div>
+						<v-progress-linear
+							:indeterminate = " !isStarted && !isFinished"
+							:value = "progress"
+							:color = " ( !isStarted && !isFinished ) ? 'primary' : 'green' "
+							height = "2"
+						/>
+					</div>
+					<div
+						class = "elevation-2 mt-4"
+						style = "background: #fff"
+					>
 						<v-tabs
 							v-model = "tabs"
 							fixed-tabs
@@ -32,21 +43,27 @@
 						>
 							<v-tab
 								:ripple = "false"
-								:to = "{name: 'ContestSummary'}"
+								to = "summary"
 							>
 								Summary
 							</v-tab>
 							<v-tab
 								:ripple = "false"
-								:to = "{name: 'ContestClarification'}"
+								to = "clarification"
 							>
 								Clarification
 							</v-tab>
 							<v-tab
 								:ripple = "false"
-								:to = "{name: 'ContestProblem'}"
+								to = "problem"
 							>
 								Problem
+							</v-tab>
+							<v-tab
+								:ripple = "false"
+								:to = "{name: 'ContestSubmissionSubmit'}"
+							>
+								Submit
 							</v-tab>
 							<v-tab
 								:ripple = "false"
@@ -64,7 +81,7 @@
 						<keep-alive>
 							<router-view/>
 						</keep-alive>
-					</v-card>
+					</div>
 				</div>
 			</v-flex>
 		</v-layout>
@@ -72,6 +89,10 @@
 </template>
 
 <script>
+
+import gql from 'graphql-tag';
+import { setTimeout } from 'timers';
+
 export default {
 	props: {
 		pk: {
@@ -83,18 +104,90 @@ export default {
 		return {
 			tabs: null,
 			contest: null,
-			isLoading: false,
+			isLoading: true,
 			isError: false,
-			formTitle: 'UESTC吃鸡',
+			formTitle: '',
+			startTime: null,
+			endTime: null,
+			currentTime: null,
+			isFinished: null,
+			isStarted: null,
 		};
+	},
+
+	computed: {
+		progress() {
+			if (this.isStarted) {
+				return ((this.currentTime - this.startTime) / (this.endTime - this.startTime)) * 100;
+			}
+			if (this.isFinished) {
+				return 100;
+			}
+			return 0;
+		},
+	},
+
+	mounted() {
+		this.fetchData();
+	},
+
+
+	methods: {
+		fetchData() {
+			this.isLoading = true;
+			this.isError = false;
+			const query = gql`
+                query Contest($pk: ID!){
+                    contest(pk: $pk){
+						title
+                        settings {
+                            startTime
+                            endTime
+                        }
+                    }
+                }
+            `;
+			this.$apollo.query({
+				query,
+				variables: {
+					pk: this.pk,
+				},
+			})
+				.then(response => response.data.contest)
+				.then((data) => { this.contest = data; this.initializeTime(); })
+				.catch(() => { this.isError = true; })
+				.finally(() => { this.isLoading = false; });
+		},
+
+		initializeTime() {
+			let { startTime, endTime } = this.contest.settings;
+			const cur = this.$moment.unix(Date.now());
+			startTime = this.$moment.unix(new Date(startTime));
+			endTime = this.$moment.unix(new Date(endTime));
+			this.startTime = startTime;
+			this.endTime = endTime;
+			this.currentTime = cur;
+			if (cur >= startTime && cur < endTime) {
+				this.isStarted = true;
+			} else if (cur >= endTime) {
+				this.isFinished = true;
+			}
+			if (!this.isFinished) {
+				this.updateTime();
+			}
+		},
+
+		updateTime() {
+			this.currentTime = this.$moment.unix(Date.now());
+			if (this.currentTime >= this.endTime) {
+				window.location.reload();
+				this.isFinished = true;
+			} else if (this.currentTime >= this.startTime && !this.isStarted) {
+				window.location.reload();
+			} else {
+				setTimeout(() => { this.updateTime(); }, 5000);
+			}
+		},
 	},
 };
 </script>
-
-<style scoped lang = "stylus">
-	.title
-		font-size : 20px
-		color: grey
-		font-weight: 500
-		margin-bottom: 20px
-</style>

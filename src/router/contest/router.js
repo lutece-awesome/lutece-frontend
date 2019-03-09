@@ -7,7 +7,10 @@ import ContestClarification from '@/components/contest/detail/clarification';
 import ContestProblem from '@/components/contest/detail/problem';
 import ContestRank from '@/components/contest/detail/rank';
 import ContestSubmission from '@/components/contest/detail/submission';
-
+import ContestSubmissionSubmit from '@/components/contest/detail/submit';
+import ContestReviewOverall from '@/components/contest/review/overall';
+import ContestReviewMine from '@/components/contest/review/mine';
+import ContestUpdate from '@/components/contest/edit/update';
 
 const Router = [
 	{
@@ -22,6 +25,15 @@ const Router = [
 		meta: {
 			requirePermission: 'contest.add_contest',
 		},
+	},
+	{
+		path: '/contest-update/:pk',
+		name: 'ContestUpdate',
+		component: ContestUpdate,
+		meta: {
+			requirePermission: 'contest.change_contest',
+		},
+		props: true,
 	},
 	{
 		path: '/contest/:pk',
@@ -50,6 +62,12 @@ const Router = [
 				props: true,
 			},
 			{
+				path: 'submit',
+				name: 'ContestSubmissionSubmit',
+				component: ContestSubmissionSubmit,
+				props: true,
+			},
+			{
 				path: 'submission',
 				name: 'ContestSubmission',
 				component: ContestSubmission,
@@ -68,6 +86,26 @@ const Router = [
 		path: '/contest-review/:pk',
 		name: 'ContestReview',
 		component: ContestReview,
+		redirect: {
+			name: 'ContestReviewOverall',
+		},
+		children: [
+			{
+				path: 'overall',
+				name: 'ContestReviewOverall',
+				component: ContestReviewOverall,
+				props: true,
+			},
+			{
+				path: 'mine',
+				name: 'ContestReviewMine',
+				component: ContestReviewMine,
+				props: true,
+				meta: {
+					requireAuth: true,
+				},
+			},
+		],
 		props: true,
 	},
 ];

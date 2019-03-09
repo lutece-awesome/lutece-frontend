@@ -31,15 +31,6 @@
 				<td class = "text-xs-center blue--text text--darken-2">
 					<strong>
 						{{ getRunningStatus( props.item.settings.startTime , props.item.settings.endTime ) }}
-						<span class = "ml-1 mr-1"> | </span>
-						<v-icon
-							small
-							class = "postive"
-							flat
-						>
-							mdi-account
-						</v-icon>
-						x {{ props.item.registerMemberNumber }}
 					</strong>
 				</td>
 			</router-link>

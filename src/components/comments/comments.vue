@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<comment
-			v-for = "( each , index ) in articleCommentList"
+			v-for = "( each , index ) in list"
 			:key = "index"
 			:pk = "parseInt(each.pk,10)"
 			:author = "each.author"
@@ -37,6 +37,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		reFresh: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	data() {
@@ -45,7 +49,7 @@ export default {
 			isError: false,
 			page: 1,
 			maxPage: 0,
-			articleCommentList: [],
+			list: [],
 		};
 	},
 
@@ -55,6 +59,9 @@ export default {
 		},
 		reFetch() {
 			this.page = 1;
+			this.update();
+		},
+		reFresh() {
 			this.update();
 		},
 	},
@@ -71,7 +78,8 @@ export default {
 			this.fetchComments(this.page)
 				.then((data) => {
 					if (currentPage === this.page) {
-						Object.assign(this, data);
+						this.maxPage = data.maxPage;
+						this.list = data.list;
 					}
 				})
 				.catch(() => {
