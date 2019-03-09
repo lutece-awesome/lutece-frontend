@@ -199,10 +199,6 @@ export default {
 			type: String,
 			default: '',
 		},
-		canJoinAfterContestBegin: {
-			type: Boolean,
-			default: false,
-		},
 		problemList: {
 			type: Array,
 			default: () => ([]),

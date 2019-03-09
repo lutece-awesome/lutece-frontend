@@ -23,7 +23,6 @@
 					:problem-list = "problemList"
 					:note = "note"
 					:submit = "createContest"
-					:can-join-after-contest-begin = "canJoinAfterContestBegin"
 					:max-team-member-number = "maxTeamMemberNumber"
 					form-title = "Create Contest"
 					@input-title = "title = $event"
@@ -32,7 +31,6 @@
 					@input-endTime = "endTime = $event"
 					@input-password = "password = $event"
 					@input-maxTeamMemberNumber = "maxTeamMemberNumber = $event"
-					@input-canJoinAfterContestBegin = "canJoinAfterContestBegin = $event"
 					@input-note = "note = $event"
 					@input-appendProblem = "appendProblem"
 					@input-removeProblem = "removeProblem"
@@ -61,7 +59,6 @@ export default {
 			endTime: new Date(),
 			maxTeamMemberNumber: 1,
 			password: '',
-			canJoinAfterContestBegin: false,
 			problemList: [],
 			note: '',
 		};
@@ -82,7 +79,7 @@ export default {
 		},
 		createContest() {
 			const mutation = gql`
-				mutation CreateContest($title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $password: String!, $canJoinAfterContestBegin: Boolean!, $problems: String!) {
+				mutation CreateContest($title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $password: String!, $problems: String!) {
 					createContest(
 						title: $title,
 						note: $note,
@@ -91,7 +88,6 @@ export default {
 						endTime: $endTime,
 						maxTeamMemberNumber: $maxTeamMemberNumber,
 						password: $password,
-						canJoinAfterContestBegin: $canJoinAfterContestBegin,
 						problems: $problems,
 					) {
 						pk
@@ -109,7 +105,6 @@ export default {
 					endTime: this.endTime,
 					maxTeamMemberNumber: this.maxTeamMemberNumber,
 					password: this.password,
-					canJoinAfterContestBegin: this.canJoinAfterContestBegin,
 					problems: JSON.stringify(this.problemList.map(each => each.pk)),
 				},
 			})
