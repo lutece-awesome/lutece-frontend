@@ -21,7 +21,6 @@
 					:disable = "disable"
 					:password = "password"
 					:problem-list = "problemList"
-					:join-need-approve = "joinNeedApprove"
 					:note = "note"
 					:submit = "createContest"
 					:can-join-after-contest-begin = "canJoinAfterContestBegin"
@@ -34,7 +33,6 @@
 					@input-password = "password = $event"
 					@input-maxTeamMemberNumber = "maxTeamMemberNumber = $event"
 					@input-canJoinAfterContestBegin = "canJoinAfterContestBegin = $event"
-					@input-joinNeedProve = "joinNeedProve = $event"
 					@input-note = "note = $event"
 					@input-appendProblem = "appendProblem"
 					@input-removeProblem = "removeProblem"
@@ -64,7 +62,6 @@ export default {
 			maxTeamMemberNumber: 1,
 			password: '',
 			canJoinAfterContestBegin: false,
-			joinNeedApprove: true,
 			problemList: [],
 			note: '',
 		};
@@ -85,7 +82,7 @@ export default {
 		},
 		createContest() {
 			const mutation = gql`
-				mutation CreateContest($title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $password: String!, $canJoinAfterContestBegin: Boolean!, $joinNeedApprove: Boolean!, $problems: String!) {
+				mutation CreateContest($title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $password: String!, $canJoinAfterContestBegin: Boolean!, $problems: String!) {
 					createContest(
 						title: $title,
 						note: $note,
@@ -95,7 +92,6 @@ export default {
 						maxTeamMemberNumber: $maxTeamMemberNumber,
 						password: $password,
 						canJoinAfterContestBegin: $canJoinAfterContestBegin,
-						joinNeedApprove: $joinNeedApprove,
 						problems: $problems,
 					) {
 						pk
@@ -114,7 +110,6 @@ export default {
 					maxTeamMemberNumber: this.maxTeamMemberNumber,
 					password: this.password,
 					canJoinAfterContestBegin: this.canJoinAfterContestBegin,
-					joinNeedApprove: this.joinNeedApprove,
 					problems: JSON.stringify(this.problemList.map(each => each.pk)),
 				},
 			})

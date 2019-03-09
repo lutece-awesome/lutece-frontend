@@ -8,6 +8,8 @@ import ContestProblem from '@/components/contest/detail/problem';
 import ContestRank from '@/components/contest/detail/rank';
 import ContestSubmission from '@/components/contest/detail/submission';
 import ContestSubmissionSubmit from '@/components/contest/detail/submit';
+import ContestReviewOverall from '@/components/contest/review/overall';
+import ContestReviewMine from '@/components/contest/review/mine';
 
 const Router = [
 	{
@@ -74,6 +76,26 @@ const Router = [
 		path: '/contest-review/:pk',
 		name: 'ContestReview',
 		component: ContestReview,
+		redirect: {
+			name: 'ContestReviewOverall',
+		},
+		children: [
+			{
+				path: 'overall',
+				name: 'ContestReviewOverall',
+				component: ContestReviewOverall,
+				props: true,
+			},
+			{
+				path: 'mine',
+				name: 'ContestReviewMine',
+				component: ContestReviewMine,
+				props: true,
+				meta: {
+					requireAuth: true,
+				},
+			},
+		],
 		props: true,
 	},
 ];

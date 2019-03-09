@@ -91,6 +91,7 @@
 <script>
 
 import gql from 'graphql-tag';
+import { setTimeout } from 'timers';
 
 export default {
 	props: {
@@ -140,14 +141,9 @@ export default {
                     contest(pk: $pk){
 						title
                         settings {
-                            note
                             startTime
                             endTime
-                            maxTeamMemberNumber
                         }
-                        registered
-                        registerMemberNumber
-						isPublic
                     }
                 }
             `;
@@ -175,6 +171,21 @@ export default {
 				this.isStarted = true;
 			} else if (cur >= endTime) {
 				this.isFinished = true;
+			}
+			if (!this.isFinished) {
+				this.updateTime();
+			}
+		},
+
+		updateTime() {
+			this.currentTime = this.$moment.unix(Date.now());
+			if (this.currentTime >= this.endTime) {
+				window.location.reload();
+				this.isFinished = true;
+			} else if (this.currentTime >= this.startTime && !this.isStarted) {
+				window.location.reload();
+			} else {
+				setTimeout(() => { this.updateTime(); }, 5000);
 			}
 		},
 	},

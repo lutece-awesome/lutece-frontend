@@ -45,6 +45,17 @@
 					</tr>
 				</table>
 			</div>
+
+			<div
+				class = "mt-2"
+				style = "margin-left: -10px;"
+			>
+				<v-btn
+					:to = "{ name : 'ContestReview' , params: { pk } }"
+					color = "primary"
+					medium
+				> {{ hasPermission('contest.view_contest') ? 'Review' : 'Register' }} </v-btn>
+			</div>
 			<async-mixrend-component
 				v-if = "contest.settings.note"
 				:content = "contest.settings.note"
@@ -56,6 +67,7 @@
 <script>
 
 import gql from 'graphql-tag';
+import { mapGetters } from 'vuex';
 import { getRunningStatus } from '../utils';
 import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
 
@@ -83,6 +95,10 @@ export default {
 		runningStatus() {
 			return getRunningStatus(this.contest.settings.startTime, this.contest.settings.endTime);
 		},
+		...mapGetters({
+			isAuthenticated: 'user/isAuthenticated',
+			hasPermission: 'user/hasPermission',
+		}),
 	},
 
 	mounted() {

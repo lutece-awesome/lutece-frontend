@@ -1,71 +1,68 @@
 <template>
-	<v-container class = "elevation-2">
+	<v-container
+		:class = "{'pa-0': $vuetify.breakpoint.xsOnly }"
+		class = "mt-4"
+		fluid
+	>
 		<v-layout
 			row
 			wrap
-			fill-height
-			align-center
 			justify-center
 		>
-			<loading-spinner
-				v-if = "isLoading"
-				style = "height: 600px"
-			/>
-			<error-spinner
-				v-else-if = "isError"
-				style = "height: 600px"
-			/>
-			<div v-else>
-				<v-flex
-					v-if = "formTitle"
-					xs12
+			<v-flex
+				xs12
+				md10
+				xl8
+			>
+				<div
+					class = "mt-4"
 				>
-					<div class = "text-xs-center title">
-						{{ contest.title }} - Review
-					</div>
-				</v-flex>
-				<v-flex xs12>
-					<div class = "section-title" > Title </div>
-					<v-text-field
-						v-model = "title"
-						:disabled = "withRender"
-						@input = "$emit( 'input-title' , $event )"/>
-				</v-flex>
-			</div>
+					<v-tabs
+						v-model = "tabs"
+						fixed-tabs
+						fluid
+						color = "#fafafa"
+					>
+						<v-tab
+							:ripple = "false"
+							to = "overall"
+						>
+							Overall
+						</v-tab>
+						<v-tab
+							v-if = "isAuthenticated"
+							:ripple = "false"
+							to = "mine"
+						>
+							Mine
+						</v-tab>
+					</v-tabs>
+					<keep-alive>
+						<router-view/>
+					</keep-alive>
+				</div>
+			</v-flex>
 		</v-layout>
 	</v-container>
 </template>
 
 
 <script>
+
+import { mapGetters } from 'vuex';
+
+
 export default {
-	props: {
-		pk: {
-			type: Number,
-			required: true,
-		},
-	},
 	data() {
 		return {
-			isLoading: true,
-			isError: false,
-			contest: null,
+			tabs: null,
 		};
+	},
+
+	computed: {
+		...mapGetters({
+			isAuthenticated: 'user/isAuthenticated',
+		}),
 	},
 };
 </script>
-
-<style scoped lang = "stylus">
-	.title
-		font-size: 20px
-		color: grey
-		font-weight: 500
-		margin-top: 12px
-		margin-bottom: -12px
-	.section-title
-		font-size: 16px
-		color: grey
-		font-weight: 500
-		margin-top: 12px
-		margin-bottom: -12px
-</style>
