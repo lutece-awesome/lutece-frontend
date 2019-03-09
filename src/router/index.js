@@ -45,22 +45,24 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-	const meta = {};
-	to.matched.some(record => Object.assign(meta, record.meta));
+	const { matched } = to;
 
-	// Check the requireAuth meta info
-	if (Object.prototype.hasOwnProperty.call(meta, 'requireAuth')) {
-		if (isAuthenticated() !== meta.requireAuth) {
-			goHome();
-			return;
+	for (let i = 0; i < matched.length; i += 1) {
+		const { meta } = matched[i];
+		// Check the requireAuth meta info
+		if (Object.prototype.hasOwnProperty.call(meta, 'requireAuth')) {
+			if (isAuthenticated() !== meta.requireAuth) {
+				goHome();
+				return;
+			}
 		}
-	}
 
-	// Check the permission required or not
-	if (Object.prototype.hasOwnProperty.call(meta, 'requirePermission')) {
-		if (!hasPermission(meta.requirePermission)) {
-			goHome();
-			return;
+		// Check the permission required or not
+		if (Object.prototype.hasOwnProperty.call(meta, 'requirePermission')) {
+			if (!hasPermission(meta.requirePermission)) {
+				goHome();
+				return;
+			}
 		}
 	}
 

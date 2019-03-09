@@ -43,19 +43,19 @@
 						>
 							<v-tab
 								:ripple = "false"
-								to = "summary"
+								:to = "{name: 'ContestSummary'}"
 							>
 								Summary
 							</v-tab>
 							<v-tab
 								:ripple = "false"
-								to = "clarification"
+								:to = "{name: 'ContestClarification'}"
 							>
 								Clarification
 							</v-tab>
 							<v-tab
 								:ripple = "false"
-								to = "problem"
+								:to = "{name: 'ContestProblem'}"
 							>
 								Problem
 							</v-tab>
