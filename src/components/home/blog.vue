@@ -15,39 +15,21 @@
 				<v-flex
 					xs12
 					md10
-					lg9
+					lg8
+					text-xs-center
 				>
 					<ApolloQuery
 						:query = "require('@/graphql/home/home-article-list.gql')"
-						:variables = "{ page , filter, choice}"
+						:variables = "{ page , filter }"
 						:debounce = "300"
 						@result = "onResult" >
 						<template
 							slot-scope = "{ result: { loading, error , data } , isLoading }">
-
-							<v-layout
-								row
-								xs14
-							>
-								<v-flex
-									xs1
-								>
-									<v-select
-										:items="choices"
-										v-model = "choice"
-									/>
-								</v-flex>
-								<v-flex
-									xs13
-								>
-									<search-bar
-										v-model = "filter"
-										class = "mb-4 fluid"
-										label = ""
-									/>
-								</v-flex>
-							</v-layout>
-
+							<search-bar
+								v-model = "filter"
+								class = "mb-4 fluid"
+								label = ""
+							/>
 							<loading-spinner
 								v-if = "( ( !data || loading || isLoading ) && (!error) ) ? true : false"
 							/>
@@ -129,11 +111,8 @@ export default {
 			page: 1,
 			maxPage: 0,
 			filter: '',
-			choice: 'Date',
-			choices: ['Date', 'Rank'],
 		};
 	},
-
 
 	computed: {
 		...mapGetters({
