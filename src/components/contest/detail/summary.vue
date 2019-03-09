@@ -54,13 +54,28 @@
 					:to = "{ name : 'ContestReview' , params: { pk } }"
 					color = "primary"
 					medium
-				> {{ hasPermission('contest.view_contest') ? 'Review' : 'Register' }} </v-btn>
+				> {{ hasPermission('contest.view_contest') ? 'Review' : 'TEAM' }} </v-btn>
 			</div>
 			<async-mixrend-component
 				v-if = "contest.settings.note"
 				:content = "contest.settings.note"
 				class = "mt-4"/>
 		</div>
+		<v-btn
+			v-if = "hasPermission('contest.change_contest')"
+			:to = "{
+				name: 'ContestUpdate',
+				params: { pk }
+			}"
+			color = "accent"
+			dark
+			fab
+			fixed
+			bottom
+			right
+		>
+			<v-icon>mdi-pencil</v-icon>
+		</v-btn>
 	</v-container>
 </template>
 

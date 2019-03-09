@@ -29,7 +29,7 @@
 							>
 								<v-icon
 									:color = "problemList[each - 1].solved ?
-									'light-green' : colorList[each % colorList.length]">
+									'green' : colorList[each % colorList.length]">
 									mdi-record
 								</v-icon>
 							</v-btn>

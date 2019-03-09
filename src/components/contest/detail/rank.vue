@@ -59,7 +59,7 @@
 				slot-scope = "{ item , index }">
 				<tr tile>
 					<td class = "text-xs-center nowrap">
-						{{ index }}
+						{{ index + 1 }}
 					</td>
 					<td class = "text-xs-center">
 						{{ item.name }}
@@ -70,9 +70,34 @@
 					<td
 						v-for = "(each , index) in problemLength"
 						:key = "index"
+						:class = "{ 'first-blood' : item.details[index].firstBlood}"
 						class = "text-xs-center"
 					>
-						{{ item.details[index].tried }}
+						<v-icon
+							v-if = "item.details[index].firstBlood"
+							small
+							color = "success"
+							class = "mr-1"
+						>
+							mdi-thumb-up-outline
+						</v-icon>
+						<strong
+							v-if = "item.details[index].tried > 0 && !item.details[index].solved"
+							class = "error--text"
+						>
+							- {{ item.details[index].tried }}
+						</strong>
+						<strong
+							v-if = "item.details[index].solved"
+							class = "success--text"
+						>
+							<span v-if = "item.details[index].tried > 1 || !item.details[index].firstBlood">
+								+
+							</span>
+							<span v-if = "item.details[index].tried > 1">
+								{{ item.details[index].tried - 1 }}
+							</span>
+						</strong>
 					</td>
 				</tr>
 			</template>
@@ -102,7 +127,7 @@ export default {
 		};
 	},
 
-	mounted() {
+	activated() {
 		this.fetchData();
 	},
 
@@ -132,6 +157,7 @@ export default {
 				variables: {
 					pk: this.pk,
 				},
+				fetchPolicy: 'no-cache',
 			})
 				.then(response => response.data.contestRankingList)
 				.then((data) => {
@@ -158,36 +184,49 @@ export default {
 			submissions.forEach((each) => {
 				const { status, team, createTime } = each;
 				const idx = slugToIdx.get(each.slug);
-				let teamIndex = null;
-				if (!teamnameToPos.get(team)) {
-					teamnameToPos.set(team, arr.length);
-					teamIndex = arr.length;
-					arr.push({
-						name: team,
-						solved: 0,
-						penalty: 0,
-						details: new Array(problems.length).map(() => ({
-							solved: false,
-							tried: 0,
-							firstBlood: false,
-							solvedTime: null,
-						})),
-					});
-				} else {
-					teamIndex = teamnameToPos.get(team);
-				}
-				const teamRef = arr[teamIndex];
-				const isSolved = teamRef.details[idx].solved;
-				if (!isSolved) {
-					if (status === Verdict.ac.full) {
-						teamRef.penalty += getMinutesBetweenTwo(startTime, createTime);
-						teamRef.penalty += 20 * teamRef.details[idx].tried;
-						teamRef.solved += 1;
-						teamRef.details[idx].solved = true;
-						teamRef.solvedTime = new Date(createTime);
-						minimumSolvedTime.set(idx, Math.min(minimumSolvedTime.get(idx), new Date(createTime)));
+				// Avoid the delete problem
+				if (idx !== undefined) {
+					let teamIndex = null;
+					if (teamnameToPos.get(team) === undefined) {
+						teamnameToPos.set(team, arr.length);
+						teamIndex = arr.length;
+						const detailArr = [];
+						for (let i = 0; i < problems.length; i += 1) {
+							detailArr.push({
+								solved: false,
+								tried: 0,
+								firstBlood: false,
+								solvedTime: null,
+							});
+						}
+						arr.push({
+							name: team,
+							solved: 0,
+							penalty: 0,
+							details: detailArr,
+						});
 					} else {
-						teamRef.details[idx].tried += 1;
+						teamIndex = teamnameToPos.get(team);
+					}
+					const teamRef = arr[teamIndex];
+					const isSolved = teamRef.details[idx].solved;
+					if (!isSolved) {
+						const st = Verdict.valueOf(status);
+						if (st !== Verdict.ce
+						&& st !== Verdict.rn && st !== Verdict.pd && st !== Verdict.pr && st !== Verdict.je) {
+							if (st === Verdict.ac) {
+								teamRef.penalty += getMinutesBetweenTwo(startTime, createTime);
+								teamRef.penalty += 20 * teamRef.details[idx].tried;
+								teamRef.solved += 1;
+								teamRef.details[idx].solved = true;
+								const timing = this.$moment.unix(new Date(createTime)).unix();
+								teamRef.details[idx].solvedTime = timing;
+								minimumSolvedTime.set(
+									idx, Math.min(minimumSolvedTime.get(idx), timing),
+								);
+							}
+							teamRef.details[idx].tried += 1;
+						}
 					}
 				}
 			});

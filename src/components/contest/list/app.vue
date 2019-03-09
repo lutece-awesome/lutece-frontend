@@ -105,7 +105,6 @@ export default {
 								startTime
 								endTime
 							}
-							registerMemberNumber
 						}
 					}
 				}`;

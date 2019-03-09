@@ -10,6 +10,7 @@ import ContestSubmission from '@/components/contest/detail/submission';
 import ContestSubmissionSubmit from '@/components/contest/detail/submit';
 import ContestReviewOverall from '@/components/contest/review/overall';
 import ContestReviewMine from '@/components/contest/review/mine';
+import ContestUpdate from '@/components/contest/edit/update';
 
 const Router = [
 	{
@@ -24,6 +25,15 @@ const Router = [
 		meta: {
 			requirePermission: 'contest.add_contest',
 		},
+	},
+	{
+		path: '/contest-update/:pk',
+		name: 'ContestUpdate',
+		component: ContestUpdate,
+		meta: {
+			requirePermission: 'contest.change_contest',
+		},
+		props: true,
 	},
 	{
 		path: '/contest/:pk',

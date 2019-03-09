@@ -49,7 +49,7 @@
 				<v-flex xs12>
 					<div class = "section-title" > Max Team Member Number </div>
 					<v-slider
-						:input-value = "maxTeamMemberNumber"
+						:value = "maxTeamMemberNumber"
 						:tick-labels = "[1, 2, 3, 4, 5]"
 						:min = "1"
 						:max = "5"
