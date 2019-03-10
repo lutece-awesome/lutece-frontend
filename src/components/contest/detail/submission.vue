@@ -120,6 +120,13 @@
 				</router-link>
 			</template>
 		</v-data-table>
+		<div
+			:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
+			class = "text-xs-center mt-2">
+			<v-pagination
+				v-model = "page"
+				:length = "maxPage"/>
+		</div>
 	</v-container>
 </template>
 
@@ -249,7 +256,7 @@ export default {
 			})
 				.then(response => response.data.contestSubmissionList)
 				.then((data) => {
-					this.maxPage = data.pge;
+					this.maxPage = data.maxPage;
 					this.statusItem = data.submissionList;
 				})
 				.finally(() => {
