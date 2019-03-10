@@ -1,5 +1,5 @@
 <template>
-	<v-container fiuld>
+	<div class = "pl-3 pr-3 pt-4 pb-4">
 		<loading-spinner
 			v-if = "isLoading"
 			text = "Loading ..."
@@ -15,13 +15,12 @@
 					v-model = "current"
 					:class = "{ 'mobile-shrink' : $vuetify.breakpoint.xsOnly }"
 					class = "shrink"
-					tag = "v-flex"
 				>
 					<v-item
 						v-for = "each in problemList.length"
 						:key = "each"
 					>
-						<div slot-scope="{ active, toggle }">
+						<div slot-scope = "{ active, toggle }">
 							<v-btn
 								:input-value = "active"
 								icon
@@ -36,27 +35,25 @@
 						</div>
 					</v-item>
 				</v-item-group>
-				<v-flex>
-					<v-window
-						v-model = "current"
-						vertical
-						mandatory
+				<v-window
+					v-model = "current"
+					vertical
+					mandatory
+				>
+					<v-window-item
+						v-for = "(each, index) in problemList"
+						:key = "index"
+						:reverse-transition = "false"
+						:transition = "false"
 					>
-						<v-window-item
-							v-for = "(each, index) in problemList"
-							:key = "index"
-							:reverse-transition = "false"
-							:transition = "false"
-						>
-							<problem-preview
-								:problem = "each"
-							/>
-						</v-window-item>
-					</v-window>
-				</v-flex>
+						<problem-preview
+							:problem = "each"
+						/>
+					</v-window-item>
+				</v-window>
 			</v-layout>
 		</div>
-	</v-container>
+	</div>
 </template>
 
 <script>
@@ -157,7 +154,6 @@ export default {
 
 <style scoped>
 	.shrink {
-		margin-left: -25px;
 		margin-right: 5px;
 	}
 
