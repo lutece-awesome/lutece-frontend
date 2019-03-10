@@ -40,12 +40,20 @@
 						class = "column text-xs-center"
 						style = "width: 10%"
 					>
+						Solved
+					</th>
+					<th
+						role = "columnheader"
+						scope = "col"
+						class = "column text-xs-center"
+						style = "width: 10%"
+					>
 						Penalty
 					</th>
 					<th
 						v-for = "(each , index) in problemLength"
 						:key = "index"
-						:style = "{ width: 60 / problemLength + '%' }"
+						:style = "{ width: 50 / problemLength + '%' }"
 						role = "columnheader"
 						scope = "col"
 						class = "column text-xs-center"
@@ -63,6 +71,9 @@
 					</td>
 					<td class = "text-xs-center">
 						{{ item.name }}
+					</td>
+					<td class = "text-xs-center">
+						{{ item.solved }}
 					</td>
 					<td class = "text-xs-center">
 						{{ item.penalty }}
@@ -84,19 +95,15 @@
 						<strong
 							v-if = "item.details[index].tried > 0 && !item.details[index].solved"
 							class = "error--text"
-						>
-							- {{ item.details[index].tried }}
-						</strong>
+						>-{{ item.details[index].tried }}</strong>
 						<strong
 							v-if = "item.details[index].solved"
 							class = "success--text"
 						>
-							<span v-if = "item.details[index].tried > 1 || !item.details[index].firstBlood">
-								+
-							</span>
-							<span v-if = "item.details[index].tried > 1">
-								{{ item.details[index].tried - 1 }}
-							</span>
+							<span
+								v-if = "item.details[index].tried > 1 || !item.details[index].firstBlood">+</span>
+							<span
+								v-if = "item.details[index].tried > 1">{{ item.details[index].tried - 1 }}</span>
 						</strong>
 					</td>
 				</tr>
@@ -238,7 +245,11 @@ export default {
 					}
 				}
 			});
-			arr.sort((a, b) => (a.solved < b.solved || (a.solved === b.solved && a.penalty < b.penalty)));
+			arr.sort((a, b) => {
+				if (a.solved > b.solved || (a.solved === b.solved && a.penalty < b.penalty)) { return -1; }
+				if (a.solved === b.solved && a.penalty === b.penalty) { return 0; }
+				return 1;
+			});
 			this.problemLength = problems.length;
 			this.renderingRankingList = arr;
 		},
