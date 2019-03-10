@@ -158,6 +158,7 @@ export default {
 	}
 
 	.mobile-shrink {
-		margin-right: -5px
+		margin-right: -5px;
+		margin-left: -20px;
 	}
 </style>
