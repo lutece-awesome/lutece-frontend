@@ -63,6 +63,8 @@
 							:members = "updateMemberList"
 							:submit = "updateTeam"
 							:base-name = "mine.name"
+							extra = "Please notice that your change
+							would make your team as pending status if it was approved before."
 							form-title = "Update Team"
 						/>
 						<button-dialog

@@ -37,9 +37,7 @@
 					</v-avatar>
 					<span>{{ owner.username }} </span>
 				</v-flex>
-				<v-flex
-					xs12
-				>
+				<v-flex xs12>
 					<div class = "section-title" > Members </div>
 					<v-list
 						class = "mt-4 memberList"
@@ -66,6 +64,12 @@
 						v-model = "queryUser"
 						@input = "$emit( 'input-appendUser' , $event )"
 					/>
+				</v-flex>
+				<v-flex
+					v-if = "extra"
+					xs12>
+					<div class = "section-title" > Extra </div>
+					<div class = "mt-4 red--text" > <strong>{{ extra }} </strong> </div>
 				</v-flex>
 			</v-layout>
 		</v-container>
@@ -124,6 +128,10 @@ export default {
 		submit: {
 			type: Function,
 			default: () => Promise.resolve(),
+		},
+		extra: {
+			type: String,
+			default: '',
 		},
 	},
 
