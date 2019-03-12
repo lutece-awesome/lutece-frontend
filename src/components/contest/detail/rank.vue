@@ -3,7 +3,7 @@
 		<v-data-table
 			:items = "renderingRankingList"
 			:loading = "isLoading > 0"
-			:headers-length = "3 + problemLength"
+			:headers-length = "4 + problemLength"
 			hide-actions
 		>
 			<v-progress-linear

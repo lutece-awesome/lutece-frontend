@@ -10,6 +10,7 @@
 			:submit = "submit"
 			:member-list = "memberList"
 			:form-title = "formTitle"
+			:extra = "extra"
 			@input-name = "name = $event"
 			@input-cancel = "$emit( 'input' , false )"
 			@input-appendUser = "appendUser"
@@ -53,6 +54,10 @@ export default {
 		members: {
 			type: Array,
 			default: () => ([]),
+		},
+		extra: {
+			type: String,
+			default: '',
 		},
 	},
 
