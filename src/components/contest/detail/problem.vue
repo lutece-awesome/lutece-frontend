@@ -9,7 +9,9 @@
 				<router-link
 					v-for = "each in contest.problems.length"
 					:key = "each"
+					:class = "{ 'mobile-shrink' : $vuetify.breakpoint.xsOnly }"
 					:to = "{name: 'ContestSpecifyProblem', params: {id: String.fromCharCode(each + 96) }}"
+					class = "shrink"
 					tag = "span"
 				>
 					<v-item>
@@ -119,11 +121,11 @@ export default {
 
 <style scoped>
 .shrink {
-  margin-right: 5px;
+	margin-right: 5px;
 }
 
 .mobile-shrink {
-  margin-right: -5px;
-  margin-left: -20px;
+	margin-right: -5px;
+	margin-left: -20px;
 }
 </style>
