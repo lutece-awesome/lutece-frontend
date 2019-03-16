@@ -147,10 +147,10 @@ export default {
 							status
 							createTime
 							team
-							slug
+							problemId
 						}
 						problems{
-							slug
+							pk
 						}
 						meta{
 							startTime
@@ -179,10 +179,10 @@ export default {
 			if (!submissions || !problems || !meta) {
 				return;
 			}
-			const slugToIdx = new Map();
+			const problemIdToIdx = new Map();
 			const minimumSolvedTime = new Map();
 			for (let i = 0; i < problems.length; i += 1) {
-				slugToIdx.set(problems[i].slug, i);
+				problemIdToIdx.set(problems[i].pk, i);
 				minimumSolvedTime.set(i, Infinity);
 			}
 			const arr = [];
@@ -190,7 +190,7 @@ export default {
 			const { startTime } = meta;
 			submissions.forEach((each) => {
 				const { status, team, createTime } = each;
-				const idx = slugToIdx.get(each.slug);
+				const idx = problemIdToIdx.get(each.problemId);
 				// Avoid the delete problem
 				if (idx !== undefined) {
 					let teamIndex = null;
