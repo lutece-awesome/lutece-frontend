@@ -5,7 +5,6 @@
 		app
 		dark
 		color = "primary"
-		extension-height = "0"
 	>
 		<v-toolbar-side-icon
 			@click.stop = "$emit( 'input-toggle-drawer' , $event )"
