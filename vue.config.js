@@ -65,7 +65,7 @@ module.exports = {
 						path.join(__dirname, './src/**/*.js'),
 						path.join(__dirname, 'node_modules', 'vuetify', 'src', '**/*.@(js|ts)'),
 					]),
-					whitelistPatterns: [/^(?!mdi)/],
+					whitelistPatterns: [/^(?!mdi)/, /^mdi-alpha-.-circle/],
 				}])
 				.after('extract-css')
 				.end()
