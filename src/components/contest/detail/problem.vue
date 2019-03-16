@@ -26,10 +26,8 @@
 								icon
 								@click = "toggle"
 							>
-								<v-icon
-									:color = "problemList[each - 1].solved ?
-									'green' : colorList[each % colorList.length]">
-									mdi-record
+								<v-icon :color = "getIconColor(each)">
+									{{ getIcon(each) }}
 								</v-icon>
 							</v-btn>
 						</div>
@@ -79,25 +77,6 @@ export default {
 			error: null,
 			problemList: [],
 			current: null,
-			colorList: [
-				'red',
-				'pink',
-				'purple',
-				'deep-purple',
-				'indigo',
-				'blue',
-				'light-blue',
-				'cyan',
-				'teal',
-				'lime',
-				'yellow',
-				'amber',
-				'orange',
-				'deep-orange',
-				'brown',
-				'blue-grey',
-				'grey',
-			],
 		};
 	},
 
@@ -111,6 +90,7 @@ export default {
 			const query = gql`
 				query ContestProblemList($pk: ID!){
 					contestProblemList(pk: $pk){
+						tried
 						solved
 						pk
 						title
@@ -148,17 +128,30 @@ export default {
 				.catch((error) => { this.error = error; })
 				.finally(() => { this.isLoading = false; });
 		},
+		getIconColor(problemId) {
+			return `hsl( ${(problemId - 1) * 360 / this.problemList.length} , 100%, 40%)`;
+		},
+		getIcon(problemId) {
+			const alpha = String.fromCharCode(96 + problemId);
+			if (this.problemList[problemId - 1].solved) {
+				return `mdi-alpha-${alpha}-circle`;
+			}
+			if (this.problemList[problemId - 1].tried) {
+				return `mdi-alpha-${alpha}-box-outline`;
+			}
+			return `mdi-alpha-${alpha}-circle-outline`;
+		},
 	},
 };
 </script>
 
 <style scoped>
-	.shrink {
-		margin-right: 5px;
-	}
+.shrink {
+  margin-right: 5px;
+}
 
-	.mobile-shrink {
-		margin-right: -5px;
-		margin-left: -20px;
-	}
+.mobile-shrink {
+  margin-right: -5px;
+  margin-left: -20px;
+}
 </style>
