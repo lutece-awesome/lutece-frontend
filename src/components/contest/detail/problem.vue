@@ -15,6 +15,7 @@
 					v-model = "current"
 					:class = "{ 'mobile-shrink' : $vuetify.breakpoint.xsOnly }"
 					class = "shrink"
+					mandatory
 				>
 					<v-item
 						v-for = "each in problemList.length"
@@ -33,11 +34,7 @@
 						</div>
 					</v-item>
 				</v-item-group>
-				<v-window
-					v-model = "current"
-					vertical
-					mandatory
-				>
+				<v-window v-model = "current">
 					<v-window-item
 						v-for = "(each, index) in problemList"
 						:key = "index"
@@ -147,11 +144,11 @@ export default {
 
 <style scoped>
 .shrink {
-  margin-right: 5px;
+	margin-right: 5px;
 }
 
 .mobile-shrink {
-  margin-right: -5px;
-  margin-left: -20px;
+	margin-right: -5px;
+	margin-left: -20px;
 }
 </style>
