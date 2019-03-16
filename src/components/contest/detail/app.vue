@@ -495,5 +495,6 @@ export default {
 <style scoped>
 .progress-text {
 	text-align: center;
+	color: white;
 }
 </style>
