@@ -90,6 +90,7 @@ export default {
 			const query = gql`
 				query ContestProblemList($pk: ID!){
 					contestProblemList(pk: $pk){
+						tried
 						solved
 						pk
 						title
@@ -134,6 +135,9 @@ export default {
 			const alpha = String.fromCharCode(96 + problemId);
 			if (this.problemList[problemId - 1].solved) {
 				return `mdi-alpha-${alpha}-circle`;
+			}
+			if (this.problemList[problemId - 1].tried) {
+				return `mdi-alpha-${alpha}-box-outline`;
 			}
 			return `mdi-alpha-${alpha}-circle-outline`;
 		},
