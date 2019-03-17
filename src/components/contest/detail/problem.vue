@@ -10,7 +10,7 @@
 					v-for = "each in contest.problems.length"
 					:key = "each"
 					:class = "{ 'mobile-shrink' : $vuetify.breakpoint.xsOnly }"
-					:to = "{name: 'ContestSpecifyProblem', params: {id: String.fromCharCode(each + 96) }}"
+					:to = "{name: 'ContestSpecifyProblem', params: {id: String.fromCharCode(each + 64) }}"
 					class = "shrink"
 					tag = "span"
 				>

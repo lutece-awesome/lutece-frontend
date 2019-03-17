@@ -188,11 +188,8 @@ export default {
 			maxPage: 0,
 			titleToIdx: new Map(),
 			problemList: [],
-<<<<<<< HEAD
 			dialog: false,
 			queryPk: null,
-=======
->>>>>>> [Contest]: Add problem routing.
 		};
 	},
 
