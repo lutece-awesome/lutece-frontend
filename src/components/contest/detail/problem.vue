@@ -5,13 +5,12 @@
 				v-model = "current"
 				:class = "{ 'mobile-shrink' : $vuetify.breakpoint.xsOnly }"
 				class = "shrink"
+				mandatory
 			>
 				<router-link
 					v-for = "each in contest.problems.length"
 					:key = "each"
-					:class = "{ 'mobile-shrink' : $vuetify.breakpoint.xsOnly }"
 					:to = "{name: 'ContestSpecifyProblem', params: {id: String.fromCharCode(each + 64) }}"
-					class = "shrink"
 					tag = "span"
 				>
 					<v-item>
@@ -30,8 +29,6 @@
 			</v-item-group>
 			<v-window
 				v-model = "current"
-				vertical
-				mandatory
 			>
 				<v-window-item
 					v-for = "(each, index) in contest.problems"
