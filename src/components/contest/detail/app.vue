@@ -119,6 +119,7 @@
 								<submit-tab
 									ref = "submit"
 									:contest = "contest"
+									@submitSubmissionCallback = "submitSubmissionCallback"
 								/>
 							</v-tab-item>
 							<v-tab-item
@@ -477,6 +478,14 @@ export default {
 			} else {
 				setTimeout(() => { this.updateTime(); }, 1000);
 			}
+		},
+
+		submitSubmissionCallback(pk) {
+			this.$router.push({
+				name: 'ContestSubmission',
+			}, () => {
+				this.$refs.submission.getSubmitSubmission(pk);
+			});
 		},
 
 	},

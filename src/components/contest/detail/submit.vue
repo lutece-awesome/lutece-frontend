@@ -90,12 +90,7 @@ export default {
 				},
 			})
 				.then((response) => {
-					this.$router.push({
-						name: 'StatusDetail',
-						params: {
-							pk: response.data.contestSubmitSubmission.pk,
-						},
-					});
+					this.$emit('submitSubmissionCallback', response.data.contestSubmitSubmission.pk);
 				})
 				.catch((_error) => {
 					this.isUploadingError = true;

@@ -8,7 +8,6 @@ const establishWebSocketConnection = pk => new Promise(
 		const ws = new WebSocket(`${getWebSocketUri()}/status/${String(pk)}/?${token}`);
 		ws.onerror = error => reject(error);
 		ws.onopen = resolve(ws);
-		return ws;
 	},
 );
 
@@ -21,6 +20,12 @@ const closeWebSocketConnection = ws => new Promise(
 	},
 );
 
+const closeWebSocketConnectionSync = ws => {
+	if( ws ){
+		ws.close();
+	}
+};
+
 
 const waitingInitializing = ws => new Promise(
 	(resolve) => {
@@ -31,4 +36,4 @@ const waitingInitializing = ws => new Promise(
 	},
 );
 
-export { establishWebSocketConnection, closeWebSocketConnection, waitingInitializing };
+export { establishWebSocketConnection, closeWebSocketConnection, waitingInitializing, closeWebSocketConnectionSync };

@@ -92,11 +92,11 @@
 			<template
 				slot = "items"
 				slot-scope = "props">
-				<router-link
-					:to = "{name: 'StatusDetail', params: {pk: props.item.pk}}"
+				<tr
 					style = "cursor: pointer"
 					tile
-					tag = "tr">
+					@click = "querySubmission(props.item.pk)"
+				>
 					<td class="text-xs-center nowrap">
 						<router-link
 							:to = "{ name: 'UserDetail' , params: {username: props.item.user.username } }"
@@ -131,7 +131,7 @@
 						<span class="full-time">{{ props.item.createTime | moment("Y-MM-DD HH:mm:ss") }}</span>
 					</td>
 					<td class="text-xs-center hidden-sm-and-down">{{ props.item.language }}</td>
-				</router-link>
+				</tr>
 			</template>
 		</v-data-table>
 		<div
@@ -141,6 +141,11 @@
 				v-model = "page"
 				:length = "maxPage"/>
 		</div>
+		<submission-dialog
+			v-model = "dialog"
+			:pk = "queryPk"
+			:contest = "contest"
+		/>
 	</v-container>
 </template>
 
@@ -152,6 +157,7 @@ import LanguageSelect from '@/components/language/utils/select';
 import VerdictSelect from '@/components/verdict/utils/select';
 import gql from 'graphql-tag';
 import debounce from 'lodash/debounce';
+import SubmissionDialog from '../submission/detail';
 
 export default {
 
@@ -160,6 +166,7 @@ export default {
 		ProblemAutoComplete,
 		LanguageSelect,
 		VerdictSelect,
+		SubmissionDialog,
 	},
 
 	props: {
@@ -181,6 +188,8 @@ export default {
 			maxPage: 0,
 			titleToIdx: new Map(),
 			problemList: [],
+			dialog: false,
+			queryPk: null,
 		};
 	},
 
@@ -296,6 +305,21 @@ export default {
 				.finally(() => {
 					this.isLoading -= 1;
 				});
+		},
+
+		querySubmission(pk) {
+			this.queryPk = pk;
+			this.dialog = true;
+		},
+
+		getSubmitSubmission(pk) {
+			const iaf = this.page === 1;
+			this.page = 1;
+			if (iaf) {
+				this.debounceFetchData();
+			}
+			this.queryPk = pk;
+			this.dialog = true;
 		},
 	},
 };
