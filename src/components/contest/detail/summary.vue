@@ -1,15 +1,6 @@
 <template>
 	<v-container fiuld>
-		<loading-spinner
-			v-if = "isLoading"
-			text = "Loading ..."
-			style = "height: 600px"
-		/>
-		<error-spinner
-			v-else-if = "isError"
-			style = "height: 600px"
-		/>
-		<div v-else>
+		<div>
 			<div class = "mt-2">
 				<table class = "dt-table" >
 					<tr>
@@ -51,7 +42,7 @@
 				style = "margin-left: -10px;"
 			>
 				<v-btn
-					:to = "{ name : 'ContestReview' , params: { pk } }"
+					:to = "{ name : 'ContestReview' , params: { pk: contest.pk } }"
 					color = "primary"
 					medium
 				> {{ hasPermission('contest.view_contest') ? 'Review' : 'TEAM' }} </v-btn>
@@ -60,12 +51,88 @@
 				v-if = "contest.settings.note"
 				:content = "contest.settings.note"
 				class = "mt-4"/>
+			<div
+				v-if = "contest.problems"
+				class = "mt-4" >
+				<v-data-table
+					:items = "contest.problems"
+					:headers-length = "3"
+					hide-actions
+				>
+					<template slot = "headers">
+						<tr
+							justify-center
+							align-center
+						>
+							<th
+								role = "columnheader"
+								scope = "col"
+								class = "column text-xs-center"
+								style = "width: 50%"
+							>
+								Problem
+							</th>
+							<th
+								role = "columnheader"
+								scope = "col"
+								class = "column text-xs-center"
+								style = "width: 25%"
+							>
+								Summary
+							</th>
+							<th
+								role = "columnheader"
+								scope = "col"
+								class = "column text-xs-center"
+								style = "width: 25%"
+							>
+								Status
+							</th>
+						</tr>
+					</template>
+					<template
+						slot = "items"
+						slot-scope = "{ item , index }"
+					>
+						<router-link
+							:to = "{
+								name: 'ContestSpecifyProblem',
+								params: { id: String.fromCharCode( 65 + index ) }
+							}"
+							tag = "tr"
+							style = "cursor: pointer;"
+							tile
+						>
+							<td class = "text-xs-center nowrap">
+								{{ String.fromCharCode(65 + index) }} - {{ item.title }}
+							</td>
+							<td class = "text-xs-center">
+								{{ item.accept }} / {{ item.submit }}
+							</td>
+							<td class = "text-xs-center" >
+								<v-icon
+									v-if = "item.solved"
+									color = "success"
+								>
+									mdi-check
+								</v-icon>
+								<v-icon
+									v-else-if = "item.tried"
+									color = "error"
+								>
+									mdi-close
+								</v-icon>
+							</td>
+						</router-link>
+					</template>
+				</v-data-table>
+			</div>
 		</div>
 		<v-btn
 			v-if = "hasPermission('contest.change_contest')"
 			:to = "{
 				name: 'ContestUpdate',
-				params: { pk }
+				params: { pk: contest.pk }
 			}"
 			color = "accent"
 			dark
@@ -81,7 +148,6 @@
 
 <script>
 
-import gql from 'graphql-tag';
 import { mapGetters } from 'vuex';
 import { getRunningStatus } from '../utils';
 import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
@@ -92,18 +158,10 @@ export default {
 	},
 
 	props: {
-		pk: {
-			type: String,
+		contest: {
+			type: Object,
 			required: true,
 		},
-	},
-
-	data() {
-		return {
-			isLoading: true,
-			isError: false,
-			contest: null,
-		};
 	},
 
 	computed: {
@@ -111,48 +169,15 @@ export default {
 			return getRunningStatus(this.contest.settings.startTime, this.contest.settings.endTime);
 		},
 		...mapGetters({
-			isAuthenticated: 'user/isAuthenticated',
 			hasPermission: 'user/hasPermission',
 		}),
 	},
 
-	mounted() {
-		this.fetchData();
-	},
-
 	methods: {
-		fetchData() {
-			this.isLoading = true;
-			this.isError = false;
-			const query = gql`
-                query ContestSummary($pk: ID!){
-                    contest(pk: $pk){
-                        title
-                        settings {
-                            note
-                            startTime
-                            endTime
-                            maxTeamMemberNumber
-                        }
-                        registered
-                        registerMemberNumber
-						isPublic
-                    }
-                }
-            `;
-			this.$apollo.query({
-				query,
-				variables: {
-					pk: this.pk,
-				},
-			})
-				.then(response => response.data.contest)
-				.then((data) => { this.contest = data; })
-				.catch(() => { this.isError = true; })
-				.finally(() => { this.isLoading = false; });
+		init() {
+			this.$emit('updateStatus');
 		},
 	},
-
 };
 </script>
 
@@ -178,4 +203,20 @@ export default {
 		tr > td:first-child
 			@extend .body-2
 			width 120px
+
+	table.df-table
+		border-spacing 0px
+		color rgba(0,0,0,0.6)
+		td
+			@extend .py-1, .subheading
+			border-width 0 0 thin 0
+			border-style solid
+			border-color rgba(0,0,0,0.12)
+		tr > td:first-child
+			@extend .font-weight-bold
+			text-align: center
+		tr > td:nth-child(2)
+			@extend .pl-4
+		tr > td:nth-child(3)
+			@extend .pl-4
 </style>

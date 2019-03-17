@@ -6,6 +6,7 @@
 		/>
 		<comments
 			v-else
+			ref = "comments"
 			:fetch-comments = "fetchClarifications"
 			:submit = "submitClarification"
 			:display-title = "false"
@@ -35,7 +36,6 @@ export default {
 	data() {
 		return {
 			error: null,
-			reFetch: false,
 		};
 	},
 
@@ -93,6 +93,10 @@ export default {
 					list: data.contestClarificationList,
 				}))
 				.catch((error) => { this.error = error; });
+		},
+
+		init() {
+			this.$refs.comments.update();
 		},
 	},
 
