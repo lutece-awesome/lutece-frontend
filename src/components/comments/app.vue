@@ -27,9 +27,8 @@
 			</v-card>
 		</div> -->
 		<comment-list
+			ref = "comments"
 			:fetch-comments = "fetchComments"
-			:re-fetch = "reFetch"
-			:re-fresh = "reFresh"
 		/>
 		<div v-if = "isAuthenticated">
 			<v-divider class = "mt-3 mb-3"/>
@@ -37,7 +36,7 @@
 				:content = "replyComment"
 				:submit = "submit"
 				class = "mt-3"
-				@submit-success = "reFetch = !reFetch"
+				@submit-success = "submitSuccessCallback"
 				@input-content = "replyComment = $event"
 			/>
 		</div>
@@ -70,18 +69,12 @@ export default {
 			type: Function,
 			required: true,
 		},
-		activedUpdate: {
-			type: Boolean,
-			default: false,
-		},
 	},
 
 	data() {
 		return {
 			replyComment: '',
 			commentsArray: [],
-			reFetch: false,
-			reFresh: false,
 		};
 	},
 
@@ -91,10 +84,13 @@ export default {
 		}),
 	},
 
-	activated() {
-		if (this.activedUpdate) {
-			this.reFresh = !this.reFresh;
-		}
+	methods: {
+		submitSuccessCallback() {
+			this.$refs.comments.refresh();
+		},
+		update() {
+			this.$refs.comments.update();
+		},
 	},
 };
 </script>

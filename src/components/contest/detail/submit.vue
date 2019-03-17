@@ -1,15 +1,6 @@
 <template>
 	<v-container fiuld>
-		<loading-spinner
-			v-if = "isLoading"
-			text = "Loading ..."
-			style = "height: 600px"
-		/>
-		<error-spinner
-			v-else-if = "error"
-			:msg = "error"
-		/>
-		<div v-else-if = "problemList.length > 0">
+		<div v-if = "problemList.length > 0">
 			<v-select
 				v-model = "problem"
 				:items = "problemList"
@@ -47,8 +38,8 @@ export default {
 	},
 
 	props: {
-		pk: {
-			type: String,
+		contest: {
+			type: Object,
 			required: true,
 		},
 	},
@@ -57,8 +48,6 @@ export default {
 		return {
 			code: '',
 			language: null,
-			isLoading: false,
-			error: null,
 			problemList: [],
 			problem: null,
 			isUploading: false,
@@ -68,46 +57,19 @@ export default {
 
 	created() {
 		this.language = this.$store.getters['editor/currentLanguage'] || Language.first();
-	},
-
-	mounted() {
-		this.fetchData();
+		for (let i = 0; i < this.contest.problems.length; i += 1) {
+			const each = this.contest.problems[i];
+			this.problemList.push({
+				title: `${String.fromCharCode(65 + i)} - ${each.title}`,
+				slug: each.slug,
+			});
+		}
+		if (this.problemList.length > 0) {
+			[this.problem] = this.problemList;
+		}
 	},
 
 	methods: {
-		fetchData() {
-			this.isLoading = true;
-			const query = gql`
-				query ContestProblemList($pk: ID!){
-					contestProblemList(pk: $pk){
-						title
-                        slug
-					}
-				}
-            `;
-			this.$apollo.query({
-				query,
-				variables: {
-					pk: this.pk,
-				},
-			})
-				.then(response => response.data.contestProblemList)
-				.then((data) => {
-					let idx = 0;
-					this.problemList = data.map((each) => {
-						idx += 1;
-						return {
-							title: `${String.fromCharCode(64 + idx)} - ${each.title}`,
-							slug: each.slug,
-						};
-					});
-					if (this.problemList.length > 0) {
-						[this.problem] = this.problemList;
-					}
-				})
-				.catch((error) => { this.error = error; })
-				.finally(() => { this.isLoading = false; });
-		},
 		submit() {
 			this.isUploadingError = false;
 			this.isUploading = true;
@@ -124,16 +86,11 @@ export default {
 					problemSlug: this.problem.slug,
 					language: this.language.full,
 					code: this.code,
-					pk: this.pk,
+					pk: this.contest.pk,
 				},
 			})
 				.then((response) => {
-					this.$router.push({
-						name: 'StatusDetail',
-						params: {
-							pk: response.data.contestSubmitSubmission.pk,
-						},
-					});
+					this.$emit('submitSubmissionCallback', response.data.contestSubmitSubmission.pk);
 				})
 				.catch((_error) => {
 					this.isUploadingError = true;
@@ -141,6 +98,11 @@ export default {
 				.finally(() => {
 					this.isUploading = false;
 				});
+		},
+
+		// Do nothing
+		init() {
+
 		},
 	},
 };

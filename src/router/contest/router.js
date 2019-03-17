@@ -2,12 +2,7 @@ import ContestList from '@/components/contest/list/app';
 import ContestCreate from '@/components/contest/edit/create';
 import ContestDetail from '@/components/contest/detail/app';
 import ContestReview from '@/components/contest/review/app';
-import ContestSummary from '@/components/contest/detail/summary';
-import ContestClarification from '@/components/contest/detail/clarification';
-import ContestProblem from '@/components/contest/detail/problem';
 import ContestRank from '@/components/contest/detail/rank';
-import ContestSubmission from '@/components/contest/detail/submission';
-import ContestSubmissionSubmit from '@/components/contest/detail/submit';
 import ContestReviewOverall from '@/components/contest/review/overall';
 import ContestReviewMine from '@/components/contest/review/mine';
 import ContestUpdate from '@/components/contest/edit/update';
@@ -46,32 +41,26 @@ const Router = [
 			{
 				path: 'summary',
 				name: 'ContestSummary',
-				component: ContestSummary,
-				props: true,
 			},
 			{
 				path: 'clarification',
 				name: 'ContestClarification',
-				component: ContestClarification,
-				props: true,
 			},
 			{
 				path: 'problem',
 				name: 'ContestProblem',
-				component: ContestProblem,
-				props: true,
+				children: [{
+					path: ':id',
+					name: 'ContestSpecifyProblem',
+				}],
 			},
 			{
 				path: 'submit',
 				name: 'ContestSubmissionSubmit',
-				component: ContestSubmissionSubmit,
-				props: true,
 			},
 			{
 				path: 'submission',
 				name: 'ContestSubmission',
-				component: ContestSubmission,
-				props: true,
 			},
 			{
 				path: 'rank',

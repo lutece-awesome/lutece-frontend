@@ -12,7 +12,6 @@
 		/>
 		<div class = "text-xs-center mt-3">
 			<v-pagination
-				ref = "pagination"
 				v-model = "page"
 				:length = "maxPage"
 			/>
@@ -33,14 +32,6 @@ export default {
 			type: Function,
 			required: true,
 		},
-		reFetch: {
-			type: Boolean,
-			default: false,
-		},
-		reFresh: {
-			type: Boolean,
-			default: false,
-		},
 	},
 
 	data() {
@@ -55,13 +46,6 @@ export default {
 
 	watch: {
 		page() {
-			this.update();
-		},
-		reFetch() {
-			this.page = 1;
-			this.update();
-		},
-		reFresh() {
 			this.update();
 		},
 	},
@@ -87,6 +71,11 @@ export default {
 				}).finally(() => {
 					this.isLoading = false;
 				});
+		},
+
+		refresh() {
+			this.page = 1;
+			this.update();
 		},
 	},
 };

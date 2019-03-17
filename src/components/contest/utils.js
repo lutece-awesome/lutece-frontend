@@ -1,9 +1,9 @@
-
+import Vue from '@/plugins/essential/vue';
 
 const getRunningStatus = (st, ed) => {
-	const cur = Date.now();
-	const stTime = new Date(st);
-	const edTime = new Date(ed);
+	const cur = Vue.moment();
+	const stTime = Vue.moment(st);
+	const edTime = Vue.moment(ed);
 	if (cur < stTime) {
 		return 'Pending';
 	}

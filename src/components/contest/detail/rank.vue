@@ -58,7 +58,11 @@
 						scope = "col"
 						class = "column text-xs-center"
 					>
-						{{ String.fromCharCode( 65 + index ) }}
+						<router-link
+							:to = "{name: 'ContestSpecifyProblem',
+								params: {id: String.fromCharCode( 65 + index ) }}">
+							{{ String.fromCharCode( 65 + index ) }}
+						</router-link>
 					</th>
 				</tr>
 			</template>
@@ -120,8 +124,8 @@ import { getMinutesBetweenTwo } from '../utils';
 
 export default {
 	props: {
-		pk: {
-			type: String,
+		contest: {
+			type: Object,
 			required: true,
 		},
 	},
@@ -134,11 +138,15 @@ export default {
 		};
 	},
 
-	activated() {
+	mounted() {
 		this.fetchData();
 	},
 
 	methods: {
+		init() {
+			this.fetchData();
+		},
+
 		fetchData() {
 			const query = gql`
 				query ContestRankingList( $pk: ID!){
@@ -149,12 +157,6 @@ export default {
 							team
 							problemId
 						}
-						problems{
-							pk
-						}
-						meta{
-							startTime
-						}
 					}
 				}
 			`;
@@ -162,32 +164,32 @@ export default {
 			this.$apollo.query({
 				query,
 				variables: {
-					pk: this.pk,
+					pk: this.contest.pk,
 				},
 				fetchPolicy: 'no-cache',
 			})
 				.then(response => response.data.contestRankingList)
 				.then((data) => {
-					this.updateRenderingList(data.submissions, data.problems, data.meta);
+					this.updateRenderingList(data.submissions);
 				})
 				.finally(() => {
 					this.isLoading -= 1;
 				});
 		},
 
-		updateRenderingList(submissions, problems, meta) {
-			if (!submissions || !problems || !meta) {
+		updateRenderingList(submissions) {
+			if (!submissions) {
 				return;
 			}
 			const problemIdToIdx = new Map();
 			const minimumSolvedTime = new Map();
-			for (let i = 0; i < problems.length; i += 1) {
-				problemIdToIdx.set(problems[i].pk, i);
+			for (let i = 0; i < this.contest.problems.length; i += 1) {
+				problemIdToIdx.set(this.contest.problems[i].pk, i);
 				minimumSolvedTime.set(i, Infinity);
 			}
 			const arr = [];
 			const teamnameToPos = new Map();
-			const { startTime } = meta;
+			const { startTime } = this.contest.settings;
 			submissions.forEach((each) => {
 				const { status, team, createTime } = each;
 				const idx = problemIdToIdx.get(each.problemId);
@@ -198,7 +200,7 @@ export default {
 						teamnameToPos.set(team, arr.length);
 						teamIndex = arr.length;
 						const detailArr = [];
-						for (let i = 0; i < problems.length; i += 1) {
+						for (let i = 0; i < this.contest.problems.length; i += 1) {
 							detailArr.push({
 								solved: false,
 								tried: 0,
@@ -250,7 +252,7 @@ export default {
 				if (a.solved === b.solved && a.penalty === b.penalty) { return 0; }
 				return 1;
 			});
-			this.problemLength = problems.length;
+			this.problemLength = this.contest.problems.length;
 			this.renderingRankingList = arr;
 		},
 	},

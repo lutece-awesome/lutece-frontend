@@ -174,7 +174,15 @@ export default {
 				...this.caseList,
 				...previousCaseList,
 			]
-				.sort((a, b) => a.case < b.case);
+				.sort((a, b) => {
+					if (a.case > b.case) {
+						return -1;
+					}
+					if (a.case === b.case) {
+						return 0;
+					}
+					return 1;
+				});
 		},
 	},
 

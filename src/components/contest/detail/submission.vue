@@ -34,7 +34,16 @@
 						class = "column text-xs-center pt-3"
 						style = "width: 14.2%"
 					>
-						Problem
+						<v-select
+							v-model = "problem"
+							:items = "problemList"
+							item-text = "title"
+							item-value = "slug"
+							class = "mt-1"
+							persistent-hint
+							return-object
+							single-line
+						/>
 					</th>
 					<th
 						role = "columnheader"
@@ -83,11 +92,11 @@
 			<template
 				slot = "items"
 				slot-scope = "props">
-				<router-link
-					:to = "{name: 'StatusDetail', params: {pk: props.item.pk}}"
+				<tr
 					style = "cursor: pointer"
 					tile
-					tag = "tr">
+					@click = "querySubmission(props.item.pk)"
+				>
 					<td class="text-xs-center nowrap">
 						<router-link
 							:to = "{ name: 'UserDetail' , params: {username: props.item.user.username } }"
@@ -101,8 +110,13 @@
 							{{ props.item.user.username }}
 						</router-link>
 					</td>
-					<td class="text-xs-center">
-						{{ props.item.problem.title }}
+					<td class = "text-xs-center">
+						<router-link
+							:to = "{ name: 'ContestSpecifyProblem' ,
+								params: {id: titleToIdx.get(props.item.problem.title) } }"
+						>
+							{{ titleToIdx.get(props.item.problem.title) }} - {{ props.item.problem.title }}
+						</router-link>
 					</td>
 					<td
 						:class = "props.item.result.color + '--text'"
@@ -117,7 +131,7 @@
 						<span class="full-time">{{ props.item.createTime | moment("Y-MM-DD HH:mm:ss") }}</span>
 					</td>
 					<td class="text-xs-center hidden-sm-and-down">{{ props.item.language }}</td>
-				</router-link>
+				</tr>
 			</template>
 		</v-data-table>
 		<div
@@ -127,6 +141,11 @@
 				v-model = "page"
 				:length = "maxPage"/>
 		</div>
+		<submission-dialog
+			v-model = "dialog"
+			:pk = "queryPk"
+			:contest = "contest"
+		/>
 	</v-container>
 </template>
 
@@ -138,6 +157,7 @@ import LanguageSelect from '@/components/language/utils/select';
 import VerdictSelect from '@/components/verdict/utils/select';
 import gql from 'graphql-tag';
 import debounce from 'lodash/debounce';
+import SubmissionDialog from '../submission/detail';
 
 export default {
 
@@ -146,11 +166,12 @@ export default {
 		ProblemAutoComplete,
 		LanguageSelect,
 		VerdictSelect,
+		SubmissionDialog,
 	},
 
 	props: {
-		pk: {
-			type: String,
+		contest: {
+			type: Object,
 			required: true,
 		},
 	},
@@ -165,6 +186,10 @@ export default {
 			language: null,
 			page: 1,
 			maxPage: 0,
+			titleToIdx: new Map(),
+			problemList: [],
+			dialog: false,
+			queryPk: null,
 		};
 	},
 
@@ -186,17 +211,35 @@ export default {
 		},
 	},
 
-	activated() {
-		this.debounceFetchData();
-	},
-
-
 	mounted() {
 		this.fetchData();
 		this.debounceFetchData = debounce(this.fetchData, this.debounce);
 	},
 
+	created() {
+		for (let i = 0; i < this.contest.problems.length; i += 1) {
+			this.titleToIdx.set(this.contest.problems[i].title, String.fromCharCode(65 + i));
+		}
+		this.problemList.push({
+			title: 'All',
+		});
+		for (let i = 0; i < this.contest.problems.length; i += 1) {
+			const each = this.contest.problems[i];
+			this.problemList.push({
+				title: `${String.fromCharCode(65 + i)} - ${each.title}`,
+				slug: each.slug,
+			});
+		}
+		if (this.problemList.length > 0) {
+			[this.problem] = this.problemList;
+		}
+	},
+
 	methods: {
+		init() {
+			this.debounceFetchData();
+		},
+
 		fetchData() {
 			this.isLoading += 1;
 			const query = gql`
@@ -246,9 +289,9 @@ export default {
 			this.$apollo.query({
 				query,
 				variables: {
-					pk: this.pk,
+					pk: this.contest.pk,
 					page: this.page,
-					problem: this.problem ? this.problem.slug : null,
+					problem: this.problem.title !== 'All' ? this.problem.slug : null,
 					judgeStatus: this.verdict ? this.verdict.full : null,
 					language: this.language ? this.language.full : null,
 				},
@@ -262,6 +305,21 @@ export default {
 				.finally(() => {
 					this.isLoading -= 1;
 				});
+		},
+
+		querySubmission(pk) {
+			this.queryPk = pk;
+			this.dialog = true;
+		},
+
+		getSubmitSubmission(pk) {
+			const iaf = this.page === 1;
+			this.page = 1;
+			if (iaf) {
+				this.debounceFetchData();
+			}
+			this.queryPk = pk;
+			this.dialog = true;
 		},
 	},
 };
