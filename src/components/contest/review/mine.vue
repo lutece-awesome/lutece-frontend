@@ -244,7 +244,7 @@ export default {
 			}
 			this.mine = mine;
 			this.invitationList = inv;
-			if (mineIdx > 0) {
+			if (mineIdx >= 0) {
 				this.isOwner = data[mineIdx].owner.username === this.profile.username;
 			}
 		},
