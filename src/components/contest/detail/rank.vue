@@ -156,6 +156,7 @@ export default {
 							createTime
 							team
 							problemId
+							teamApproved
 						}
 					}
 				}
@@ -191,10 +192,12 @@ export default {
 			const teamnameToPos = new Map();
 			const { startTime } = this.contest.settings;
 			submissions.forEach((each) => {
-				const { status, team, createTime } = each;
+				const {
+					status, team, createTime, teamApproved,
+				} = each;
 				const idx = problemIdToIdx.get(each.problemId);
 				// Avoid the delete problem
-				if (idx !== undefined) {
+				if (idx !== undefined && teamApproved) {
 					let teamIndex = null;
 					if (teamnameToPos.get(team) === undefined) {
 						teamnameToPos.set(team, arr.length);
