@@ -226,7 +226,7 @@ export default {
 		processData(data) {
 			let mine = null;
 			const inv = [];
-			let mineIdx = 0;
+			let mineIdx = -1;
 			for (let i = 0; i < data.length; i += 1) {
 				const memebers = data[i].memberList;
 				let fd = false;
@@ -244,7 +244,9 @@ export default {
 			}
 			this.mine = mine;
 			this.invitationList = inv;
-			this.isOwner = data[mineIdx].owner.username === this.profile.username;
+			if (mineIdx > 0) {
+				this.isOwner = data[mineIdx].owner.username === this.profile.username;
+			}
 		},
 
 		exitTeam() {
