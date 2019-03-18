@@ -11,10 +11,12 @@
 			:member-list = "memberList"
 			:form-title = "formTitle"
 			:extra = "extra"
+			:info = "info"
 			@input-name = "name = $event"
 			@input-cancel = "$emit( 'input' , false )"
 			@input-appendUser = "appendUser"
 			@input-removeUser = "removeUser"
+			@input-info = "info = $event"
 		/>
 	</v-dialog>
 </template>
@@ -59,12 +61,17 @@ export default {
 			type: String,
 			default: '',
 		},
+		baseInfo: {
+			type: String,
+			default: '',
+		},
 	},
 
 	data() {
 		return {
 			name: '',
 			memberList: [],
+			info: '',
 		};
 	},
 
@@ -76,6 +83,7 @@ export default {
 
 	mounted() {
 		this.name = this.baseName;
+		this.info = this.baseInfo;
 		if (this.members.length > 0) {
 			this.memberList = JSON.parse(JSON.stringify(this.members));
 		} else {

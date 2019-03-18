@@ -74,6 +74,7 @@
 						</v-tabs>
 						<v-tabs-items
 							:value = "currentDisplayTab"
+							touchless
 						>
 							<v-tab-item
 								:reverse-transition = "false"
