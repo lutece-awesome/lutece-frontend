@@ -29,6 +29,7 @@
 			</v-item-group>
 			<v-window
 				v-model = "current"
+				touchless
 			>
 				<v-window-item
 					v-for = "(each, index) in contest.problems"

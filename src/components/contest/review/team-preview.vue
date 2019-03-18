@@ -66,6 +66,16 @@
 					/>
 				</v-flex>
 				<v-flex
+					xs12>
+					<div class = "section-title" > Info(only visiable for team members and admins) </div>
+					<v-textarea
+						:value = "info"
+						auto-grow
+						rows = "4"
+						@input = "$emit( 'input-info' , $event )"
+					/>
+				</v-flex>
+				<v-flex
 					v-if = "extra"
 					xs12>
 					<div class = "section-title" > Extra </div>
@@ -133,6 +143,10 @@ export default {
 			type: String,
 			default: '',
 		},
+		info: {
+			type: String,
+			default: '',
+		},
 	},
 
 	data() {
@@ -156,6 +170,7 @@ export default {
 			this.submit({
 				name: this.name,
 				memberList: this.memberList,
+				info: this.info,
 			})
 				.finally(() => {
 					this.isLoading = false;

@@ -93,13 +93,12 @@
 				slot = "items"
 				slot-scope = "props">
 				<tr
-					style = "cursor: pointer"
 					tile
-					@click = "querySubmission(props.item.pk)"
 				>
-					<td class="text-xs-center nowrap">
+					<td class = "text-xs-center">
 						<router-link
 							:to = "{ name: 'UserDetail' , params: {username: props.item.user.username } }"
+							class = "clicked-tr"
 							tag = "span"
 						>
 							<v-avatar
@@ -114,15 +113,23 @@
 						<router-link
 							:to = "{ name: 'ContestSpecifyProblem' ,
 								params: {id: titleToIdx.get(props.item.problem.title) } }"
+							tag = "a"
+							class = "clicked-tr"
 						>
 							{{ titleToIdx.get(props.item.problem.title) }} - {{ props.item.problem.title }}
 						</router-link>
 					</td>
 					<td
 						:class = "props.item.result.color + '--text'"
-						class = "text-xs-center">
-						{{ props.item.result.status }}
-						<span v-if = "props.item.failedCase">#{{ props.item.failedCase }}</span>
+						class = "text-xs-center"
+					>
+						<span
+							class = "clicked-tr"
+							@click = "querySubmission(props.item.pk)"
+						>
+							{{ props.item.result.status }}
+							<span v-if = "props.item.failedCase">#{{ props.item.failedCase }}</span>
+						</span>
 					</td>
 					<td class="text-xs-center hidden-sm-and-down">{{ props.item.attachInfo.timeCost }}</td>
 					<td class="text-xs-center hidden-sm-and-down">{{ props.item.attachInfo.memoryCost }}</td>
@@ -324,3 +331,9 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+	.clicked-tr{
+		cursor: pointer;
+	}
+</style>

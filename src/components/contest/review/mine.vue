@@ -52,6 +52,7 @@
 				>
 					<v-layout>
 						<v-btn
+							v-if = "isOwner"
 							color = "orange"
 							@click = "updateTeamDialog = true"
 						>
@@ -63,6 +64,7 @@
 							:members = "updateMemberList"
 							:submit = "updateTeam"
 							:base-name = "mine.name"
+							:base-info = "mine.info"
 							extra = "Please notice that your change
 							would make your team as pending status if it was approved before."
 							form-title = "Update Team"
@@ -88,6 +90,13 @@
 					v-model = "createTeamDialog"
 					:submit = "createTeam"
 					form-title = "Create Team"
+				/>
+			</div>
+			<div v-if = "mine">
+				<v-divider class = "mt-4 mb-4" />
+				<h1 class = "headline mb-4 grey--text"> <strong> Infos </strong> </h1>
+				<async-mixrend-component
+					:content = "getInfo | nl2br"
 				/>
 			</div>
 			<v-divider class = "mt-4 mb-4" />
@@ -116,6 +125,7 @@ import ButtonDialog from './dialog';
 import { clearApolloCache } from '@/utils';
 import UpdateTeam from './update-team';
 import TeamTile from './team-tile';
+import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
 
 export default {
 
@@ -123,6 +133,7 @@ export default {
 		ButtonDialog,
 		UpdateTeam,
 		TeamTile,
+		AsyncMixrendComponent,
 	},
 
 	props: {
@@ -140,11 +151,12 @@ export default {
 			invitationList: [],
 			exitText: {
 				title: 'Exit Team',
-				content: 'If you are the owner of team, your exit would delete the entire team, but if you are just one member, your exit would just remove yourself from the entire team',
+				content: 'If you are the owner of team, your exit would delete the entire team, but if you are just one member, your exit would remove yourself from the entire team and make the contest status to pending if it was approved before',
 			},
 			createTeamDialog: false,
 			updateTeamDialog: false,
 			disableJoin: false,
+			isOwner: false,
 		};
 	},
 
@@ -157,6 +169,14 @@ export default {
 		},
 		updateMemberList() {
 			return this.mine.memberList.map(each => each.user.username);
+		},
+		getInfo() {
+			const error = 'No additional info provided.';
+			if (!this.mine || this.mine === undefined || !this.mine.info
+			|| this.mine.info === undefined || this.mine.info.length === 0) {
+				return error;
+			}
+			return this.mine.info;
 		},
 	},
 
@@ -177,6 +197,7 @@ export default {
 						owner {
 							username
 						}
+						info
                         memberList{
                             user{
                                 username
@@ -205,6 +226,7 @@ export default {
 		processData(data) {
 			let mine = null;
 			const inv = [];
+			let mineIdx = 0;
 			for (let i = 0; i < data.length; i += 1) {
 				const memebers = data[i].memberList;
 				let fd = false;
@@ -215,12 +237,14 @@ export default {
 				}
 				if (fd || data[i].owner.username === this.profile.username) {
 					mine = data[i];
+					mineIdx = i;
 				} else {
 					inv.push(data[i]);
 				}
 			}
 			this.mine = mine;
 			this.invitationList = inv;
+			this.isOwner = data[mineIdx].owner.username === this.profile.username;
 		},
 
 		exitTeam() {
@@ -247,8 +271,8 @@ export default {
 
 		createTeam(data) {
 			const mutation = gql`
-                mutation CreateContestTeam( $pk: ID!, $name: String!, $members: String! ){
-                    createContestTeam( pk: $pk , name: $name, members: $members ){
+                mutation CreateContestTeam( $pk: ID!, $name: String!, $members: String! , $additionalInfo: String ){
+                    createContestTeam( pk: $pk , name: $name, members: $members, additionalInfo: $additionalInfo ){
                         state
                     }
                 } 
@@ -259,6 +283,7 @@ export default {
 					pk: this.pk,
 					name: data.name,
 					members: JSON.stringify(data.memberList),
+					additionalInfo: data.info,
 				},
 			}).then(() => {
 				clearApolloCache().then(
@@ -272,8 +297,8 @@ export default {
 
 		updateTeam(data) {
 			const mutation = gql`
-                mutation UpdateContestTeam( $pk: ID!, $name: String!, $members: String! ){
-                    updateContestTeam( pk: $pk , name: $name, members: $members ){
+                mutation UpdateContestTeam( $pk: ID!, $name: String!, $members: String!, $additionalInfo: String ){
+                    updateContestTeam( pk: $pk , name: $name, members: $members, additionalInfo: $additionalInfo ){
                         state
                     }
                 } 
@@ -284,6 +309,7 @@ export default {
 					pk: this.mine.pk,
 					name: data.name,
 					members: JSON.stringify(data.memberList),
+					additionalInfo: data.info,
 				},
 			}).then(() => {
 				clearApolloCache().then(

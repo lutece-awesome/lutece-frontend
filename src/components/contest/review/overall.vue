@@ -15,8 +15,15 @@
 				:loading = "isLoading > 0"
 				hide-actions
 			>
-				<template v-slot:items = "props">
-					<td class="text-xs-center">
+				<template
+					v-slot:items = "props"
+				>
+					<td
+						:class = "{ 'blue--text': hasPermission('contest.view_contestteam') }"
+						:style = "{ cursor: hasPermission('contest.view_contestteam') ? 'pointer' : 'auto' }"
+						class = "text-xs-center"
+						@click = "queryDialog(props.item.pk)"
+					>
 						{{ props.item.pk }}</td>
 					<td class="text-xs-center">
 						<span class = "font-weight-medium" >{{ props.item.name }}</span>
@@ -77,6 +84,10 @@
 					</td>
 				</template>
 			</v-data-table>
+			<query-dialog
+				v-model = "dialog"
+				:pk = "queryPk"
+			/>
 		</div>
 	</v-container>
 </template>
@@ -88,10 +99,12 @@ import gql from 'graphql-tag';
 import SearchBar from '@/components/utils/search-bar';
 import { mapGetters } from 'vuex';
 import Vue from '@/plugins/essential/vue';
+import QueryDialog from './query-dialog';
 
 export default {
 	components: {
 		SearchBar,
+		QueryDialog,
 	},
 
 	props: {
@@ -106,6 +119,8 @@ export default {
 			filter: '',
 			isLoading: 0,
 			teamList: [],
+			dialog: false,
+			queryPk: null,
 			headers: [
 				{
 					text: '#',
@@ -196,6 +211,14 @@ export default {
 					}
 				})
 				.finally(() => { this.isLoading -= 1; });
+		},
+
+		queryDialog(pk) {
+			if (!this.hasPermission('contest.view_contestteam')) {
+				return;
+			}
+			this.dialog = true;
+			this.queryPk = pk;
 		},
 
 		toggleTeamStatus(idx) {
