@@ -127,7 +127,6 @@
 								:reverse-transition = "false"
 								:transition = "false"
 								value = "ContestSubmission"
-								lazy
 							>
 								<submission-tab
 									ref = "submission"
@@ -394,15 +393,15 @@ export default {
 
 		updateTeamProblemStatus() {
 			const query = gql`
-                query Contest($pk: ID!){
-                    contest(pk: $pk){
+			    query Contest($pk: ID!){
+			        contest(pk: $pk){
 						problems {
 							tried
 							solved
 						}
-                    }
-                }
-            `;
+			        }
+			    }
+			`;
 			this.$apollo.query({
 				query,
 				variables: {
