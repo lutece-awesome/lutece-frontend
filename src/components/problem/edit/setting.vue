@@ -77,6 +77,30 @@
 						@change = "$emit( 'input-disable' , $event )"
 					/>
 				</div>
+				<div class = "limitation-section">
+					<v-btn
+						:loading = "isUploadingData"
+						:disabled = "isUploadingData || !problem.pk"
+						:color = " isUploadingError ? 'error' : 'blue-grey' "
+						class = "white--text"
+						style = "margin-left: -2px"
+						@click = "uploadData"
+					>
+						<input
+							ref = "fileInput"
+							type = "file"
+							style = "display:none"
+							@change = "onFilePicked"
+						>
+						Upload Data
+						<v-icon
+							right
+							dark
+						>
+							mdi-cloud
+						</v-icon>
+					</v-btn>
+				</div>
 			</div>
 
 			<div>
@@ -207,6 +231,7 @@
 <script>
 
 import { getErrorMessage, parseGraphqlError } from '@/utils';
+import gql from 'graphql-tag';
 
 export default {
 	props: {
@@ -227,6 +252,8 @@ export default {
 	data: () => ({
 		isLoading: false,
 		error: false,
+		isUploadingData: false,
+		isUploadingError: false,
 	}),
 
 	methods: {
@@ -244,6 +271,50 @@ export default {
 				})
 				.finally(() => {
 					this.isLoading = false;
+				});
+		},
+
+		uploadData() {
+			this.$refs.fileInput.click();
+		},
+
+		onFilePicked(e) {
+			const file = e.target.files[0];
+			if (file.type !== 'application/zip') {
+				this.$store.commit('snackbar/setSnack', 'Data must be a single zip file');
+				return;
+			}
+			const { size } = file;
+			const limitation = 200 * 1024 * 1024;
+			if (size > limitation) {
+				this.$store.commit('snackbar/setSnack', 'Max data size is 200 Mib');
+				return;
+			}
+			this.isUploadingError = false;
+			this.isUploadingData = true;
+			const mutation = gql`
+				mutation UpdateProblemData($pk: ID!, $file: Upload!){
+					updateProblemData(pk: $pk, file: $file){
+						state
+					}
+				}
+			`;
+			this.$apollo.mutate({
+				mutation,
+				variables: {
+					pk: this.problem.pk,
+					file,
+				},
+			})
+				.then(() => {
+					this.$store.commit('snackbar/setSnack', 'Successfully upadte data');
+				})
+				.catch((error) => {
+					this.$store.commit('snackbar/setSnack', error);
+					this.isUploadingError = true;
+				})
+				.finally(() => {
+					this.isUploadingData = false;
 				});
 		},
 

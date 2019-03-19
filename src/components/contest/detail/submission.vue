@@ -26,7 +26,11 @@
 						class = "column text-xs-center pt-3"
 						style = "width: 14.2%"
 					>
-						User
+						<user-auto-complete
+							v-model = "user"
+							class = "mt-1"
+							label = "User"
+						/>
 					</th>
 					<th
 						role = "columnheader"
@@ -301,6 +305,7 @@ export default {
 					problem: this.problem.title !== 'All' ? this.problem.slug : null,
 					judgeStatus: this.verdict ? this.verdict.full : null,
 					language: this.language ? this.language.full : null,
+					user: this.user,
 				},
 				fetchPolicy: 'no-cache',
 			})

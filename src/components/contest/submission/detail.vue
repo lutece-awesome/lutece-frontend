@@ -78,7 +78,7 @@ import { establishWebSocketConnection, closeWebSocketConnectionSync } from '@/co
 import Verdict from '@/modules/verdict/main';
 import Language from '@/modules/language/main';
 import Code from '@/components/status/detail/code';
-import Summary from '@/components/status/detail/summary';
+import Summary from './summary';
 import Progress from '@/components/status/detail/progress';
 
 export default {
