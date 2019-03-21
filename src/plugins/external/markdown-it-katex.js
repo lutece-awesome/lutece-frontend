@@ -10,7 +10,7 @@ TexMathPlugin.use(Katex);
  * For security settings, ref to https://github.com/markdown-it/markdown-it/blob/master/docs/security.md.
  */
 const StrictMarkdownParser = MarkdownIt({
-	html: true, // Enable HTML tags in source
+	html: false, // Enable HTML tags in source
 	xhtmlOut: false, // Use '/' to close single tags (<br />).
 	// This is only for full CommonMark compatibility.
 	breaks: false, // Convert '\n' in paragraphs into <br>
