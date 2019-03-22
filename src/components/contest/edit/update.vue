@@ -28,7 +28,7 @@
 					:start-time = "startTime"
 					:end-time = "endTime"
 					:disable = "disable"
-					:password = "password"
+					:is-public = "isPublic"
 					:problem-list = "problemList"
 					:note = "note"
 					:submit = "updateContest"
@@ -38,7 +38,7 @@
 					@input-disable = "disable = $event"
 					@input-startTime = "startTime = $event"
 					@input-endTime = "endTime = $event"
-					@input-password = "password = $event"
+					@input-visibility = "isPublic = $event"
 					@input-maxTeamMemberNumber = "maxTeamMemberNumber = $event"
 					@input-note = "note = $event"
 					@input-appendProblem = "appendProblem"
@@ -74,7 +74,7 @@ export default {
 			startTime: new Date(),
 			endTime: new Date(),
 			maxTeamMemberNumber: 1,
-			password: '',
+			isPublic: true,
 			problemList: [],
 			note: '',
 			isLoading: false,
@@ -100,7 +100,7 @@ export default {
 							startTime
 							endTime
 							maxTeamMemberNumber
-							password
+							isPublic
 						}
 						problems {
 							pk
@@ -124,7 +124,7 @@ export default {
 					this.startTime = new Date(data.settings.startTime);
 					this.endTime = new Date(data.settings.endTime);
 					this.maxTeamMemberNumber = data.settings.maxTeamMemberNumber;
-					this.password = data.settings.password;
+					this.isPublic = data.settings.isPublic;
 					this.problemList = data.problems;
 				})
 				.catch(() => {
@@ -148,7 +148,7 @@ export default {
 		},
 		updateContest() {
 			const mutation = gql`
-				mutation UpdateContest($pk: ID!, $title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $password: String!, $problems: String!) {
+				mutation UpdateContest($pk: ID!, $title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $isPublic: Boolean!, $problems: String!) {
 					updateContest(
 						pk: $pk,
 						title: $title,
@@ -157,7 +157,7 @@ export default {
 						startTime: $startTime,
 						endTime: $endTime,
 						maxTeamMemberNumber: $maxTeamMemberNumber,
-						password: $password,
+						isPublic: $isPublic,
 						problems: $problems,
 					) {
 						pk
@@ -175,7 +175,7 @@ export default {
 					startTime: this.startTime,
 					endTime: this.endTime,
 					maxTeamMemberNumber: this.maxTeamMemberNumber,
-					password: this.password,
+					isPublic: this.isPublic,
 					problems: JSON.stringify(this.problemList.map(each => each.pk)),
 				},
 			})

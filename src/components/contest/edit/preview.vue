@@ -32,17 +32,18 @@
 					/>
 				</v-flex>
 				<v-flex xs12>
-					<div class = "section-title" > Contest Password </div>
+					<div class = "section-title" > Contest Visibility </div>
 					<v-tooltip bottom>
-						<v-text-field
+						<v-checkbox
 							slot = "activator"
-							:value = "password"
+							:input-value = "isPublic"
 							:disabled = "withRender"
-							class = "password"
-							autocomplete = "false"
-							@input = "$emit( 'input-password' , $event )"/>
+							:label = "isPublic ? 'Public' : 'Private'"
+							class = "pt-4"
+							@change = "$emit( 'input-visibility' , $event )"
+						/>
 						<span>
-							Leave blank to make this contest public
+							The private contest would cause permission denied for unapproved team.
 						</span>
 					</v-tooltip>
 				</v-flex>
@@ -195,9 +196,9 @@ export default {
 			type: Number,
 			default: 1,
 		},
-		password: {
-			type: String,
-			default: '',
+		isPublic: {
+			type: Boolean,
+			default: true,
 		},
 		problemList: {
 			type: Array,
@@ -268,8 +269,6 @@ export default {
 		max-width: 600px
 		margin-top: 32px
 	.picker
-		max-width: 600px
-	.password
 		max-width: 600px
 	.problemList
 		max-width: 600px

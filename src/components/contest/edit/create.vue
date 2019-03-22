@@ -19,7 +19,7 @@
 					:start-time = "startTime"
 					:end-time = "endTime"
 					:disable = "disable"
-					:password = "password"
+					:is-public = "isPublic"
 					:problem-list = "problemList"
 					:note = "note"
 					:submit = "createContest"
@@ -29,7 +29,7 @@
 					@input-disable = "disable = $event"
 					@input-startTime = "startTime = $event"
 					@input-endTime = "endTime = $event"
-					@input-password = "password = $event"
+					@input-visibility = "isPublic = $event"
 					@input-maxTeamMemberNumber = "maxTeamMemberNumber = $event"
 					@input-note = "note = $event"
 					@input-appendProblem = "appendProblem"
@@ -58,7 +58,7 @@ export default {
 			startTime: new Date(),
 			endTime: new Date(),
 			maxTeamMemberNumber: 1,
-			password: '',
+			isPublic: true,
 			problemList: [],
 			note: '',
 		};
@@ -79,7 +79,7 @@ export default {
 		},
 		createContest() {
 			const mutation = gql`
-				mutation CreateContest($title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $password: String!, $problems: String!) {
+				mutation CreateContest($title: String!, $note: String!, $disable: Boolean!, $startTime: DateTime!, $endTime: DateTime!, $maxTeamMemberNumber: Int!, $isPublic: Boolean!, $problems: String!) {
 					createContest(
 						title: $title,
 						note: $note,
@@ -87,7 +87,7 @@ export default {
 						startTime: $startTime,
 						endTime: $endTime,
 						maxTeamMemberNumber: $maxTeamMemberNumber,
-						password: $password,
+						isPublic: $isPublic,
 						problems: $problems,
 					) {
 						pk
@@ -104,7 +104,7 @@ export default {
 					startTime: this.startTime,
 					endTime: this.endTime,
 					maxTeamMemberNumber: this.maxTeamMemberNumber,
-					password: this.password,
+					isPublic: this.isPublic,
 					problems: JSON.stringify(this.problemList.map(each => each.pk)),
 				},
 			})
