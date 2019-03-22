@@ -2,7 +2,6 @@
 	<v-container fiuld>
 		<error-spinner
 			v-if = "error"
-			:msg = "error"
 		/>
 		<comments
 			v-else
