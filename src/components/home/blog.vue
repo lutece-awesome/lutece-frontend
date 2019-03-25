@@ -44,19 +44,17 @@
 									xs12
 									sm9
 								>
-									<div class = "elevation-1">
-										<home-artile-tile
-											v-for = " ( each , index ) in data.homeArticleList.homeArticleList "
-											:key = "index"
-											:title = "each.title"
-											:slug = "each.slug"
-											:username = "each.author.username"
-											:preview = "each.preview"
-											:gravatar = "each.author.attachInfo.gravatar"
-											:last-update-time = "each.lastUpdateTime"
-											:count = "each.record.count"
-										/>
-									</div>
+									<home-artile-tile
+										v-for = " ( each , index ) in data.homeArticleList.homeArticleList "
+										:key = "index"
+										:title = "each.title"
+										:slug = "each.slug"
+										:username = "each.author.username"
+										:preview = "each.preview"
+										:gravatar = "each.author.attachInfo.gravatar"
+										:last-update-time = "each.lastUpdateTime"
+										:count = "each.record.count"
+									/>
 								</v-flex>
 							</v-layout>
 							<div
