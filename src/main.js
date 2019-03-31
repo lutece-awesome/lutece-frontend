@@ -1,4 +1,4 @@
-// import '@babel/polyfill';
+import '@babel/polyfill';
 
 import loadingPlugins from './plugins/index';
 import Vue from './plugins/essential/vue';
