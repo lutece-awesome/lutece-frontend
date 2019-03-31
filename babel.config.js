@@ -1,4 +1,3 @@
-import '@babel/polyfill';
 /* eslint no-template-curly-in-string: "off" */
 module.exports = {
 	presets: [
