@@ -1,7 +1,9 @@
+require('babel-polyfill');
+
 const path = require('path');
 
 module.exports = {
-	entry: './src/main.js',
+	entry: ['babel-polyfill', './src/main.js'],
 
 	resolve: {
 		extensions: ['.js', '.vue', '.json'],
@@ -15,11 +17,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.styl(us)?$/,
-				use: [
-					'vue-style-loader',
-					'css-loader',
-					'stylus-loader',
-				],
+				use: ['vue-style-loader', 'css-loader', 'stylus-loader'],
 			},
 			{
 				test: /.md$/,

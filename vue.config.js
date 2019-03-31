@@ -8,7 +8,10 @@ class MyFontminPlugin extends FontminPlugin {
 	findFontFiles(compilation) {
 		const regular = this.findRegularFontFiles(compilation);
 		const extract = this.findExtractTextFontFiles(compilation);
-		return _.filter(_.uniqBy(regular.concat(extract), 'asset'), o => !o.asset.includes('KaTeX'));
+		return _.filter(
+			_.uniqBy(regular.concat(extract), 'asset'),
+			o => !o.asset.includes('KaTeX'),
+		);
 	}
 
 	apply(compiler) {
@@ -49,24 +52,34 @@ module.exports = {
 	parallel: undefined,
 	css: undefined,
 	chainWebpack: (_config) => {
-		_config.module.rule('md')
+		_config.module
+			.rule('md')
 			.test(/\.md$/)
 			.use('raw-loader')
 			.loader('raw-loader')
 			.end();
 		_config.when(process.env.NODE_ENV === 'production', (config) => {
-			config
-				.plugins.delete('prefetch').end()
+			config.plugins
+				.delete('prefetch')
+				.end()
 				.plugin('purgecss')
-				.use(PurgecssPlugin, [{
-					paths: glob.sync([
-						path.join(__dirname, './index.html'),
-						path.join(__dirname, './src/**/*.vue'),
-						path.join(__dirname, './src/**/*.js'),
-						path.join(__dirname, 'node_modules', 'vuetify', 'src', '**/*.@(js|ts)'),
-					]),
-					whitelistPatterns: [/^(?!mdi)/, /^mdi-alpha-./],
-				}])
+				.use(PurgecssPlugin, [
+					{
+						paths: glob.sync([
+							path.join(__dirname, './index.html'),
+							path.join(__dirname, './src/**/*.vue'),
+							path.join(__dirname, './src/**/*.js'),
+							path.join(
+								__dirname,
+								'node_modules',
+								'vuetify',
+								'src',
+								'**/*.@(js|ts)',
+							),
+						]),
+						whitelistPatterns: [/^(?!mdi)/, /^mdi-alpha-./],
+					},
+				])
 				.after('extract-css')
 				.end()
 				.plugin('fontmin')
