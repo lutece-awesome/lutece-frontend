@@ -7,6 +7,8 @@ query ProfileGQL($username: String!) {
 			location
 			about
 			gravatar
+			codeforces
+			atcoder
 		}
 		solved
 		tried

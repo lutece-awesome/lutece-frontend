@@ -57,6 +57,18 @@
 								</v-flex>
 								<v-flex>
 									<v-text-field
+										v-model = "codeforces"
+										:error-messages="getErrorByDelegate('codeforces')"
+										label="Codeforces" />
+								</v-flex>
+								<v-flex>
+									<v-text-field
+										v-model = "atcoder"
+										:error-messages="getErrorByDelegate('atcoder')"
+										label="Atcoder" />
+								</v-flex>
+								<v-flex>
+									<v-text-field
 										v-model = "about"
 										:error-messages="getErrorByDelegate('about')"
 										label="About" />
@@ -93,6 +105,8 @@ export default {
 			school: '',
 			company: '',
 			location: '',
+			codeforces: '',
+			atcoder: '',
 			about: 'The man is too lazy to leave anything.',
 			loading: false,
 			error: null,
@@ -108,10 +122,10 @@ export default {
 		register() {
 			this.error = null;
 			const {
-				username, password, email, about, school, company, location,
+				username, password, email, about, school, company, location, codeforces, atcoder,
 			} = this;
 			this.$store.dispatch('user/signup', {
-				username, password, email, about, school, company, location,
+				username, password, email, about, school, company, location, codeforces, atcoder,
 			})
 				.then(() => {
 					this.$router.push(this.$route.query.redirect || '/');

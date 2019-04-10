@@ -35,6 +35,8 @@ mutation RefreshToken($token: String!) {
 				company
 				location
 				about
+				codeforces
+				atcoder
 			}
 		}
 	}
