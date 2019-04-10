@@ -33,6 +33,19 @@
 							/>
 
 							<v-text-field
+								v-model = "codeforces"
+								:error-messages = "getErrorByDelegate('codeforces')"
+								label = "Codeforces"
+								prepend-icon = "mdi-emoticon-cool"
+							/>
+							<v-text-field
+								v-model = "atcoder"
+								:error-messages = "getErrorByDelegate('atcoder')"
+								label = "Atcoder"
+								prepend-icon = "mdi-emoticon-cool"
+							/>
+
+							<v-text-field
 								v-model = "about"
 								:error-messages = "getErrorByDelegate('about')"
 								label = "About"
@@ -43,7 +56,8 @@
 								:error-messages = "getErrorByDelegate('gravatar')"
 								label = "Gravatar"
 								disabled
-								prepend-icon = "mdi-emoticon-cool"/>
+								prepend-icon = "mdi-emoticon-cool"
+							/>
 							<v-alert
 								:value = "true"
 								class = "mb-3"
@@ -84,6 +98,8 @@ export default {
 		location: '',
 		about: '',
 		gravatar: '',
+		codeforces: '',
+		atcoder: '',
 		isloading: false,
 		error: null,
 		gravatarExplain: '<div> You can only use Gravatar service to gain the avatar, to ensure your gravatar email privacy, the default gravatar email address will not shown and only encrypted address shown. </div> <div> But currently this is based on your email, changing is still WIP. </div>',
@@ -99,6 +115,8 @@ export default {
 		this.location = this.profile.location;
 		this.about = this.profile.about;
 		this.gravatar = this.profile.gravatar;
+		this.codeforces = this.profile.codeforces;
+		this.atcoder = this.profile.atcoder;
 	},
 	methods: {
 		request() {
@@ -129,6 +147,8 @@ export default {
 					about: this.about,
 					school: this.school,
 					location: this.location,
+					codeforces: this.codeforces,
+					atcoder: this.atcoder,
 				},
 			})
 				.then(() => {
