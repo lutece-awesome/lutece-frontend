@@ -9,6 +9,8 @@ query ProfileGQL($username: String!) {
 			gravatar
 			codeforces
 			atcoder
+			studentid
+			gender
 		}
 		solved
 		tried

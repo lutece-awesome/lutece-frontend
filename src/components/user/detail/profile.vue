@@ -76,6 +76,7 @@
 											<td>atcoder</td>
 											<td>{{ user.attachInfo.atcoder }}</td>
 										</tr>
+
 										<!-- <tr>
 											<td>Social</td>
 											<td>

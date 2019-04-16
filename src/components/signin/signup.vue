@@ -107,6 +107,8 @@ export default {
 			location: '',
 			codeforces: '',
 			atcoder: '',
+			studentID: '',
+			gender: true,
 			about: 'The man is too lazy to leave anything.',
 			loading: false,
 			error: null,

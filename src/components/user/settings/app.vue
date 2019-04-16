@@ -31,18 +31,23 @@
 								label = "Location"
 								prepend-icon = "mdi-map-marker"
 							/>
-
+							<v-text-field
+								v-model = "studentid"
+								:error-messages = "getErrorByDelegate('studentid')"
+								label = "StudentID"
+								prepend-icon = "dialpad"
+							/>
 							<v-text-field
 								v-model = "codeforces"
 								:error-messages = "getErrorByDelegate('codeforces')"
 								label = "Codeforces"
-								prepend-icon = "mdi-emoticon-cool"
+								prepend-icon = "mdi-xbox-controller"
 							/>
 							<v-text-field
 								v-model = "atcoder"
 								:error-messages = "getErrorByDelegate('atcoder')"
 								label = "Atcoder"
-								prepend-icon = "mdi-emoticon-cool"
+								prepend-icon = "mdi-watch"
 							/>
 
 							<v-text-field
@@ -100,6 +105,8 @@ export default {
 		gravatar: '',
 		codeforces: '',
 		atcoder: '',
+		studentid: '',
+		gender: true,
 		isloading: false,
 		error: null,
 		gravatarExplain: '<div> You can only use Gravatar service to gain the avatar, to ensure your gravatar email privacy, the default gravatar email address will not shown and only encrypted address shown. </div> <div> But currently this is based on your email, changing is still WIP. </div>',
@@ -117,6 +124,8 @@ export default {
 		this.gravatar = this.profile.gravatar;
 		this.codeforces = this.profile.codeforces;
 		this.atcoder = this.profile.atcoder;
+		this.gender = this.profile.gender;
+		this.studentid = this.profile.studentid;
 	},
 	methods: {
 		request() {
@@ -149,6 +158,8 @@ export default {
 					location: this.location,
 					codeforces: this.codeforces,
 					atcoder: this.atcoder,
+					gender: this.gender,
+					studentid: this.studentid,
 				},
 			})
 				.then(() => {

@@ -1,5 +1,23 @@
-mutation UserInfoUpdateGQL( $about: String!, $company: String! , $school: String!, $location: String!, $codeforces: String, $atcoder: String){
-        userAttachInfoUpdate( company: $company , about: $about , school: $school, location: $location, codeforces: $codeforces, atcoder: $atcoder){
+mutation UserInfoUpdateGQL( 
+        $about: String!, 
+        $company: String!, 
+        $school: String!, 
+        $location: String!, 
+        $codeforces: String!, 
+        $atcoder: String!,
+        $studentid: String!,
+        $gender: Boolean!
+        ){
+        userAttachInfoUpdate( 
+                company: $company, 
+                about: $about, 
+                school: $school, 
+                location: $location, 
+                codeforces: $codeforces, 
+                atcoder: $atcoder,
+                studentid: $studentid,
+                gender: $gender
+                ){
                 state
         }
 }
