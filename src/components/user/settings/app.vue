@@ -13,6 +13,23 @@
 				<v-card>
 					<v-card-text>
 						<v-form @submit.prevent = "submit">
+							<div>
+								<v-icon>
+									mdi-account-multiple-outline
+								</v-icon>
+								<v-btn
+									v-if = "gender"
+									color = "info"
+									small
+									@click = "ChangeGender"
+								> Male </v-btn>
+								<v-btn
+									v-else
+									color = "error"
+									small
+									@click = "ChangeGender"
+								> Female </v-btn>
+							</div>
 							<v-text-field
 								v-model = "school"
 								:error-messages = "getErrorByDelegate('school')"
@@ -35,19 +52,19 @@
 								v-model = "studentid"
 								:error-messages = "getErrorByDelegate('studentid')"
 								label = "StudentID"
-								prepend-icon = "dialpad"
+								prepend-icon = "mdi-account-card-details"
 							/>
 							<v-text-field
 								v-model = "codeforces"
 								:error-messages = "getErrorByDelegate('codeforces')"
 								label = "Codeforces"
-								prepend-icon = "mdi-xbox-controller"
+								prepend-icon = "mdi-iframe"
 							/>
 							<v-text-field
 								v-model = "atcoder"
 								:error-messages = "getErrorByDelegate('atcoder')"
 								label = "Atcoder"
-								prepend-icon = "mdi-watch"
+								prepend-icon = "mdi-iframe-outline"
 							/>
 
 							<v-text-field
@@ -175,6 +192,9 @@ export default {
 					this.error = parseGraphqlError(error);
 				})
 				.finally(() => { this.isloading = false; });
+		},
+		ChangeGender() {
+			this.gender = !this.gender;
 		},
 	},
 };
