@@ -8,6 +8,8 @@ mutation RegisterGQL(
 	$location: String
 	$codeforces: String
 	$atcoder: String
+	$studentid: String
+	$gender: Boolean
 ) {
 	userRegister(
 		username: $username
@@ -19,6 +21,8 @@ mutation RegisterGQL(
 		location: $location
 		codeforces: $codeforces
 		atcoder: $atcoder
+		studentid: $studentid
+		gender: $gender
 	) {
 		token
 		payload
@@ -33,6 +37,8 @@ mutation RegisterGQL(
 				about
 				codeforces
 				atcoder
+				studentid
+				gender
 			}
 		}
 	}

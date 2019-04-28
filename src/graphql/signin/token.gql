@@ -11,6 +11,10 @@ mutation UserLogin($username: String!, $password: String!) {
 				company
 				location
 				about
+				codeforces
+				atcoder
+				studentid
+				gender
 			}
 		}
 	}
@@ -37,6 +41,8 @@ mutation RefreshToken($token: String!) {
 				about
 				codeforces
 				atcoder
+				studentid
+				gender
 			}
 		}
 	}

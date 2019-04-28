@@ -76,6 +76,16 @@
 											<td>atcoder</td>
 											<td>{{ user.attachInfo.atcoder }}</td>
 										</tr>
+
+										<tr v-if="user.attachInfo.gender">
+											<td>Gender</td>
+											<td> Male </td>
+										</tr>
+										<tr v-else>
+											<td>Gender</td>
+											<td> Female</td>
+										</tr>
+
 										<!-- <tr>
 											<td>Social</td>
 											<td>
