@@ -90,6 +90,9 @@ export default {
 			{
 				info: 'HONOR',
 				color: 'red',
+				to: {
+					name: 'Honor',
+				},
 			},
 		],
 	}),
