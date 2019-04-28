@@ -14,21 +14,15 @@
 					<v-card-text>
 						<v-form @submit.prevent = "submit">
 							<div>
-								<v-icon>
-									mdi-account-multiple-outline
-								</v-icon>
-								<v-btn
-									v-if = "gender"
-									color = "info"
-									small
-									@click = "changeGender"
-								> Male </v-btn>
-								<v-btn
-									v-else
-									color = "error"
-									small
-									@click = "changeGender"
-								> Female </v-btn>
+								<v-select
+									v-model = "gender"
+									:items = "genderList"
+									prepend-icon = "mdi-account-multiple-outline"
+									class = "mt-1"
+									persistent-hint
+									return-object
+									single-line
+								/>
 							</div>
 							<v-text-field
 								v-model = "school"
@@ -107,7 +101,6 @@
 
 import { mapGetters } from 'vuex';
 import { UserInfoUpdateGQL } from '@/graphql/user/settings.gql';
-import { ProfileGQL } from '@/graphql/user/profile.gql';
 import { clearApolloCache, parseGraphqlError, getErrorMessage } from '@/utils';
 
 
@@ -123,7 +116,8 @@ export default {
 		codeforces: '',
 		atcoder: '',
 		studentid: '',
-		gender: true,
+		gender: 0,
+		genderList: ['Male', 'Female'],
 		isloading: false,
 		error: null,
 		gravatarExplain: '<div> You can only use Gravatar service to gain the avatar, to ensure your gravatar email privacy, the default gravatar email address will not shown and only encrypted address shown. </div> <div> But currently this is based on your email, changing is still WIP. </div>',
@@ -141,22 +135,10 @@ export default {
 		this.gravatar = this.profile.gravatar;
 		this.codeforces = this.profile.codeforces;
 		this.atcoder = this.profile.atcoder;
-		this.gender = this.profile.gender;
+		this.gender = this.profile.gender ? 'Male' : 'Female';
 		this.studentid = this.profile.studentid;
 	},
 	methods: {
-		request() {
-			this.$apollo.query({
-				query: ProfileGQL,
-				variables: {
-					username: this.username,
-				},
-			})
-				.then(response => response.data.user)
-				.then((data) => {
-					Object.assign(this, data);
-				});
-		},
 
 		getErrorByDelegate(field) {
 			return getErrorMessage(this.error, field);
@@ -175,7 +157,7 @@ export default {
 					location: this.location,
 					codeforces: this.codeforces,
 					atcoder: this.atcoder,
-					gender: this.gender,
+					gender: this.gender === 'Male',
 					studentid: this.studentid,
 				},
 			})
@@ -192,9 +174,6 @@ export default {
 					this.error = parseGraphqlError(error);
 				})
 				.finally(() => { this.isloading = false; });
-		},
-		changeGender() {
-			this.gender = !this.gender;
 		},
 	},
 };

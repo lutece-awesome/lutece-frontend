@@ -69,11 +69,11 @@
 											<td>{{ user.attachInfo.location }}</td>
 										</tr>
 										<tr v-if="user.attachInfo.codeforces">
-											<td>codeforces</td>
+											<td>Codeforces</td>
 											<td>{{ user.attachInfo.codeforces }}</td>
 										</tr>
 										<tr v-if="user.attachInfo.atcoder">
-											<td>atcoder</td>
+											<td>Atcoder</td>
 											<td>{{ user.attachInfo.atcoder }}</td>
 										</tr>
 

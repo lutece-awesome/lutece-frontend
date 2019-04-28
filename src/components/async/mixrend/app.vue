@@ -4,7 +4,7 @@
 
 <script>
 
-import StrictMarkdownParser from '@/plugins/external/markdown-it-katex';
+import { StrictMarkdownParser, DangerousMarkdownParser } from '@/plugins/external/markdown-it-katex';
 
 export default {
 	props: {
@@ -12,11 +12,16 @@ export default {
 			type: String,
 			default: '',
 		},
+		danger: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	computed: {
 		renderContent() {
-			return StrictMarkdownParser.render(this.content);
+			return this.danger
+				? DangerousMarkdownParser.render(this.content) : StrictMarkdownParser.render(this.content);
 		},
 	},
 };

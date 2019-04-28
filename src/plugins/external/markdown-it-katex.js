@@ -21,5 +21,17 @@ const StrictMarkdownParser = MarkdownIt({
 })
 	.use(TexMathPlugin);
 
+// Only used for admin
+const DangerousMarkdownParser = MarkdownIt({
+	html: true, // Enable HTML tags in source
+	xhtmlOut: false, // Use '/' to close single tags (<br />).
+	// This is only for full CommonMark compatibility.
+	breaks: false, // Convert '\n' in paragraphs into <br>
+	// useful for external highlighters.
+	linkify: false, // Autoconvert URL-like text to links
+	typographer: true,
+	quotes: '“”‘’',
+})
+	.use(TexMathPlugin);
 
-export default StrictMarkdownParser;
+export { StrictMarkdownParser, DangerousMarkdownParser };

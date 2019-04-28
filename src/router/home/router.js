@@ -2,6 +2,7 @@ import Home from '@/components/home/home';
 import Blog from '@/components/home/blog';
 import Develop from '@/components/home/develop';
 import BlogDetail from '@/components/article/home/detail';
+import Honor from '@/components/home/honor';
 
 const Router = [
 	{
@@ -30,6 +31,11 @@ const Router = [
 		path: '/develop',
 		name: 'Develop',
 		component: Develop,
+	},
+	{
+		path: '/honor',
+		name: 'Honor',
+		component: Honor,
 	},
 ];
 
