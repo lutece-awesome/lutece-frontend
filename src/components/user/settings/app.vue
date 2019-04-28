@@ -21,13 +21,13 @@
 									v-if = "gender"
 									color = "info"
 									small
-									@click = "ChangeGender"
+									@click = "changeGender"
 								> Male </v-btn>
 								<v-btn
 									v-else
 									color = "error"
 									small
-									@click = "ChangeGender"
+									@click = "changeGender"
 								> Female </v-btn>
 							</div>
 							<v-text-field
@@ -193,7 +193,7 @@ export default {
 				})
 				.finally(() => { this.isloading = false; });
 		},
-		ChangeGender() {
+		changeGender() {
 			this.gender = !this.gender;
 		},
 	},
