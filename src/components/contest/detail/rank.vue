@@ -150,15 +150,7 @@ export default {
 		fetchData() {
 			const query = gql`
 				query ContestRankingList( $pk: ID!){
-					contestRankingList(pk: $pk){
-						submissions{
-							status
-							createTime
-							team
-							problemId
-							teamApproved
-						}
-					}
+					contestRankingList(pk: $pk)
 				}
 			`;
 			this.isLoading += 1;
@@ -169,9 +161,9 @@ export default {
 				},
 				fetchPolicy: 'no-cache',
 			})
-				.then(response => response.data.contestRankingList)
+				.then(response => JSON.parse(response.data.contestRankingList))
 				.then((data) => {
-					this.updateRenderingList(data.submissions);
+					this.updateRenderingList(data);
 				})
 				.finally(() => {
 					this.isLoading -= 1;
@@ -185,7 +177,7 @@ export default {
 			const problemIdToIdx = new Map();
 			const minimumSolvedTime = new Map();
 			for (let i = 0; i < this.contest.problems.length; i += 1) {
-				problemIdToIdx.set(this.contest.problems[i].pk, i);
+				problemIdToIdx.set(Number(this.contest.problems[i].pk), i);
 				minimumSolvedTime.set(i, Infinity);
 			}
 			const arr = [];
