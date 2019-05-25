@@ -35,17 +35,31 @@
 						:content = "content"
 						class = "mt-3 commentContent"
 					/>
-					<div
-						v-if = "hasEditPermission"
-						class = "mt-3 subheader"
+					<v-layout
+						row
+						wrap
 					>
-						<span
-							style = "cursor:pointer;"
-							@click = "dialogVisiable = !dialogVisiable"
+						<v-flex
 						>
-							Edit
-						</span>
-					</div>
+							<v-icon class = "mt-3" > mdi-heart </v-icon>
+						</v-flex>
+						<v-flex
+							xs1
+							justify-end
+						>
+							<div
+								v-if = "hasEditPermission"
+								class = "mt-3 subheader"
+							>
+								<span
+									style = "cursor:pointer;"
+									@click = "dialogVisiable = !dialogVisiable"
+								>
+									Edit
+								</span>
+							</div>
+						</v-flex>
+					</v-layout>
 					<update-dialog
 						v-if = "dialogVisiable"
 						:value = "dialogVisiable"
