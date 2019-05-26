@@ -23,6 +23,13 @@
 						:contest-list = "contestList"
 					/>
 				</div>
+				<div class = "text-xs-center mt-3">
+					<v-pagination
+						ref = "pagination"
+						v-model = "page"
+						:length = "maxPage"
+					/>
+				</div>
 			</v-flex>
 		</v-layout>
 		<v-btn

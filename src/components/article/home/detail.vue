@@ -186,6 +186,7 @@ export default {
 					pk: this.pk,
 					page,
 				},
+				fetchPolicy: 'no-cache',
 			})
 				.then(response => response.data.articleCommentList)
 				.then(data => ({

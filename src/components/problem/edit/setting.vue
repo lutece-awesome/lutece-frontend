@@ -280,7 +280,8 @@ export default {
 
 		onFilePicked(e) {
 			const file = e.target.files[0];
-			if (file.type !== 'application/zip') {
+			const fileType = file.type;
+			if (fileType !== 'application/zip' || fileType !== 'application/x-zip-compressed' || fileType !== 'application/x-compressed') {
 				this.$store.commit('snackbar/setSnack', 'Data must be a single zip file');
 				return;
 			}
