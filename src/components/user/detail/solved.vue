@@ -5,17 +5,24 @@
 			:class = "`elevation-${hover ? 4 : 1}`"
 		>
 			<div>
-				<v-container>
+				<v-container fluid>
 					<v-layout
 						row
-						wrap>
+						wrap
+						justify-center
+						align-center
+					>
 						<v-flex xs12>
 							<h3>
 								<v-icon class = "mdi-18px"> mdi-chart-gantt </v-icon>
 								<span class = "ml-1"> Solved </span>
 							</h3>
 							<v-divider class = "mt-2 mb-2" />
-							<div>
+						</v-flex>
+						<v-flex
+							xs12
+						>
+							<div class = "text-xs-center">
 								<v-btn
 									v-for = "each in user.statistics.solve"
 									:key = "each.pk"
@@ -43,6 +50,5 @@ export default {
 			default: null,
 		},
 	},
-
 };
 </script>

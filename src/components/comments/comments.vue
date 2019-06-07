@@ -7,6 +7,8 @@
 			:author = "each.author"
 			:content = "each.content"
 			:create-time = "each.createTime"
+			:vote = "each.vote"
+			:self-attitude = "each.selfAttitude"
 			:last-update-time = "each.lastUpdateTime"
 			@update-success = "update"
 		/>

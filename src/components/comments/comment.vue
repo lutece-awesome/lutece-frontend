@@ -36,29 +36,44 @@
 						class = "mt-3 commentContent"
 					/>
 					<v-layout
-						row
+						class = "mt-3"
 						wrap
+						row
 					>
-						<v-flex
+						<div
+							style = "cursor:pointer"
+							@click = "toggleVote"
 						>
-							<v-icon class = "mt-3" > mdi-heart </v-icon>
-						</v-flex>
-						<v-flex
-							xs1
-							justify-end
+							<v-icon
+								:color = "iconColor"
+								small >
+								mdi-heart
+							</v-icon>
+							<span class = "subheader ml-1">
+								{{ vote + rating - selfAttitude }}
+							</span>
+						</div>
+						<div
+							class = "ml-3"
+							style = "cursor:pointer"
+							@click = "onStartReply"
 						>
-							<div
-								v-if = "hasEditPermission"
-								class = "mt-3 subheader"
+							<v-icon small >
+								mdi-comment
+							</v-icon>
+							<span class = "subheader ml-1" > 0 </span>
+						</div>
+						<div
+							v-if = "hasEditPermission"
+							class = "ml-3 subheader"
+						>
+							<span
+								style = "cursor:pointer;"
+								@click = "dialogVisiable = !dialogVisiable"
 							>
-								<span
-									style = "cursor:pointer;"
-									@click = "dialogVisiable = !dialogVisiable"
-								>
-									Edit
-								</span>
-							</div>
-						</v-flex>
+								Edit
+							</span>
+						</div>
 					</v-layout>
 					<update-dialog
 						v-if = "dialogVisiable"
@@ -79,6 +94,7 @@
 import { mapGetters } from 'vuex';
 import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
 import UpdateDialog from './update';
+import ToggleReplyVote from './toggle-reply-vote';
 
 export default {
 
@@ -108,11 +124,21 @@ export default {
 			type: String,
 			required: true,
 		},
+		vote: {
+			type: Number,
+			required: true,
+		},
+		selfAttitude: {
+			type: Boolean,
+			required: true,
+		},
 	},
 
 	data() {
 		return {
 			dialogVisiable: false,
+			voteLoading: false,
+			rating: 0,
 		};
 	},
 
@@ -123,13 +149,43 @@ export default {
 		hasEditPermission() {
 			return this.author.username === this.$store.getters['user/profile'].username || this.$store.getters['user/hasPermission']('reply.change_basereply');
 		},
+		iconColor() {
+			return this.rating ? 'red lighten-2' : '';
+		},
 	},
+
+	mounted() {
+		this.rating = this.selfAttitude ? 1 : 0;
+	},
+
+	methods: {
+		onStartReply() {
+
+		},
+
+		toggleVote() {
+			if (this.voteLoading || !this.isAuthenticated) {
+				return;
+			}
+			const previousRating = this.rating;
+			this.voteLoading = true;
+			this.rating = 1 - this.rating;
+			ToggleReplyVote(this.pk)
+				.catch(() => {
+					this.rating = previousRating;
+				})
+				.finally(() => {
+					this.voteLoading = false;
+				});
+		},
+	},
+
 };
 </script>
 
 <style scoped>
 	.subheader {
-		font-size: 16px;
+		font-size: 14px;
 		color: grey;
 		font-weight:  400;
 	}

@@ -176,6 +176,8 @@ export default {
 									gravatar
 								}
 							}
+							vote
+							selfAttitude
 						}
 					}
 				}
