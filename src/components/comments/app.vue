@@ -17,8 +17,8 @@
 				:content = "replyComment"
 				:submit = "submit"
 				class = "mt-3"
-				@submit-success = "submitSuccessCallback"
 				@input-content = "replyComment = $event"
+				@submit-success = "submitSuccessCallback"
 			/>
 		</div>
 	</div>
@@ -66,11 +66,11 @@ export default {
 	},
 
 	methods: {
-		submitSuccessCallback() {
-			this.$refs.comments.refresh();
-		},
 		update() {
 			this.$refs.comments.update();
+		},
+		submitSuccessCallback() {
+			this.$refs.comments.refresh();
 		},
 	},
 };

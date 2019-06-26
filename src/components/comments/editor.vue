@@ -10,8 +10,8 @@
 				v-else
 				:value = "content"
 				:loading = "isLoading"
+				:rows = "rowNumber"
 				auto-grow
-				rows = "9"
 				@input = "$emit( 'input-content' , $event )"
 			/>
 		</div>
@@ -19,6 +19,7 @@
 			dense
 			height = "48"
 			flat
+			style = "z-index: 0 !important"
 		>
 			<v-switch
 				v-model = "withRender"
@@ -58,6 +59,10 @@ export default {
 			type: Function,
 			required: true,
 		},
+		rowNumber: {
+			type: Number,
+			default: 9,
+		},
 	},
 
 	data() {
@@ -72,7 +77,7 @@ export default {
 		triggerSubmit() {
 			this.isError = false;
 			this.isLoading = true;
-			this.submit({
+			return this.submit({
 				content: this.content,
 				reply: null,
 			})

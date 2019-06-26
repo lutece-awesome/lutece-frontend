@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<comment
-			v-for = "( each , index ) in list"
-			:key = "index"
+			v-for = "each in list"
+			:key = "each.pk"
 			:pk = "parseInt(each.pk,10)"
 			:author = "each.author"
 			:content = "each.content"
@@ -10,6 +10,8 @@
 			:vote = "each.vote"
 			:self-attitude = "each.selfAttitude"
 			:last-update-time = "each.lastUpdateTime"
+			:reply = "each.reply"
+			:total-reply-number = "each.totalReplyNumber"
 			@update-success = "update"
 		/>
 		<div class = "text-xs-center mt-3">

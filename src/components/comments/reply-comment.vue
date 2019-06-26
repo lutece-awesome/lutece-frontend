@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class = "reply-box" >
 		<v-card
 			hover
 			class = "mt-2 card"
@@ -54,16 +54,6 @@
 							</span>
 						</div>
 						<div
-							class = "ml-3"
-							style = "cursor:pointer"
-							@click = "onStartReply"
-						>
-							<v-icon small >
-								mdi-comment
-							</v-icon>
-							<span class = "subheader ml-1" > {{ totalReplyNumber }} </span>
-						</div>
-						<div
 							v-if = "hasEditPermission"
 							class = "ml-3 subheader"
 						>
@@ -86,31 +76,6 @@
 				</v-card-text>
 			</div>
 		</v-card>
-		<div :class = "{ 'ml-4': $vuetify.breakpoint.smAndUp , 'ml-1': $vuetify.breakpoint.xsOnly }">
-			<div
-				v-if = "beingReply"
-				class = "pb-3" >
-				<Editor
-					:content = "replyContent"
-					:row-number = "5"
-					:submit = "submitCommentReply"
-					@input-content = "replyContent = $event"
-				/>
-			</div>
-			<reply-comment
-				v-for = "each in reply"
-				:key = "each.pk"
-				:pk = "parseInt(each.pk,10)"
-				:author = "each.author"
-				:content = "each.content"
-				:create-time = "each.createTime"
-				:vote = "each.vote"
-				:self-attitude = "each.selfAttitude"
-				:last-update-time = "each.lastUpdateTime"
-				:reply = "each.reply"
-				@update-success = "$emit( 'update-success' , $event )"
-			/>
-		</div>
 	</div>
 </template>
 
@@ -118,19 +83,14 @@
 <script>
 import { mapGetters } from 'vuex';
 import { AsyncMixrendComponent } from '@/components/async/mixrend/index';
-import gql from '@/plugins/essential/graphql-tag';
 import UpdateDialog from './update';
 import ToggleReplyVote from './toggle-reply-vote';
-import Editor from './editor';
-import ReplyComment from './reply-comment';
 
 export default {
 
 	components: {
 		AsyncMixrendComponent,
 		UpdateDialog,
-		Editor,
-		ReplyComment,
 	},
 
 	props: {
@@ -162,14 +122,6 @@ export default {
 			type: Boolean,
 			required: true,
 		},
-		reply: {
-			type: Array,
-			required: true,
-		},
-		totalReplyNumber: {
-			type: Number,
-			required: true,
-		},
 	},
 
 	data() {
@@ -177,9 +129,6 @@ export default {
 			dialogVisiable: false,
 			voteLoading: false,
 			rating: 0,
-			replyContent: '',
-			beingReply: false,
-			processingReplyRequest: false,
 		};
 	},
 
@@ -200,12 +149,6 @@ export default {
 	},
 
 	methods: {
-		onStartReply() {
-			if (this.processingReplyRequest || !this.isAuthenticated) {
-				return;
-			}
-			this.beingReply = !this.beingReply;
-		},
 
 		toggleVote() {
 			if (this.voteLoading || !this.isAuthenticated) {
@@ -222,36 +165,6 @@ export default {
 					this.voteLoading = false;
 				});
 		},
-
-		submitCommentReply(data) {
-			if (this.processingReplyRequest) {
-				return Promise.resolve();
-			}
-			this.processingReplyRequest = true;
-			const { content } = data;
-			const mutation = gql`
-				mutation CreateCommentReply( $parent: ID!, $content: String!){
-					createCommentReply(parent: $parent, content: $content){
-						state
-					}
-				}
-			`;
-			return this.$apollo.mutate({
-				mutation,
-				variables: {
-					parent: this.pk,
-					content,
-				},
-			})
-				.then(response => response.data.CreateCommentReply)
-				.then(() => {
-					this.$emit('update-success');
-				})
-				.finally(() => {
-					this.processingReplyRequest = false;
-					this.beingReply = false;
-				});
-		},
 	},
 
 };
@@ -266,5 +179,9 @@ export default {
 
 	.card {
 		cursor: default;
+	}
+
+	.reply-box {
+		border-left: 3px #37474F solid;
 	}
 </style>
