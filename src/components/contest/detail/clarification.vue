@@ -77,20 +77,6 @@ export default {
 							vote
 							selfAttitude
 							totalReplyNumber
-							reply {
-								pk
-								content
-								createTime
-								lastUpdateTime
-								author {
-									username
-									attachInfo {
-										gravatar
-									}
-								}
-								vote
-								selfAttitude
-							}
 						}
 					}
 				}

@@ -10,7 +10,6 @@
 			:vote = "each.vote"
 			:self-attitude = "each.selfAttitude"
 			:last-update-time = "each.lastUpdateTime"
-			:reply = "each.reply"
 			:total-reply-number = "each.totalReplyNumber"
 			@update-success = "update"
 		/>

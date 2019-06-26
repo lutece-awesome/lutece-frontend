@@ -121,7 +121,7 @@ export default {
 				},
 			})
 				.then(() => {
-					this.$emit('update-success').then((
+					this.$emit('update-success', this.dataContent).then((
 						this.$emit('input')
 					));
 				})

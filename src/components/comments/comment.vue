@@ -81,12 +81,14 @@
 						:pk = "pk"
 						:content = "content"
 						@input = "dialogVisiable = !dialogVisiable"
-						@update-success = "$emit( 'update-success' , $event )"
+						@update-success = "$emit('update-success')"
 					/>
 				</v-card-text>
 			</div>
 		</v-card>
-		<div :class = "{ 'ml-4': $vuetify.breakpoint.smAndUp , 'ml-1': $vuetify.breakpoint.xsOnly }">
+		<div
+			v-if = "isInitializingReplyFinished"
+			:class = "{ 'ml-4': $vuetify.breakpoint.smAndUp , 'ml-1': $vuetify.breakpoint.xsOnly }" >
 			<div
 				v-if = "beingReply"
 				class = "pb-3" >
@@ -108,8 +110,22 @@
 				:self-attitude = "each.selfAttitude"
 				:last-update-time = "each.lastUpdateTime"
 				:reply = "each.reply"
-				@update-success = "$emit( 'update-success' , $event )"
+				@update-success = "(data) => { each.content = data ; $emit('update-success')}"
 			/>
+			<div
+				v-if = "totalReplyNumber > reply.length"
+				class = "pb-2" >
+				<v-btn
+					:loading = "isFetchingMore"
+					block
+					large
+					color = "#B0BEC5"
+					@click = "fetchingMore"
+				>
+					<v-icon> mdi-refresh </v-icon>
+					<span class = "ml-2"> FETCH MORE </span>
+				</v-btn>
+			</div>
 		</div>
 	</div>
 </template>
@@ -162,10 +178,6 @@ export default {
 			type: Boolean,
 			required: true,
 		},
-		reply: {
-			type: Array,
-			required: true,
-		},
 		totalReplyNumber: {
 			type: Number,
 			required: true,
@@ -180,6 +192,10 @@ export default {
 			replyContent: '',
 			beingReply: false,
 			processingReplyRequest: false,
+			isFetchingMore: false,
+			isInitializingReplyFinished: false,
+			nextReplyPage: 1,
+			reply: [],
 		};
 	},
 
@@ -197,6 +213,9 @@ export default {
 
 	mounted() {
 		this.rating = this.selfAttitude ? 1 : 0;
+		this.fetchingMore().then(() => {
+			this.isInitializingReplyFinished = true;
+		});
 	},
 
 	methods: {
@@ -245,12 +264,63 @@ export default {
 			})
 				.then(response => response.data.CreateCommentReply)
 				.then(() => {
+					this.fetchingMore();
 					this.$emit('update-success');
 				})
 				.finally(() => {
 					this.processingReplyRequest = false;
 					this.beingReply = false;
 					this.replyContent = '';
+				});
+		},
+
+		fetchingMore() {
+			if (this.isFetchingMore) {
+				return Promise.resolve();
+			}
+			this.isFetchingMore = true;
+			const query = gql`
+			query CommentReplyList( $pk: ID!, $page: Int! ){
+				commentReplyList(pk: $pk, page: $page){
+					pk
+					content
+					createTime
+					lastUpdateTime
+					author {
+						username
+						attachInfo {
+							gravatar
+						}
+					}
+					vote
+					selfAttitude
+				}
+			}
+		`;
+			return this.$apollo.query({
+				query,
+				variables: {
+					pk: this.pk,
+					page: this.nextReplyPage,
+				},
+				fetchPolicy: 'no-cache',
+			})
+				.then(response => response.data.commentReplyList)
+				.then((data) => {
+					const idSet = new Set();
+					for (let i = 0; i < this.reply.length; i += 1) {
+						idSet.add(this.reply[i].pk);
+					}
+					data.forEach((eachNewReply) => {
+						if (!idSet.has(eachNewReply.pk)) {
+							idSet.add(eachNewReply.pk);
+							this.reply.push(eachNewReply);
+						}
+					});
+					this.nextReplyPage += 1;
+				})
+				.finally(() => {
+					this.isFetchingMore = false;
 				});
 		},
 	},
