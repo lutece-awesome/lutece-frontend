@@ -250,6 +250,7 @@ export default {
 				.finally(() => {
 					this.processingReplyRequest = false;
 					this.beingReply = false;
+					this.replyContent = '';
 				});
 		},
 	},
