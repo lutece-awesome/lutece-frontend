@@ -149,6 +149,7 @@
 			:class = "{'mb-2': $vuetify.breakpoint.xsOnly}"
 			class = "text-xs-center mt-2">
 			<v-pagination
+				ref = "pagination"
 				v-model = "page"
 				:length = "maxPage"/>
 		</div>
@@ -252,6 +253,7 @@ export default {
 		},
 
 		fetchData() {
+			this.$refs.pagination.init();
 			this.isLoading += 1;
 			const query = gql`
 				query ContestSubmissionList(

@@ -7,25 +7,6 @@
 			<v-icon size = "20" > mdi-comment </v-icon>
 			<span class = "title ml-1" > Comments: </span>
 		</div>
-		<!-- <div
-			v-if = "!isAuthenticated"
-			class = "mt-3"
-		>
-			<v-card
-				:to = "{ name: 'Login' }"
-				elevation = "1"
-			>
-				<v-card-title class = "justify-center grey--text">
-					<strong> Login to Comment </strong>
-					<v-icon
-						size = "20"
-						class = "ml-2"
-					>
-						mdi-comment-text
-					</v-icon>
-				</v-card-title>
-			</v-card>
-		</div> -->
 		<comment-list
 			ref = "comments"
 			:fetch-comments = "fetchComments"
@@ -36,8 +17,8 @@
 				:content = "replyComment"
 				:submit = "submit"
 				class = "mt-3"
-				@submit-success = "submitSuccessCallback"
 				@input-content = "replyComment = $event"
+				@submit-success = "submitSuccessCallback"
 			/>
 		</div>
 	</div>
@@ -85,11 +66,11 @@ export default {
 	},
 
 	methods: {
-		submitSuccessCallback() {
-			this.$refs.comments.refresh();
-		},
 		update() {
 			this.$refs.comments.update();
+		},
+		submitSuccessCallback() {
+			this.$refs.comments.refresh();
 		},
 	},
 };

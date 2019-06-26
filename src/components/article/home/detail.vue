@@ -176,6 +176,9 @@ export default {
 									gravatar
 								}
 							}
+							vote
+							selfAttitude
+							totalReplyNumber
 						}
 					}
 				}
