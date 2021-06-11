@@ -21,7 +21,17 @@
 			<tr
 				v-for = "(sample, index) in problem.samples.sampleList"
 				:key = "index">
-				<td><pre>{{ sample.inputContent }}</pre></td>
+				<td class="d-flex">
+					<pre
+						:id="'input-' + index"
+						style="width: 80%">{{ sample.inputContent }}</pre>
+					<v-btn
+						:small="true"
+						style="width: 20%"
+						color="normal"
+						@click="copyInputSamples(index)"
+					>Copy</v-btn>
+				</td>
 				<td><pre>{{ sample.outputContent }}</pre></td>
 			</tr>
 		</table>
@@ -78,6 +88,12 @@ export default {
 		problem: {
 			type: Object,
 			default: null,
+		},
+	},
+
+	methods: {
+		copyInputSamples(n) {
+			navigator.clipboard.writeText(this.problem.samples.sampleList[n].inputContent);
 		},
 	},
 };
