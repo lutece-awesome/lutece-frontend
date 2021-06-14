@@ -2486,8 +2486,50 @@
       </tr>
       <tr>
          <td colspan="5" class="text-center">
-            第十一届四川省大学生程序设计竞赛（数据缺失）
+            第十一届四川省大学生程序设计竞赛
          </td>
+      </tr>
+      <tr>
+         <td>UESTC_Trimen</td>
+         <td>吴旭东</td>
+         <td>梁子辉</td>
+         <td>潘星霖</td>
+         <td>一等奖（Champion）</td>
+      </tr>
+      <tr>
+         <td>UESTC_Sakura</td>
+         <td>刘宸睿</td>
+         <td>陈天乐</td>
+         <td>刘昕</td>
+         <td>一等奖（2nd Place）</td>
+      </tr>
+      <tr>
+         <td>UESTC_POP</td>
+         <td>彭俊强</td>
+         <td>欧阳韬</td>
+         <td>潘训涛</td>
+         <td>一等奖</td>
+      </tr>
+      <tr>
+         <td>UESTC_Default</td>
+         <td>胡秋豪</td>
+         <td>张志斌</td>
+         <td>周泊帆</td>
+         <td>一等奖</td>
+      </tr>
+      <tr>
+         <td>UESTC_LoveMaster</td>
+         <td>王潇</td>
+         <td>颜禹焓</td>
+         <td>程曦</td>
+         <td>一等奖</td>
+      </tr>
+      <tr>
+         <td>UESTC_清水河大班</td>
+         <td>吴佳浩</td>
+         <td>唐钰晨</td>
+         <td>牟语嫣</td>
+         <td>三等奖</td>
       </tr>
       <tr>
          <td colspan="5" class="text-center">
