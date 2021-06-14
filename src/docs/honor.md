@@ -23,7 +23,7 @@
          <td>胡剑箫</td>
          <td>林思睿</td>
          <td>何柱</td>
-         <td>第 44 名</td>
+         <td>第 42 名</td>
       </tr>
       <tr>
          <td>UESTC_MonaLisa</td>
@@ -99,7 +99,7 @@
          <td>金牌（Gold Medal）</td>
       </tr>
       <tr>
-         <td>UESTC_RebirthOfOier</td>
+         <td>UESTC_RebirthOfOIers</td>
          <td>喻鹏云</td>
          <td>朱铖昊</td>
          <td>杜康睿</td>
@@ -200,7 +200,7 @@
          <td>银牌（Silver Medal）</td>
       </tr>
       <tr>
-         <td>UESTC_NamelessHeroes</td>
+         <td>UESTC_Nameless_Heroes</td>
          <td>苟嘉铭</td>
          <td>刘铠诚</td>
          <td>王鸿宇</td>
@@ -395,7 +395,7 @@
          <td>刘宸睿</td>
          <td>陈天乐</td>
          <td>刘昕</td>
-         <td>金牌（Gold Medal）</td>
+         <td>银牌（Silver Medal）</td>
       </tr>
       <tr>
          <td>UESTC_Return</td>
@@ -481,8 +481,10 @@
          <td>金牌（Gold Medal）</td>
       </tr>
       <tr>
-         <td>UESTC_Don’t_love_Dva</td>
-         <td colspan="3">（队员信息缺失）</td>
+         <td>UESTC_Don't_love_Dva</td>
+         <td>翁亦旸</td>
+         <td>胡超磊</td>
+         <td>张浩炜</td>
          <td>金牌（Gold Medal）</td>
       </tr>
       <tr>
@@ -531,7 +533,9 @@
       </tr>
       <tr>
          <td>UESTC_Main</td>
-         <td colspan="3">（队员信息缺失）</td>
+         <td>胡力文</td>
+         <td>周锦超</td>
+         <td>钱宇阳</td>
          <td>荣誉奖（Honorable Mention）</td>
       </tr>
       <tr>
@@ -542,8 +546,10 @@
          <td>刘昕</td>
          <td>金牌（Gold Medal）</td>
       </tr>
-         <td>UESTC_Don’t_love_Dva</td>
-         <td colspan="3">（队员信息缺失）</td>
+         <td>UESTC_Don't_love_Dva</td>
+         <td>翁亦旸</td>
+         <td>胡超磊</td>
+         <td>张浩炜</td>
          <td>银牌（Silver Medal）</td>
       <tr>
          <td>UESTC_FinalCap</td>
@@ -650,14 +656,18 @@
          <td>金牌（Gold Medal）</td>
       </tr>
       <tr>
-         <td>UESTC_星空</td>
-         <td colspan="3">（队员信息缺失）</td>
-         <td>第 89 名</td>
+         <td>UESTC_StarSky</td>
+         <td>翁亦旸</td>
+         <td>曾令安</td>
+         <td>陈尊</td>
+         <td>铜牌（Bronze Medal）</td>
       </tr>
       <tr>
-         <td>UESTC_新垣结衣</td>
-         <td colspan="3">（队员信息缺失）</td>
-         <td>第 111 名</td>
+         <td>UESTC_Aragaki</td>
+         <td>金琪铠</td>
+         <td>周锦超</td>
+         <td>钱宇阳</td>
+         <td>荣誉奖（Honorable Mention）</td>
       </tr>
       <tr>
          <td rowspan="4">西安赛区</td>
@@ -676,8 +686,10 @@
       </tr>
       <tr>
          <td>UESTC_Achilles</td>
-         <td colspan="3">（队员信息缺失）</td>
-         <td>第 119 名</td>
+         <td>杜昊</td>
+         <td>王科</td>
+         <td>李双琪</td>
+         <td>铜牌（Bronze Medal）</td>
       </tr>
       <tr>
          <td>UESTC_Duiming</td>
@@ -733,8 +745,10 @@
       </tr>
       <tr>
          <td>UESTC_p90rushB</td>
-         <td colspan="3">（队员信息缺失）</td>
-         <td>第 43 名</td>
+         <td>谭胜松</td>
+         <td>钟望</td>
+         <td>周昊</td>
+         <td>银牌（Silver Medal）</td>
       </tr>
       <tr>
          <td rowspan="3">南宁赛区</td>
@@ -759,12 +773,19 @@
          <td>银牌（Silver Medal）</td>
       </tr>
       <tr>
-         <td rowspan="2">乌鲁木齐赛区</td>
+         <td rowspan="3">乌鲁木齐赛区</td>
          <td>UESTC_Meglev</td>
          <td>徐浩</td>
          <td>杨宇同</td>
          <td>沈柯</td>
          <td>金牌（Gold Medal, 2nd Place）</td>
+      </tr>
+      <tr>
+         <td>UESTC_p90rushB</td>
+         <td>谭胜松</td>
+         <td>钟望</td>
+         <td>周昊</td>
+         <td>银牌（Silver Medal）</td>
       </tr>
       <tr>
          <td>UESTC_Continue</td>
@@ -1447,10 +1468,10 @@
          <td>金牌（Gold Medal）</td>
       </tr>
       <tr>
-         <td>UESTC-Macaroni</td> <!-- On https://acm.sdut.edu.cn/acmss/icpc/2012/chengdu/index.html -->
-         <td>刘施剑</td>
-         <td>詹艳玲</td>
-         <td>姚智瀚</td>
+         <td>UESTC-Ditalini</td> <!-- On https://acm.sdut.edu.cn/acmss/icpc/2012/chengdu/index.html -->
+         <td>陈谷锋</td>
+         <td>陈佳伟</td>
+         <td>童安哲</td>
          <td>银牌（Silver Medal）</td>
       </tr>
       <tr>
