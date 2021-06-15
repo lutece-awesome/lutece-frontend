@@ -175,7 +175,7 @@
          <td>张乐恒</td>
          <td>杨登庆</td>
          <td>王昱栋</td>
-         <td>荣誉奖（Honorable Mention）</td>
+         <td>铜牌（Bronze Medal）</td>
       </tr>
       <tr>
          <td rowspan="4">昆明赛区</td>
