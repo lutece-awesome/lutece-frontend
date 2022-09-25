@@ -1,5 +1,5 @@
 query ComemntsGQL( $page: Int! , $slug: String! , $time: Int ){
-    blogDiscussionList( page: $page , slug: $slug , time: $time ){
+    articleDiscussionList( page: $page , slug: $slug , time: $time ){
         maxPage
         discussionList{
             user{

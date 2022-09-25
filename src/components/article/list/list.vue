@@ -3,7 +3,7 @@
 		<v-card
 			v-for = "( each , index ) in items"
 			:key = "index"
-			:to = "{ name: 'BlogDetail', params: {slug: each.slug }}"
+			:to = "{ name: 'ArticleDetail', params: {slug: each.slug }}"
 			class = "mb-4"
 			hover
 			raised

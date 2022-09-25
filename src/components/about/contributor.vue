@@ -26,6 +26,7 @@
 						</v-layout>
 					</v-flex>
 				</v-layout>
+				<div v-html="compiledMarkdown"/>
 			</v-container>
 		</v-card>
 	</v-hover>
@@ -47,14 +48,14 @@ export default {
 				company: 'Alibaba',
 				location: 'Hangzhou',
 				title: 'Algorithm Engineer',
-				gravataremail: 'https://secure.gravatar.com/avatar/ec21fbe82157f45b8cab83f91f0cac69.jpg?s=250&d=mm&r=g',
+				gravataremail: 'https://gravatar.loli.net/avatar/ec21fbe82157f45b8cab83f91f0cac69.jpg?s=250&d=mm&r=g',
 			},
 			{
 				name: 'Jun Qing',
-				company: 'Bytedance',
+				company: 'Google',
 				location: 'Beijing',
 				title: 'Algorithm Engineer',
-				gravataremail: 'https://secure.gravatar.com/avatar/647ebdcf8e291dc01e81ddd4e59a33ec.jpg?s=250&d=mm&r=g',
+				gravataremail: 'https://gravatar.loli.net/avatar/647ebdcf8e291dc01e81ddd4e59a33ec.jpg?s=250&d=mm&r=g',
 			},
 		],
 	}),

@@ -17,14 +17,10 @@
 				<article-setting
 					:title = "title"
 					:content = "content"
-					:with-preview = "true"
-					:preview = "preview"
 					:submit = "submit"
-					form-title = "Create Announcement"
+					form-title = "Create Blog"
 					@input-title = "title = $event"
 					@input-content = "content = $event"
-					@input-preview = "preview = $event"
-					@input-disable = "disable = $event ? true : false"
 				/>
 			</v-flex>
 		</v-layout>
@@ -34,7 +30,7 @@
 <script>
 
 import gql from '@/plugins/essential/graphql-tag';
-import ArticleSetting from '../edit/home_article_setting';
+import ArticleSetting from '../edit/user_article_setting';
 import { clearApolloCache } from '@/utils';
 
 export default {
@@ -46,16 +42,15 @@ export default {
 		return {
 			title: '',
 			content: '',
-			preview: '',
 		};
 	},
 
 	methods: {
 		submit(data) {
 			const mutation = gql`
-                mutation CreateHomeArticle( $title: String! , $preview: String! ,$content: String! ){
-                    createHomeArticle( title: $title, preview: $preview, content: $content ){
-                        slug
+                mutation CreateUserArticle( $title: String!, $content: String! ){
+                    createUserArticle( title: $title, content: $content ){
+						pk
                     }
                 }
             `;
@@ -64,16 +59,12 @@ export default {
 				variables: {
 					title: data.title,
 					content: data.content,
-					preview: data.preview,
 				},
 			}).then((response) => {
 				clearApolloCache().finally(
 					() => {
 						this.$router.push({
-							name: 'AnnouncementDetail',
-							params: {
-								slug: response.data.createHomeArticle.slug,
-							},
+							name: 'Blog',
 						});
 					},
 				);

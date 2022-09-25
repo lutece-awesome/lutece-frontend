@@ -10,6 +10,9 @@ function getServerUri(protocol, path) {
 	} else {
 		newUri += ':';
 	}
+	// newUri += ':';
+	// const socket_ip_port = '127.0.0.1:8001';
+	// newUri += `//${socket_ip_port}/${path}`;
 	newUri += `//${host}/${path}`;
 	return newUri;
 }

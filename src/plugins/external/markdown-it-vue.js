@@ -1,5 +1,4 @@
-import MarkdownIt from 'markdown-it';
-import TexMathPlugin from 'markdown-it-texmath';
+import MarkdownItVue from 'markdown-it-vue';
 import Katex from 'katex';
 import 'katex/dist/katex.css';
 
@@ -13,9 +12,9 @@ const StrictMarkdownParser = MarkdownIt({
 	html: false, // Enable HTML tags in source
 	xhtmlOut: false, // Use '/' to close single tags (<br />).
 	// This is only for full CommonMark compatibility.
-	breaks: true, // Convert '\n' in paragraphs into <br>
+	breaks: false, // Convert '\n' in paragraphs into <br>
 	// useful for external highlighters.
-	linkify: true, // Autoconvert URL-like text to links
+	linkify: false, // Autoconvert URL-like text to links
 	typographer: true,
 	quotes: '“”‘’',
 })

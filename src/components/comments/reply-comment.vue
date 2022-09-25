@@ -63,6 +63,15 @@
 							>
 								Edit
 							</span>
+							
+							<span class = "ml-1 mr-1" > | </span>
+
+							<span
+								style = "cursor:pointer;"
+								@click = "deleArticleComment"
+							>
+								Delete
+							</span>
 						</div>
 					</v-layout>
 					<update-dialog
@@ -149,6 +158,30 @@ export default {
 	},
 
 	methods: {
+		deleArticleComment() {
+			const mutation = gql`
+			mutation DeleArticleComment($pk: ID!){
+				deleArticleComment(pk: $pk){
+					pk
+				}
+			}`;
+			return this.$apollo.mutate({
+				mutation,
+				variables: {
+					pk: this.pk,
+				},
+			})
+				.then(response => response.data.CreateCommentReply)
+				.then(() => {
+					this.fetchingMore();
+					this.$emit('update-success');
+				})
+				.finally(() => {
+					this.processingReplyRequest = false;
+					this.beingReply = false;
+					this.replyContent = '';
+				});
+		},
 
 		toggleVote() {
 			if (this.voteLoading || !this.isAuthenticated) {

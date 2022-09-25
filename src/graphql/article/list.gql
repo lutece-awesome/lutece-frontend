@@ -1,7 +1,7 @@
-query BLogListGQL($page: Int!) {
-	blogList(page: $page) {
+query ArticleListGQL($page: Int!) {
+	articleList(page: $page) {
 		maxPage
-		blogList {
+		ArticleList {
             title
             vote
             view

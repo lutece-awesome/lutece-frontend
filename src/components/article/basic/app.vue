@@ -59,7 +59,7 @@ export default {
 					content: this.value.content,
 				},
 			})
-				.then(response => response.data.CreateBlog);
+				.then(response => response.data.CreateArticle);
 		},
 	},
 

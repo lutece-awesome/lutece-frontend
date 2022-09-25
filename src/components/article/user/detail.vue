@@ -14,7 +14,7 @@
 				<loading-spinner v-if = "isLoading"/>
 				<error-spinner v-else-if = "isError"/>
 				<div v-else>
-					<home-article-detail
+					<user-article-detail
 						:pk = "parseInt(pk,10)"
 						:title = "title"
 						:content = "content"
@@ -32,8 +32,8 @@
 					/>
 				</div>
 				<v-btn
-					v-if = "hasPermission('article.change_homearticle')"
-					:to = "{name: 'HomeArticleEdit', params: {slug}}"
+					v-if = "hasPermission('article.change_userarticle')"
+					:to = "{name: 'UserArticleEdit', params: {pk}}"
 					color = "accent"
 					dark
 					fab
@@ -52,27 +52,26 @@
 
 import gql from '@/plugins/essential/graphql-tag';
 import updateArticleRecord from '../basic/update-record';
-import HomeArticleDetail from '../detail/app';
+import UserArticleDetail from '../detail/app';
 import { mapGetters } from 'vuex';
 import Comments from '@/components/comments/app';
 
 export default {
 
 	components: {
-		HomeArticleDetail,
+		UserArticleDetail,
 		Comments,
 	},
 
 	props: {
-		slug: {
-			type: String,
+		pk: {
+			type: Number,
 			required: true,
 		},
 	},
 
 	data() {
 		return {
-			pk: '',
 			title: '',
 			content: '',
 			author: {
@@ -101,8 +100,8 @@ export default {
 
 	mounted() {
 		const query = gql`
-			query queryHomeArticle($slug: ID!){
-				homeArticle(slug: $slug){
+			query queryUserArticle($pk: ID!){
+				userArticle(pk: $pk){
 					pk
 					title
 					content
@@ -125,10 +124,10 @@ export default {
 		const fechData = this.$apollo.query({
 			query,
 			variables: {
-				slug: this.slug,
+				pk: this.pk,
 			},
 		})
-			.then(response => response.data.homeArticle)
+			.then(response => response.data.userArticle)
 			.then((data) => { Object.assign(this, data); });
 		const mixrendComponent = import('@/components/async/mixrend/index');
 		Promise.all([

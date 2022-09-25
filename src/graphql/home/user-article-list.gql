@@ -1,0 +1,19 @@
+query UserArticleListGQL($page: Int!, $filter: String) {
+	userArticleList(page: $page, filter: $filter) {
+		maxPage
+		userArticleList {
+			pk
+			title
+			author {
+				username
+				attachInfo{
+					gravatar
+				}
+			}
+			record {
+				count
+			}
+			vote
+		}
+	}
+}

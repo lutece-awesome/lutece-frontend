@@ -1,8 +1,10 @@
 import Home from '@/components/home/home';
-import Blog from '@/components/home/blog';
+import Announcement from '@/components/home/announcement';
 import Develop from '@/components/home/develop';
-import BlogDetail from '@/components/article/home/detail';
+import AnnouncementDetail from '@/components/article/home/detail';
 import Honor from '@/components/home/honor';
+import Blog from '@/components/home/blog';
+import BlogDetail from '@/components/article/user/detail';
 
 const Router = [
 	{
@@ -17,14 +19,14 @@ const Router = [
 		component: Home,
 	},
 	{
-		path: '/blog',
-		name: 'Blog',
-		component: Blog,
+		path: '/announcement',
+		name: 'Announcement',
+		component: Announcement,
 	},
 	{
-		path: '/blog/:slug',
-		name: 'BlogDetail',
-		component: BlogDetail,
+		path: '/announcement/:slug',
+		name: 'AnnouncementDetail',
+		component: AnnouncementDetail,
 		props: true,
 	},
 	{
@@ -36,6 +38,17 @@ const Router = [
 		path: '/honor',
 		name: 'Honor',
 		component: Honor,
+	},
+	{
+		path: '/blog',
+		name: 'Blog',
+		component: Blog,
+	},
+	{
+		path: '/blog/:pk',
+		name: 'BlogDetail',
+		component: BlogDetail,
+		props: true,
 	},
 ];
 

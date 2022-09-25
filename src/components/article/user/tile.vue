@@ -1,6 +1,6 @@
 <template>
 	<v-card
-		:to = "{name: 'AnnouncementDetail', params: {slug} }"
+		:to = "{name: 'BlogDetail', params: {pk} }"
 		hover
 	>
 		<div>
@@ -11,15 +11,6 @@
 				{{ title }}
 			</h2>
 		</div>
-
-		<v-card-text>
-			<div
-				v-line-clamp:20 = "2"
-				class = "content"
-			>
-				{{ preview }}
-			</div>
-		</v-card-text>
 
 		<v-divider/>
 
@@ -42,6 +33,20 @@
 
 			<span class = "grey--text" >
 				<span>
+					<!-- {{ getThoundNumberic(count) }} views -->
+					{{ vote }} stars
+					<v-icon
+					color = "blue light-2"
+					class = "ml-1"
+					size = "20"
+					style = "display: inline"
+					>
+						mdi-thumb-up-outline
+					</v-icon>
+				</span>
+
+				<span class = "ml-1 mr-1" > | </span>
+				<span>
 					{{ getThoundNumberic(count) }} views
 				</span>
 			</span>
@@ -60,19 +65,11 @@ export default {
 			type: String,
 			default: '',
 		},
-		slug: {
-			type: String,
-			default: '',
-		},
 		username: {
 			type: String,
 			default: '',
 		},
 		gravatar: {
-			type: String,
-			default: '',
-		},
-		preview: {
 			type: String,
 			default: '',
 		},
@@ -84,6 +81,14 @@ export default {
 			type: Number,
 			default: 0,
 		},
+		pk: {
+			type: Number,
+			default: 0,
+		},
+		vote: {
+			type: Number,
+			default: 0,
+		}
 	},
 
 	methods: {
