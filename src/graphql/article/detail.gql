@@ -1,5 +1,5 @@
-query BlogGQL( $slug: String! ){
-    blog( slug: $slug ){
+query ArticleGQL( $slug: String! ){
+    article( slug: $slug ){
         title
         content
         view

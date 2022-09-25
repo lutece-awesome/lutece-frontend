@@ -68,6 +68,11 @@ export default {
 					to: '/home',
 				},
 				{
+					title: 'Announcement',
+					icon: 'mdi-calendar-text',
+					to: '/announcement',
+				},
+				{
 					title: 'Contest',
 					icon: 'mdi-rocket',
 					to: '/contest',
@@ -89,7 +94,7 @@ export default {
 				},
 				{
 					title: 'Blog',
-					icon: 'mdi-calendar-text',
+					icon: 'message',
 					to: '/blog',
 				},
 				{

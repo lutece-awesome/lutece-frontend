@@ -10,9 +10,11 @@ import SignRouter from '@/router/sign/router';
 import StatusRouter from '@/router/status/router';
 import UserRouter from '@/router/user/router';
 import Store from '@/store/index';
+
 import { isAuthenticated, goHome, hasPermission } from './utils';
 
 /*
+
 	Supporting meta:
 
 		requireAuth: boolean

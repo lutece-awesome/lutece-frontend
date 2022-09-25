@@ -1,5 +1,7 @@
 import HomeArticleEdit from '@/components/article/home/edit';
 import HomeArticleCreate from '@/components/article/home/create';
+import UserArticleEdit from '@/components/article/user/edit';
+import UserArticleCreate from '@/components/article/user/create';
 
 const Router = [
 	{
@@ -17,6 +19,23 @@ const Router = [
 		component: HomeArticleCreate,
 		meta: {
 			requirePermission: 'article.add_homearticle',
+		},
+	},
+	{
+		path: '/article/user/edit/:pk',
+		name: 'UserArticleEdit',
+		component: UserArticleEdit,
+		props: true,
+		meta: {
+			requirePermission: 'article.change_userarticle',
+		},
+	},
+	{
+		path: '/article/user/create',
+		name: 'UserArticleCreate',
+		component: UserArticleCreate,
+		meta: {
+			requirePermission: 'article.add_userarticle',
 		},
 	},
 ];

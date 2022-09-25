@@ -23,19 +23,13 @@
 					>
 						<article-setting
 							:title = "title"
-							:slug = "slug"
 							:content = "content"
-							:with-preview = "true"
-							:preview = "preview"
-							:with-disable = "true"
-							:disable = "disable"
 							:submit = "submit"
+							:pk = 'pk'
 							:dele = "dele"
-							form-title = "Edit Announcement"
+							form-title = "Edit Blog"
 							@input-title = "title = $event"
 							@input-content = "content = $event"
-							@input-preview = "preview = $event"
-							@input-disable = "disable = $event ? true : false"
 						/>
 					</v-flex>
 				</v-layout>
@@ -47,7 +41,7 @@
 <script>
 
 import gql from '@/plugins/essential/graphql-tag';
-import ArticleSetting from '../edit/home_article_setting';
+import ArticleSetting from '../edit/user_article_setting';
 import { clearApolloCache } from '@/utils';
 
 export default {
@@ -57,18 +51,16 @@ export default {
 	},
 
 	props: {
-		slug: {
-			type: String,
+		pk: {
+			type: Number,
 			required: true,
 		},
 	},
 
 	data() {
 		return {
-			pk: '',
 			title: '',
 			content: '',
-			preview: '',
 			disable: false,
 			isLoading: false,
 			isError: false,
@@ -79,27 +71,25 @@ export default {
 	mounted() {
 		this.isLoading = true;
 		const query = gql`
-			query queryHomeArticle($slug: ID!){
-				homeArticle(slug: $slug){
+			query queryUserArticle($pk: ID!){
+				userArticle(pk: $pk){
 					pk
                     title
                     content
-                    preview
-                    disable
 				}
 			}
 		`;
 		this.$apollo.query({
 			query,
 			variables: {
-				slug: this.slug,
+				pk: this.pk,
 			},
 		})
-			.then(response => response.data.homeArticle)
+			.then(response => response.data.userArticle)
 			.then((data) => {
 				if (!data) {
 					this.isError = true;
-					this.errorMsg = 'No such home article, please check the Announcement list.';
+					this.errorMsg = 'No such user article, please check the Blog list.';
 				}
 				Object.assign(this, data);
 			})
@@ -110,24 +100,23 @@ export default {
 	methods: {
 		dele(data) {
 			const mutation = gql`
-			mutation DeleHomeArticle($slug: String!, $title: String!, $content: String!, $disable: Boolean){
-				deleHomeArticle( slug: $slug, title: $title, content: $content, disable: $disable){
-					slug
+			mutation DeleUserArticle($pk: ID!, $title: String!, $content: String!){
+				deleUserArticle( pk: $pk, title: $title, content: $content){
+					pk
 				}
 			}`;
 			return this.$apollo.mutate({
 				mutation,
 				variables: {
-					slug: data.slug,
+					pk: data.pk,
 					title: data.title,
 					content: data.content,
-					disable: data.disable,
 				},
 			}).then((response) => {
 				clearApolloCache().finally(
 					() => {
 						this.$router.push({
-							name: 'Announcement',
+							name: 'Blog',
 						});
 					},
 				);
@@ -136,28 +125,26 @@ export default {
 
 		submit(data) {
 			const mutation = gql`
-                mutation UpdateHomeArticle( $slug: String!, $title: String!, $content: String!, $preview: String!, $disable: Boolean!){
-                    updateHomeArticle( slug: $slug, title: $title, content: $content, preview: $preview, disable: $disable ){
-                        slug
+                mutation UpdateUserArticle( $pk: ID!, $title: String!, $content: String!){
+                    updateUserArticle( pk: $pk, title: $title, content: $content){
+						pk
                     }
                 } 
-            `;
+			`;
 			return this.$apollo.mutate({
 				mutation,
 				variables: {
-					slug: data.slug,
+					pk: this.pk,
 					title: data.title,
 					content: data.content,
-					preview: data.preview,
-					disable: data.disable,
 				},
 			}).then((response) => {
 				clearApolloCache().finally(
 					() => {
 						this.$router.push({
-							name: 'AnnouncementDetail',
+							name: 'BlogDetail',
 							params: {
-								slug: response.data.updateHomeArticle.slug,
+								pk: this.pk,
 							},
 						});
 					},

@@ -10,6 +10,7 @@
 				fill-height
 				align-center
 				justify-center
+				ma-0
 			>
 				<v-flex
 					xs12
@@ -18,7 +19,7 @@
 					text-xs-center
 				>
 					<ApolloQuery
-						:query = "require('@/graphql/home/user-article-list.gql')"
+						:query = "require('@/graphql/home/home-article-list.gql')"
 						:variables = "{ page , filter }"
 						:debounce = "300"
 						@result = "onResult" >
@@ -40,16 +41,16 @@
 								justify-center
 							>
 								<v-flex>
-									<user-article-tile
-										v-for = " ( each , index ) in data.userArticleList.userArticleList "
+									<home-article-tile
+										v-for = " ( each , index ) in data.homeArticleList.homeArticleList "
 										:key = "index"
-										:pk = "each.pk"
 										:title = "each.title"
+										:slug = "each.slug"
 										:username = "each.author.username"
+										:preview = "each.preview"
 										:gravatar = "each.author.attachInfo.gravatar"
 										:last-update-time = "each.lastUpdateTime"
 										:count = "each.record.count"
-										:vote = 'each.vote'
 									/>
 								</v-flex>
 							</v-layout>
@@ -69,8 +70,9 @@
 			</v-layout>
 		</v-container>
 		<v-btn
+			v-if = "hasPermission('article.add_homearticle')"
 			:to = "{
-				name: 'UserArticleCreate',
+				name: 'HomeArticleCreate',
 			}"
 			color = "accent"
 			dark
@@ -87,16 +89,16 @@
 <script>
 import { mapGetters } from 'vuex';
 import SearchBar from '@/components/utils/search-bar';
-import UserArticleTile from '@/components/article/user/tile';
+import HomeArticleTile from '@/components/article/home/tile';
 import { getThoundNumberic } from '@/utils';
 
 export default {
 
-	name: 'Blog',
+	name: 'Announcement',
 
 	components: {
 		SearchBar,
-		UserArticleTile,
+		HomeArticleTile,
 	},
 
 	data() {
@@ -115,7 +117,7 @@ export default {
 
 	methods: {
 		onResult(result) {
-			this.maxPage = result.data.userArticleList.maxPage;
+			this.maxPage = result.data.homeArticleList.maxPage;
 		},
 		getThoundNumberic(number) {
 			return getThoundNumberic(number);

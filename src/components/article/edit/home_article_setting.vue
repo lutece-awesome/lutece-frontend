@@ -89,6 +89,14 @@
 			/>
 			<v-btn
 				:loading = "isLoading"
+				:color = " isError ? 'error' : 'primary'"
+				flat
+				@click = "triggerDele"
+			>
+				Dele
+			</v-btn>
+			<v-btn
+				:loading = "isLoading"
 				:color = " isError ? 'error' : 'primary' "
 				flat
 				@click = "triggerSubmit"
@@ -145,6 +153,10 @@ export default {
 			type: Function,
 			default: null,
 		},
+		dele: {
+			type: Function,
+			default: null,
+		},
 	},
 
 	data() {
@@ -156,6 +168,28 @@ export default {
 	},
 
 	methods: {
+		triggerDele() {
+			this.isLoading = false;
+			this.isError = false;
+			const func = this.dele;
+			if (!func) {
+				return;
+			}
+			this.isLoading = true;
+			const data = {
+				slug: this.slug,
+				title: this.title,
+				content: this.content,
+			};
+			const delePromise = func(data);
+			delePromise
+				.catch(() => {
+					this.isError = true;
+				})
+				.finally(() => {
+					this.isLoading = false;
+				});
+		},
 		triggerSubmit() {
 			this.isLoading = false;
 			this.isError = false;

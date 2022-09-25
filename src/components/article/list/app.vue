@@ -18,7 +18,7 @@
 						<error-spinner v-else-if = "error" />
 						<article-list
 							v-else-if = "data"
-							:items = "data.blogList.blogList"
+							:items = "data.articleList.articleList"
 						/>
 					</template>
 				</ApolloQuery>
@@ -69,7 +69,7 @@ export default {
 
 	methods: {
 		onResult(result) {
-			this.maxPage = result.data.blogList.maxPage;
+			this.maxPage = result.data.ArticleList.maxPage;
 		},
 	},
 };

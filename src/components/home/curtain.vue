@@ -65,12 +65,15 @@ export default {
 		version,
 		item: [
 			{
-				info: 'Start',
-				color: 'success',
+				info: 'ANNOUNCEMENT',
+				color: 'info',
+				to: {
+					name: 'Announcement',
+				},
 			},
 			{
 				info: 'BLOG',
-				color: 'info',
+				color: 'success',
 				to: {
 					name: 'Blog',
 				},

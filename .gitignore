@@ -9,3 +9,5 @@ node_modules/
 
 # ignore idea setting file
 .idea/
+
+*nohup.out
