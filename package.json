@@ -19,7 +19,7 @@
     "codemirror": "^5.45.0",
     "katex": "^0.10.1",
     "lodash.debounce": "^4.0.8",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^12.3.2",
     "markdown-it-texmath": "^0.5.5",
     "register-service-worker": "^1.6.2",
     "unfetch": "^4.1.0",
